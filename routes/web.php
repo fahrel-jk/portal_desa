@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\FeedbackController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Desa\DashboardController as DesaDashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VillagePageController;
 use App\Http\Controllers\WizardController;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Admin\FeedbackController;
-use App\Http\Controllers\ContactController;
 
 Route::get('/', [LandingPageController::class, 'index'])->name('welcome');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
@@ -89,7 +88,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/villages/{village}/preview', [AdminDashboardController::class, 'preview'])->name('preview');
     Route::patch('/villages/{village}/approve', [AdminDashboardController::class, 'approve'])->name('approve');
     Route::patch('/villages/{village}/reject', [AdminDashboardController::class, 'reject'])->name('reject');
-    
+
     // Feedback
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
     Route::patch('/feedback/{feedback}/read', [FeedbackController::class, 'markAsRead'])->name('feedback.read');

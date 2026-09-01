@@ -176,6 +176,68 @@ selesai dan teruji.
 
 ---
 
+## Alur 6 — Kontak & Feedback Publik (di luar rencana awal, ditambahkan kemudian)
+
+Fitur ini ditambahkan setelah Alur 1-5 sudah tersusun. Tujuannya memberi
+pengunjung landing page cara untuk mengirim pertanyaan/masukan kepada
+Diskominfo tanpa perlu login.
+
+```
+[Warga/pengunjung buka landing page (/)]
+        |
+        v
+[Scroll ke bagian "Hubungi Kami" / "Get in touch"]
+        |
+        v
+[Isi form kontak: nama (wajib), email (wajib),
+ telepon (opsional), pesan (wajib)]
+        |
+        v
+[Submit] --> validasi server-side
+        |
+   +----+----+
+   |         |
+[GAGAL]   [BERHASIL]
+   |         |
+   v         v
+[Tampilkan     [Simpan ke tabel `feedback`,
+ error          kolom is_read = false (default)]
+ validasi]         |
+                   v
+              [Tampilkan flash message:
+               "Terima kasih! Pesan Anda telah kami terima..."]
+```
+
+### Sisi Admin Provinsi
+
+```
+[Admin login → Dashboard → menu "Kelola Pesan"]
+        |
+        v
+[Tampilkan daftar feedback masuk (paginated, 10 per halaman),
+ diurutkan terbaru lebih dulu]
+        |
+        v
+[Admin klik "Tandai Sudah Dibaca" pada pesan tertentu]
+        |
+        v
+[Update kolom is_read = true]
+```
+
+**Catatan teknis:**
+- Model: `App\Models\Feedback` — field: `name`, `email`, `phone`, `message`,
+  `is_read` (boolean, default false).
+- Controller publik: `ContactController@store` — validasi dan simpan.
+- Controller admin: `Admin\FeedbackController@index` (list) dan
+  `@markAsRead` (update status).
+- Route: `POST /contact` (publik), `GET /admin/feedback` dan
+  `PATCH /admin/feedback/{feedback}/read` (admin only).
+- Status hanya 2: `unread` (is_read=false) dan `read` (is_read=true).
+- **Tidak ada notifikasi otomatis** ke admin saat pesan baru masuk — admin
+  perlu mengecek halaman "Kelola Pesan" secara manual.
+
+---
+
 ## Ringkasan State Machine `villages.status`
 
 ```
@@ -190,3 +252,4 @@ Tidak ada jalur dari `published` kembali ke status lain dalam scope
 purwarupa ini — kalau nanti dibutuhkan (mis. admin ingin unpublish
 sementara), itu pengembangan lanjutan, catat sebagai rekomendasi di laporan
 evaluasi, jangan diimplementasikan sekarang supaya scope tetap terjaga.
+

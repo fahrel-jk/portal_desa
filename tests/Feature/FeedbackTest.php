@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Feedback;
+use App\Models\Template;
 use App\Models\User;
 use App\Models\Village;
-use App\Models\Template;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
