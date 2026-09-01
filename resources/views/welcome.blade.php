@@ -7,173 +7,60 @@
     <meta name="description" content="Platform termudah untuk membuat halaman resmi desa. Pilih template, isi data, dan halaman desa Anda siap diakses publik dalam hitungan menit.">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        /* ── Mini Mockup Styles (Template & Village Previews) ── */
-        .mini-mockup {
-            background: #f9fafb;
-            border-radius: 6px;
-            overflow: hidden;
-            font-size: 0;
-            position: relative;
+        .font-serif-velorah { font-family: 'Playfair Display', serif; }
+        .glass-button {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
         }
-        .mini-mockup .mm-header {
-            height: 18%;
-            display: flex;
-            align-items: center;
-            padding: 0 8%;
-            gap: 6%;
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
         }
-        .mini-mockup .mm-logo {
-            width: 8%;
-            aspect-ratio: 1;
-            border-radius: 2px;
-            background: rgba(255,255,255,0.5);
-        }
-        .mini-mockup .mm-nav {
-            display: flex;
-            gap: 4%;
-            flex: 1;
-            justify-content: flex-end;
-        }
-        .mini-mockup .mm-nav span {
-            width: 12%;
-            height: 3px;
-            border-radius: 2px;
-            background: rgba(255,255,255,0.35);
-        }
-        .mini-mockup .mm-hero {
-            height: 38%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 0 12%;
-        }
-        .mini-mockup .mm-hero .mm-title {
-            width: 55%;
-            height: 5px;
-            border-radius: 2px;
-        }
-        .mini-mockup .mm-hero .mm-subtitle {
-            width: 40%;
-            height: 3px;
-            border-radius: 2px;
-        }
-        .mini-mockup .mm-hero .mm-btn {
-            width: 22%;
-            height: 8px;
-            border-radius: 4px;
-            margin-top: 4px;
-        }
-        .mini-mockup .mm-content {
-            padding: 6% 8%;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .mini-mockup .mm-content .mm-line {
-            height: 3px;
-            border-radius: 2px;
-            background: #e5e7eb;
-        }
-        .mini-mockup .mm-content .mm-line.short { width: 60%; }
-        .mini-mockup .mm-content .mm-line.medium { width: 80%; }
-        .mini-mockup .mm-content .mm-line.full { width: 100%; }
-
-        /* ── Klasik variant ── */
-        .mini-mockup.variant-klasik .mm-header { background: #1D4ED8; }
-        .mini-mockup.variant-klasik .mm-hero { background: #EFF6FF; }
-        .mini-mockup.variant-klasik .mm-hero .mm-title { background: #1E40AF; }
-        .mini-mockup.variant-klasik .mm-hero .mm-subtitle { background: #93C5FD; }
-        .mini-mockup.variant-klasik .mm-hero .mm-btn { background: #1D4ED8; }
-
-        /* ── Modern variant ── */
-        .mini-mockup.variant-modern .mm-header { background: #111827; }
-        .mini-mockup.variant-modern .mm-hero {
-            background: linear-gradient(135deg, #312e81 0%, #4338ca 100%);
-        }
-        .mini-mockup.variant-modern .mm-hero .mm-title { background: #fff; }
-        .mini-mockup.variant-modern .mm-hero .mm-subtitle { background: rgba(255,255,255,0.5); }
-        .mini-mockup.variant-modern .mm-hero .mm-btn { background: #6366f1; }
-        .mini-mockup.variant-modern .mm-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-        }
-        .mini-mockup.variant-modern .mm-content .mm-card {
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 4px;
-            height: 28px;
-        }
-
-        /* ── Fallback village mockup ── */
-        .mini-mockup.variant-village .mm-header { background: #1D4ED8; }
-        .mini-mockup.variant-village .mm-hero {
-            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
-        }
-        .mini-mockup.variant-village .mm-hero .mm-title { background: #1E3A5F; }
-        .mini-mockup.variant-village .mm-hero .mm-subtitle { background: #93C5FD; }
-        .mini-mockup.variant-village .mm-hero .mm-btn { background: #2563EB; }
     </style>
 </head>
-<body class="font-sans antialiased text-gray-900 min-h-screen flex flex-col selection:bg-indigo-100 selection:text-indigo-900">
+<body class="font-sans antialiased text-white min-h-screen flex flex-col selection:bg-white/30 selection:text-white">
+    {{-- Fixed Cinematic Video Background --}}
+    <div class="fixed inset-0 z-[-1] overflow-hidden">
+        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+            <source src="{{ asset('video_desa.mp4') }}" type="video/mp4">
+        </video>
+        {{-- Overlay ringan agar teks tetap terbaca tanpa menggelapkan video --}}
+        <div class="absolute inset-0 bg-onyx-canvas/40"></div>
+    </div>
 
     {{-- ═══════════════════════════════════════
-         NAVIGATION — Transparent → White on scroll
-         Text color switches simultaneously with background
+         NAVIGATION — Transparent over hero, Center aligned links
          ═══════════════════════════════════════ --}}
-    <nav class="fixed w-full top-0 z-50 transition-all duration-300"
-         x-data="{ scrolled: false }"
-         @scroll.window="scrolled = (window.scrollY > 40)">
-        <div :class="scrolled
-                ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm'
-                : 'bg-transparent py-2'"
-             class="transition-all duration-300">
+    <nav class="fixed w-full top-0 z-50 transition-all duration-300" x-data="{ scrolled: false }" @scroll.window="scrolled = (window.scrollY > 40)">
+        <div :class="scrolled ? 'bg-black/40 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20' : 'bg-transparent py-2'" class="transition-all duration-300">
             <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
                 <div class="flex justify-between h-16 items-center">
                     {{-- Left: Logo --}}
                     <div class="flex items-center gap-2.5 w-1/4">
-                        <span class="text-2xl font-bold tracking-tight transition-colors duration-300"
-                              :class="scrolled ? 'text-gray-900' : 'text-white'">Portal Desa</span>
+                        <span class="font-serif-velorah text-2xl text-white tracking-tight">Portal Desa</span>
                     </div>
-
+                    
                     {{-- Center: Links --}}
                     <div class="hidden md:flex items-center justify-center gap-8 w-2/4">
-                        <a href="#cara-kerja"
-                           class="text-[13px] font-medium transition-colors duration-300"
-                           :class="scrolled ? 'text-gray-600 hover:text-gray-900' : 'text-white/90 hover:text-white'">Cara Kerja</a>
-                        <a href="#template"
-                           class="text-[13px] font-medium transition-colors duration-300"
-                           :class="scrolled ? 'text-gray-600 hover:text-gray-900' : 'text-white/90 hover:text-white'">Template</a>
-                        <a href="#faq"
-                           class="text-[13px] font-medium transition-colors duration-300"
-                           :class="scrolled ? 'text-gray-600 hover:text-gray-900' : 'text-white/90 hover:text-white'">FAQ</a>
+                        <a href="#cara-kerja" class="velorah-link text-[13px] font-medium text-white/90 hover:text-white transition-colors">Cara Kerja</a>
+                        <a href="#template" class="velorah-link text-[13px] font-medium text-white/90 hover:text-white transition-colors">Template</a>
+                        <a href="#faq" class="velorah-link text-[13px] font-medium text-white/90 hover:text-white transition-colors">FAQ</a>
                     </div>
-
+                    
                     {{-- Right: Actions --}}
                     <div class="flex items-center justify-end gap-4 w-1/4">
                         @auth
-                            <a href="{{ route('dashboard') }}"
-                               class="text-[13px] font-medium px-5 py-2 rounded-full transition-all duration-300"
-                               :class="scrolled
-                                   ? 'bg-indigo-600 text-white hover:bg-indigo-700'
-                                   : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'">
-                                Dashboard
-                            </a>
+                            <a href="{{ route('dashboard') }}" class="glass-button text-[13px] font-medium text-white px-5 py-2 rounded-full">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}"
-                               class="hidden sm:block text-[13px] font-medium transition-colors duration-300"
-                               :class="scrolled ? 'text-gray-600 hover:text-gray-900' : 'text-white/90 hover:text-white'">
-                                Masuk
-                            </a>
-                            <a href="{{ route('register') }}"
-                               class="text-[13px] font-medium px-6 py-2.5 rounded-full transition-all duration-300"
-                               :class="scrolled
-                                   ? 'bg-indigo-600 text-white hover:bg-indigo-700'
-                                   : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'">
+                            <a href="{{ route('login') }}" class="hidden sm:block text-[13px] font-medium text-white/90 hover:text-white transition">Masuk</a>
+                            <a href="{{ route('register') }}" class="glass-button text-[13px] font-medium text-white px-6 py-2.5 rounded-full">
                                 Daftar Sekarang
                             </a>
                         @endauth
@@ -184,28 +71,20 @@
     </nav>
 
     {{-- ═══════════════════════════════════════
-         HERO — Video background ONLY here
+         HERO — Dreamy Velorah Style
          ═══════════════════════════════════════ --}}
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {{-- Video Background — scoped to this section only --}}
-        <div class="absolute inset-0 z-0">
-            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-                <source src="{{ asset('video_desa.mp4') }}" type="video/mp4">
-            </video>
-            {{-- Dark gradient overlay for text readability --}}
-            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
-        </div>
+        {{-- Background flows through completely from fixed body --}}
 
         <div class="relative z-10 max-w-5xl mx-auto px-6 text-center mt-20">
-            <h1 class="animate-fade-rise text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-white tracking-tight leading-[1.1] mb-6 font-bold">
+            <h1 class="animate-fade-rise font-serif-velorah text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-white tracking-normal leading-[1.1] mb-6">
                 Bawa desa Anda ke<br>era digital.
             </h1>
-            <p class="animate-fade-rise-d1 max-w-2xl mx-auto text-[15px] sm:text-base leading-relaxed text-white/85 mb-10 font-light">
+            <p class="animate-fade-rise-d1 max-w-2xl mx-auto text-[15px] sm:text-base leading-relaxed text-white/80 mb-10 font-light">
                 Platform termudah untuk membuat halaman resmi desa. Pilih template, isi data, dan halaman desa Anda siap diakses publik dalam hitungan menit — tanpa perlu coding.
             </p>
             <div class="animate-fade-rise-d2 flex justify-center">
-                <a href="{{ route('register') }}"
-                   class="bg-indigo-600 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 hover:scale-[1.03] transition-all duration-150">
+                <a href="{{ route('register') }}" class="glass-button text-white font-medium px-8 py-3 rounded-full text-[15px]">
                     Mulai Gratis Sekarang
                 </a>
             </div>
@@ -213,27 +92,27 @@
     </section>
 
     {{-- ═══════════════════════════════════════
-         STATS — Trust strip (overlaps bottom of hero)
+         STATS — Trust strip
          ═══════════════════════════════════════ --}}
     <section class="relative z-10 -mt-20 pb-24">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="scroll-reveal bg-white rounded-2xl border border-gray-200 p-8 sm:p-10 shadow-xl">
+            <div class="scroll-reveal bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 sm:p-10 shadow-xl shadow-black/20">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                     <div>
-                        <div class="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">{{ $stats['total_villages'] }}+</div>
-                        <div class="text-xs sm:text-sm text-gray-500 uppercase tracking-widest">Desa Tergabung</div>
+                        <div class="text-3xl sm:text-4xl font-serif-velorah text-white mb-1">{{ $stats['total_villages'] }}+</div>
+                        <div class="text-xs sm:text-sm text-white/70 uppercase tracking-widest">Desa Tergabung</div>
                     </div>
                     <div>
-                        <div class="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">{{ $stats['total_districts'] }}</div>
-                        <div class="text-xs sm:text-sm text-gray-500 uppercase tracking-widest">Kecamatan</div>
+                        <div class="text-3xl sm:text-4xl font-serif-velorah text-white mb-1">{{ $stats['total_districts'] }}</div>
+                        <div class="text-xs sm:text-sm text-white/70 uppercase tracking-widest">Kecamatan</div>
                     </div>
                     <div>
-                        <div class="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">2</div>
-                        <div class="text-xs sm:text-sm text-gray-500 uppercase tracking-widest">Template Premium</div>
+                        <div class="text-3xl sm:text-4xl font-serif-velorah text-white mb-1">2</div>
+                        <div class="text-xs sm:text-sm text-white/70 uppercase tracking-widest">Template Premium</div>
                     </div>
                     <div>
-                        <div class="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">Rp 0</div>
-                        <div class="text-xs sm:text-sm text-gray-500 uppercase tracking-widest">Gratis Selamanya</div>
+                        <div class="text-3xl sm:text-4xl font-serif-velorah text-white mb-1">Rp 0</div>
+                        <div class="text-xs sm:text-sm text-white/70 uppercase tracking-widest">Gratis Selamanya</div>
                     </div>
                 </div>
             </div>
@@ -241,13 +120,13 @@
     </section>
 
     {{-- ═══════════════════════════════════════
-         CARA KERJA — 4 Steps (bg-gray-50)
+         CARA KERJA — 4 Steps
          ═══════════════════════════════════════ --}}
-    <section id="cara-kerja" class="py-24 bg-gray-50">
+    <section id="cara-kerja" class="py-24">
         <div class="max-w-7xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
-                <p class="text-xs uppercase tracking-[0.3em] text-indigo-600 font-semibold mb-4">Cara Kerja</p>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl text-gray-900 tracking-tight font-semibold">
+                <p class="text-xs uppercase tracking-[0.3em] text-cobalt mb-4">Cara Kerja</p>
+                <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium">
                     Empat langkah.<br>Lima menit.
                 </h2>
             </div>
@@ -263,13 +142,13 @@
                 @endphp
 
                 @foreach($steps as $i => $step)
-                    <div class="scroll-reveal bg-white rounded-xl p-8 border border-gray-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-lg transition-all duration-300 group" style="transition-delay: {{ $i * 0.1 }}s">
-                        <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-5 group-hover:bg-indigo-100 transition">
-                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $step['icon'] }}" /></svg>
+                    <div class="scroll-reveal bg-white/5 backdrop-blur-md rounded-xl p-8 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all group" style="transition-delay: {{ $i * 0.1 }}s">
+                        <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center mb-5 group-hover:bg-white/20 transition">
+                            <svg class="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $step['icon'] }}" /></svg>
                         </div>
-                        <div class="text-xs font-bold text-indigo-600/60 uppercase tracking-widest mb-3">Langkah {{ $i + 1 }}</div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $step['title'] }}</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">{{ $step['desc'] }}</p>
+                        <div class="text-xs font-bold text-cobalt/60 uppercase tracking-widest mb-3">Langkah {{ $i + 1 }}</div>
+                        <h3 class="text-lg font-bold text-ivory-text mb-2">{{ $step['title'] }}</h3>
+                        <p class="text-sm text-ash-text leading-relaxed">{{ $step['desc'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -277,73 +156,58 @@
     </section>
 
     {{-- ═══════════════════════════════════════
-         TEMPLATE SHOWCASE (bg-white)
+         TEMPLATE SHOWCASE
          ═══════════════════════════════════════ --}}
-    <section id="template" class="py-24 bg-white">
+    <section id="template" class="py-24 bg-graphite-card/50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
-                <p class="text-xs uppercase tracking-[0.3em] text-indigo-600 font-semibold mb-4">Pilihan Template</p>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl text-gray-900 tracking-tight font-semibold mb-4">
+                <p class="text-xs uppercase tracking-[0.3em] text-cobalt mb-4">Pilihan Template</p>
+                <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium mb-4">
                     Desain yang sudah siap pakai.
                 </h2>
-                <p class="text-gray-500 max-w-xl mx-auto">Pilih tampilan yang paling cocok untuk desa Anda. Kedua template didesain profesional dan responsif di semua perangkat.</p>
+                <p class="text-ash-text max-w-xl mx-auto">Pilih tampilan yang paling cocok untuk desa Anda. Kedua template didesain profesional dan responsif di semua perangkat.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {{-- Klasik --}}
-                <div class="scroll-reveal group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl transition-all duration-300">
-                    <div class="aspect-[4/3] p-4 bg-gray-50 flex items-center justify-center">
-                        {{-- CSS Mini Mockup: Klasik layout --}}
-                        <div class="mini-mockup variant-klasik w-full h-full rounded-lg shadow-sm border border-gray-200">
-                            <div class="mm-header"></div>
-                            <div class="mm-hero">
-                                <div class="mm-title"></div>
-                                <div class="mm-subtitle"></div>
-                                <div class="mm-btn"></div>
+                <div class="scroll-reveal group bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all">
+                    <div class="aspect-[4/3] bg-obsidian-button flex items-center justify-center overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-indigo-900/30"></div>
+                        <div class="relative text-center p-8">
+                            <div class="w-12 h-12 bg-white/10 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-ivory-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
                             </div>
-                            <div class="mm-content">
-                                <div class="mm-line full"></div>
-                                <div class="mm-line medium"></div>
-                                <div class="mm-line short"></div>
-                                <div class="mm-line full"></div>
-                                <div class="mm-line medium"></div>
-                            </div>
+                            <p class="text-ivory-text font-semibold text-lg">Preview Klasik</p>
+                            <p class="text-ash-text text-sm mt-1">Layout tradisional, terpercaya</p>
                         </div>
                     </div>
                     <div class="p-6 flex items-center justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Template Klasik</h3>
-                            <p class="text-sm text-gray-500 mt-1">Tata letak sederhana dan informatif</p>
+                            <h3 class="text-lg font-bold text-ivory-text">Template Klasik</h3>
+                            <p class="text-sm text-ash-text mt-1">Tata letak sederhana dan informatif</p>
                         </div>
-                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full">Gratis</span>
+                        <span class="text-xs font-bold text-cobalt/70 uppercase tracking-widest bg-cobalt/10 px-3 py-1 rounded-full">Gratis</span>
                     </div>
                 </div>
 
                 {{-- Modern --}}
-                <div class="scroll-reveal group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl transition-all duration-300" style="transition-delay: 0.1s">
-                    <div class="aspect-[4/3] p-4 bg-gray-50 flex items-center justify-center">
-                        {{-- CSS Mini Mockup: Modern layout --}}
-                        <div class="mini-mockup variant-modern w-full h-full rounded-lg shadow-sm border border-gray-200">
-                            <div class="mm-header"></div>
-                            <div class="mm-hero">
-                                <div class="mm-title"></div>
-                                <div class="mm-subtitle"></div>
-                                <div class="mm-btn"></div>
+                <div class="scroll-reveal group bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all" style="transition-delay: 0.1s">
+                    <div class="aspect-[4/3] bg-obsidian-button flex items-center justify-center overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-violet-900/30 to-fuchsia-900/30"></div>
+                        <div class="relative text-center p-8">
+                            <div class="w-12 h-12 bg-white/10 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-ivory-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                             </div>
-                            <div class="mm-content">
-                                <div class="mm-card"></div>
-                                <div class="mm-card"></div>
-                                <div class="mm-card"></div>
-                                <div class="mm-card"></div>
-                            </div>
+                            <p class="text-ivory-text font-semibold text-lg">Preview Modern</p>
+                            <p class="text-ash-text text-sm mt-1">Card-based, kontemporer</p>
                         </div>
                     </div>
                     <div class="p-6 flex items-center justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Template Modern</h3>
-                            <p class="text-sm text-gray-500 mt-1">Card grid dinamis dan hero overlay</p>
+                            <h3 class="text-lg font-bold text-ivory-text">Template Modern</h3>
+                            <p class="text-sm text-ash-text mt-1">Card grid dinamis dan hero overlay</p>
                         </div>
-                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full">Gratis</span>
+                        <span class="text-xs font-bold text-cobalt/70 uppercase tracking-widest bg-cobalt/10 px-3 py-1 rounded-full">Gratis</span>
                     </div>
                 </div>
             </div>
@@ -351,53 +215,38 @@
     </section>
 
     {{-- ═══════════════════════════════════════
-         SHOWCASE VILLAGES (bg-gray-50)
+         SHOWCASE VILLAGES
          ═══════════════════════════════════════ --}}
     @if($showcaseVillages->count() > 0)
-        <section class="py-24 bg-gray-50">
+        <section class="py-24">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="scroll-reveal text-center mb-16">
-                    <p class="text-xs uppercase tracking-[0.3em] text-indigo-600 font-semibold mb-4">Portofolio</p>
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl text-gray-900 tracking-tight font-semibold mb-4">
+                    <p class="text-xs uppercase tracking-[0.3em] text-cobalt mb-4">Portofolio</p>
+                    <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium mb-4">
                         Desa yang telah bergabung.
                     </h2>
-                    <p class="text-gray-500 max-w-xl mx-auto">Lihat bagaimana desa-desa lain memanfaatkan Portal Desa untuk hadir secara digital.</p>
+                    <p class="text-ash-text max-w-xl mx-auto">Lihat bagaimana desa-desa lain memanfaatkan Portal Desa untuk hadir secara digital.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     @foreach($showcaseVillages as $i => $village)
-                        <a href="{{ url('/desa/' . $village->slug) }}"
-                           class="scroll-reveal group block bg-white rounded-2xl overflow-hidden border border-gray-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl transition-all duration-300"
-                           style="transition-delay: {{ $i * 0.1 }}s">
-                            <div class="aspect-[4/3] relative overflow-hidden bg-gray-100">
+                        <a href="{{ url('/desa/' . $village->slug) }}" class="scroll-reveal group block bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all hover:-translate-y-1" style="transition-delay: {{ $i * 0.1 }}s">
+                            <div class="aspect-[4/3] bg-obsidian-button relative overflow-hidden">
                                 @if($village->hero_image_path)
                                     <img src="{{ Storage::url($village->hero_image_path) }}" alt="{{ $village->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                                 @else
-                                    {{-- Fallback: CSS mini mockup instead of broken image icon --}}
-                                    <div class="w-full h-full p-4 flex items-center justify-center">
-                                        <div class="mini-mockup variant-village w-full h-full rounded-lg shadow-sm border border-gray-200">
-                                            <div class="mm-header"></div>
-                                            <div class="mm-hero">
-                                                <div class="mm-title"></div>
-                                                <div class="mm-subtitle"></div>
-                                                <div class="mm-btn"></div>
-                                            </div>
-                                            <div class="mm-content">
-                                                <div class="mm-line full"></div>
-                                                <div class="mm-line medium"></div>
-                                                <div class="mm-line short"></div>
-                                            </div>
-                                        </div>
+                                    <div class="w-full h-full bg-gradient-to-br from-cobalt/20 to-purple-900/20 flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-slate-border/30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/><path d="M14.14 11.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
                                     </div>
                                 @endif
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition"></div>
-                                <div class="absolute bottom-3 right-3 bg-white text-xs font-bold px-2.5 py-1 rounded-full text-gray-700 border border-gray-200 shadow-sm">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+                                <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur text-xs font-bold px-2.5 py-1 rounded-full text-white/90 border border-white/20">
                                     {{ $village->template->name }}
                                 </div>
                             </div>
                             <div class="p-5">
-                                <h3 class="text-base font-bold text-gray-900 mb-1 group-hover:text-indigo-600 transition">{{ $village->name }}</h3>
-                                <p class="text-sm text-gray-500">{{ $village->kecamatan }}, {{ $village->kabupaten }}</p>
+                                <h3 class="text-base font-bold text-ivory-text mb-1 group-hover:text-cobalt transition">{{ $village->name }}</h3>
+                                <p class="text-sm text-ash-text">{{ $village->kecamatan }}, {{ $village->kabupaten }}</p>
                             </div>
                         </a>
                     @endforeach
@@ -407,13 +256,13 @@
     @endif
 
     {{-- ═══════════════════════════════════════
-         FAQ ACCORDION (bg-white)
+         FAQ ACCORDION
          ═══════════════════════════════════════ --}}
-    <section id="faq" class="py-24 bg-white">
+    <section id="faq" class="py-24">
         <div class="max-w-3xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
-                <p class="text-xs uppercase tracking-[0.3em] text-indigo-600 font-semibold mb-4">FAQ</p>
-                <h2 class="text-3xl sm:text-4xl text-gray-900 tracking-tight font-semibold">
+                <p class="text-xs uppercase tracking-[0.3em] text-cobalt mb-4">FAQ</p>
+                <h2 class="font-serif-velorah text-3xl sm:text-4xl text-white tracking-normal font-medium">
                     Pertanyaan umum.
                 </h2>
             </div>
@@ -432,11 +281,11 @@
                 @foreach($faqs as $i => $faq)
                     <div class="scroll-reveal" style="transition-delay: {{ $i * 0.05 }}s"
                          x-data="{ open: false }">
-                        <button @click="open = !open" class="w-full flex items-center justify-between bg-white rounded-xl px-6 py-5 text-left border border-gray-200 hover:border-indigo-300 transition group">
-                            <span class="text-sm sm:text-base font-medium text-gray-900 pr-4">{{ $faq['q'] }}</span>
-                            <svg class="w-5 h-5 text-gray-400 shrink-0 transition-transform duration-300" :class="open ? 'rotate-45' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                        <button @click="open = !open" class="w-full flex items-center justify-between bg-white/5 backdrop-blur-md rounded-xl px-6 py-5 text-left border border-white/10 hover:bg-white/10 transition group">
+                            <span class="text-sm sm:text-base font-medium text-ivory-text pr-4">{{ $faq['q'] }}</span>
+                            <svg class="w-5 h-5 text-ash-text shrink-0 transition-transform duration-300" :class="open ? 'rotate-45' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                         </button>
-                        <div x-show="open" x-collapse x-cloak class="px-6 pb-5 pt-2 text-sm text-gray-600 leading-relaxed bg-gray-50 rounded-b-xl -mt-2 border-x border-b border-gray-200">
+                        <div x-show="open" x-collapse x-cloak class="px-6 pb-5 pt-2 text-sm text-ash-text leading-relaxed bg-white/5 backdrop-blur-md rounded-b-xl -mt-2 border-x border-b border-white/10">
                             {{ $faq['a'] }}
                         </div>
                     </div>
@@ -446,24 +295,22 @@
     </section>
 
     {{-- ═══════════════════════════════════════
-         CTA FINAL (indigo band)
+         CTA FINAL
          ═══════════════════════════════════════ --}}
-    <section class="relative py-32 overflow-hidden bg-indigo-600">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);"></div>
-        </div>
+    <section class="relative py-32 overflow-hidden">
+        {{-- Background flows through completely from fixed body --}}
+
         <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
             <div class="scroll-reveal">
-                <p class="text-xs uppercase tracking-[0.3em] text-indigo-200 mb-6">Siap Memulai?</p>
-                <h2 class="text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.05] mb-6 font-bold">
+                <p class="text-xs uppercase tracking-[0.3em] text-white/70 mb-6">Siap Memulai?</p>
+                <h2 class="font-serif-velorah text-4xl sm:text-5xl md:text-6xl text-white tracking-normal leading-[1.05] mb-6">
                     Hadirkan desa Anda<br>secara digital.
                 </h2>
-                <p class="text-white/85 text-base sm:text-lg max-w-xl mx-auto mb-10 font-light">
+                <p class="text-white/80 text-base sm:text-lg max-w-xl mx-auto mb-10 font-light">
                     Hanya butuh 5 menit untuk mendaftar dan mempublikasikan halaman resmi desa Anda. Gratis, selamanya.
                 </p>
                 <div class="flex justify-center">
-                    <a href="{{ route('register') }}"
-                       class="bg-white text-indigo-600 font-semibold px-8 py-3.5 rounded-full text-[15px] shadow-lg hover:bg-indigo-50 hover:scale-[1.03] transition-all duration-150">
+                    <a href="{{ route('register') }}" class="glass-button text-white font-medium px-8 py-3 rounded-full text-[15px]">
                         Daftarkan Desa Anda
                     </a>
                 </div>
@@ -472,47 +319,47 @@
     </section>
 
     {{-- ═══════════════════════════════════════
-         CONTACT FOOTER (bg-gray-50)
+         CONTACT FOOTER
          ═══════════════════════════════════════ --}}
-    <footer class="relative pb-10 pt-20 px-6 bg-gray-50">
+    <footer class="relative pb-10 pt-20 px-6">
         <div class="max-w-6xl mx-auto">
-            <div class="scroll-reveal bg-white rounded-2xl border border-gray-200 p-8 sm:p-12 mb-10 shadow-lg">
+            <div class="scroll-reveal bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 sm:p-12 mb-10 shadow-2xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     {{-- Left Side: Info --}}
                     <div>
-                        <h2 class="text-4xl sm:text-5xl text-gray-900 font-bold mb-4">Hubungi Kami</h2>
-                        <p class="text-gray-500 text-sm sm:text-base leading-relaxed mb-10">
+                        <h2 class="font-serif-velorah text-4xl sm:text-5xl text-white font-medium mb-4">Get in touch</h2>
+                        <p class="text-white/80 text-sm sm:text-base leading-relaxed mb-10">
                             Punya pertanyaan tentang layanan kami atau butuh bantuan? Silakan isi form berikut. Kami akan berusaha merespons dalam 1 hari kerja.
                         </p>
-
+                        
                         <div class="space-y-6">
                             <div class="flex items-start gap-4">
-                                <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center shrink-0">
-                                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                                 </div>
                                 <div>
-                                    <div class="text-gray-900 font-semibold mb-0.5">Email</div>
-                                    <div class="text-gray-500 text-sm">contact@portaldesa.jatimprov.go.id</div>
+                                    <div class="text-white font-semibold mb-0.5">Email</div>
+                                    <div class="text-white/70 text-sm">contact@portaldesa.jatimprov.go.id</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                </div>
+                                <div>
+                                    <div class="text-white font-semibold mb-0.5">Telepon</div>
+                                    <div class="text-white/70 text-sm">(031) 8294608</div>
                                 </div>
                             </div>
 
                             <div class="flex items-start gap-4">
-                                <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center shrink-0">
-                                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                 </div>
                                 <div>
-                                    <div class="text-gray-900 font-semibold mb-0.5">Telepon</div>
-                                    <div class="text-gray-500 text-sm">(031) 8294608</div>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start gap-4">
-                                <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center shrink-0">
-                                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                </div>
-                                <div>
-                                    <div class="text-gray-900 font-semibold mb-0.5">Alamat</div>
-                                    <div class="text-gray-500 text-sm">Jl. Ahmad Yani No.242-244, Surabaya, Jawa Timur</div>
+                                    <div class="text-white font-semibold mb-0.5">Alamat</div>
+                                    <div class="text-white/70 text-sm">Jl. Ahmad Yani No.242-244, Surabaya, Jawa Timur</div>
                                 </div>
                             </div>
                         </div>
@@ -521,65 +368,60 @@
                     {{-- Right Side: Form --}}
                     <div>
                         @if(session('success'))
-                            <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                                <p class="text-green-700 text-sm font-medium">{{ session('success') }}</p>
+                            <div class="bg-green-500/20 border border-green-500/50 rounded-lg p-4 mb-6">
+                                <p class="text-green-200 text-sm font-medium">{{ session('success') }}</p>
                             </div>
                         @endif
 
                         <form action="{{ route('contact.store') }}" method="POST" class="space-y-5">
                             @csrf
                             <div>
-                                <label for="contact_name" class="block text-sm font-medium text-gray-700 mb-1.5">Nama</label>
-                                <input type="text" id="contact_name" name="name" value="{{ old('name') }}" required
-                                       class="flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all">
-                                @error('name') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                                <label for="contact_name" class="block text-sm font-medium text-white mb-1.5">Nama</label>
+                                <input type="text" id="contact_name" name="name" value="{{ old('name') }}" required class="flex h-10 w-full rounded-md border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all backdrop-blur-md">
+                                @error('name') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
+                            </div>
+                            
+                            <div>
+                                <label for="contact_email" class="block text-sm font-medium text-white mb-1.5">Email</label>
+                                <input type="email" id="contact_email" name="email" value="{{ old('email') }}" required class="flex h-10 w-full rounded-md border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all backdrop-blur-md">
+                                @error('email') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                             </div>
 
                             <div>
-                                <label for="contact_email" class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
-                                <input type="email" id="contact_email" name="email" value="{{ old('email') }}" required
-                                       class="flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all">
-                                @error('email') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                                <label for="contact_phone" class="block text-sm font-medium text-white mb-1.5">Telepon (Opsional)</label>
+                                <input type="text" id="contact_phone" name="phone" value="{{ old('phone') }}" class="flex h-10 w-full rounded-md border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all backdrop-blur-md">
+                                @error('phone') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                             </div>
 
                             <div>
-                                <label for="contact_phone" class="block text-sm font-medium text-gray-700 mb-1.5">Telepon (Opsional)</label>
-                                <input type="text" id="contact_phone" name="phone" value="{{ old('phone') }}"
-                                       class="flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all">
-                                @error('phone') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                                <label for="contact_message" class="block text-sm font-medium text-white mb-1.5">Pesan</label>
+                                <textarea id="contact_message" name="message" rows="4" required class="flex w-full rounded-md border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all backdrop-blur-md resize-none">{{ old('message') }}</textarea>
+                                @error('message') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                             </div>
 
-                            <div>
-                                <label for="contact_message" class="block text-sm font-medium text-gray-700 mb-1.5">Pesan</label>
-                                <textarea id="contact_message" name="message" rows="4" required
-                                          class="flex w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all resize-none">{{ old('message') }}</textarea>
-                                @error('message') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-                            </div>
-
-                            <button type="submit"
-                                    class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-semibold h-10 px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 hover:scale-[1.03] transition-all duration-150 shadow-md mt-2">
-                                Kirim Pesan
+                            <button type="submit" class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-black text-white hover:bg-black/80 transition-colors shadow-lg mt-2">
+                                Submit
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
-
+            
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 pt-4">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-6 h-6 bg-indigo-600 rounded-md flex items-center justify-center">
+                    <div class="w-6 h-6 bg-white/20 rounded-md flex items-center justify-center backdrop-blur-md">
                         <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
                     </div>
-                    <span class="font-bold text-gray-900 text-sm tracking-tight">Portal Desa</span>
+                    <span class="font-bold text-white text-sm tracking-tight">Portal Desa</span>
                 </div>
-                <p class="text-gray-400 text-xs">
+                <p class="text-white/60 text-xs">
                     &copy; {{ date('Y') }} Portal Desa — Diskominfo Provinsi Jawa Timur. Proyek Magang Akademik.
                 </p>
             </div>
         </div>
     </footer>
 
-    {{-- Scroll Reveal Script (fade-in-up via IntersectionObserver) --}}
+    {{-- Scroll Reveal Script --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {
