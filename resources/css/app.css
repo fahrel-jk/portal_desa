@@ -28,8 +28,8 @@
     --color-ivory-text: #ededf3;
 
     /* ── Colors: Mercury Accent ── */
-    --color-cobalt: #5266eb;
-    --color-cobalt-hover: #6478f0;
+    --color-cobalt: #4F46E5;
+    --color-cobalt-hover: #6366F1;
     --color-pure-white: #ffffff;
 
     /* ── Status colors (functional — retained) ── */
@@ -51,8 +51,8 @@
     --color-desa-light: #EFF6FF;
 
     /* ── Legacy Portal aliases (for Breeze compat) ── */
-    --color-portal-primary: #5266eb;
-    --color-portal-primary-hover: #6478f0;
+    --color-portal-primary: #4F46E5;
+    --color-portal-primary-hover: #6366F1;
     --color-portal-dark: #171721;
     --color-portal-light: #272735;
     --color-portal-bg: #171721;
@@ -183,31 +183,31 @@
 
 /* ═══════════════════════════════════════════════
    Dark Form Overrides — for Breeze components
+   Scoped to .dark-theme so landing page (light) inputs are unaffected
    ═══════════════════════════════════════════════ */
 
-/* Make all Breeze text inputs dark */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="tel"],
-input[type="url"],
-input[type="search"],
-select,
-textarea {
+.dark-theme input[type="text"],
+.dark-theme input[type="email"],
+.dark-theme input[type="password"],
+.dark-theme input[type="number"],
+.dark-theme input[type="tel"],
+.dark-theme input[type="url"],
+.dark-theme input[type="search"],
+.dark-theme select,
+.dark-theme textarea {
     background-color: var(--color-obsidian-button) !important;
     border-color: var(--color-slate-border) !important;
     color: var(--color-ivory-text) !important;
 }
-input::placeholder,
-textarea::placeholder {
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
     color: var(--color-ash-text) !important;
 }
-input:focus,
-textarea:focus,
-select:focus {
+.dark-theme input:focus,
+.dark-theme textarea:focus,
+.dark-theme select:focus {
     border-color: var(--color-cobalt) !important;
-    box-shadow: 0 0 0 3px rgba(82, 102, 235, 0.25) !important;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25) !important;
 }
 
 /* ═══════════════════════════════════════════════
