@@ -1,0 +1,364 @@
+<?php
+
+namespace App\Http\Controllers\Desa;
+
+use App\Http\Controllers\Controller;
+use App\Models\VillageNews;
+use App\Models\VillageOfficial;
+use App\Models\VillageService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
+
+class DashboardController extends Controller
+{
+    /**
+     * Edit village profile.
+     */
+    public function editProfile(Request $request): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        return view('desa.profile-edit', compact('village'));
+    }
+
+    /**
+     * Update village profile.
+     */
+    public function updateProfile(Request $request): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        $validated = $request->validate([
+            'description' => 'nullable|string|max:5000',
+            'contact_phone' => 'nullable|string|max:20',
+            'contact_email' => 'nullable|email|max:255',
+            'office_hours' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:1000',
+        ]);
+
+        $village->update($validated);
+
+        return back()->with('success', 'Profil desa berhasil diperbarui.');
+    }
+
+    /**
+     * List village officials.
+     */
+    public function officialsIndex(Request $request): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        $officials = $village->officials;
+
+        return view('desa.officials.index', compact('village', 'officials'));
+    }
+
+    /**
+     * Show create official form.
+     */
+    public function officialsCreate(Request $request): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        return view('desa.officials.create', compact('village'));
+    }
+
+    /**
+     * Store a new official.
+     */
+    public function officialsStore(Request $request): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $photoPath = str_replace('public/', '', $request->file('photo')->store('public/villages/officials'));
+        }
+
+        VillageOfficial::create([
+            'village_id' => $village->id,
+            'name' => $validated['name'],
+            'position' => $validated['position'],
+            'photo_path' => $photoPath,
+            'order' => $village->officials()->max('order') + 1,
+        ]);
+
+        return redirect()->route('desa.officials.index')->with('success', 'Perangkat desa berhasil ditambahkan.');
+    }
+
+    /**
+     * Show edit official form.
+     */
+    public function officialsEdit(Request $request, VillageOfficial $official): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $official->village_id === $village->id, 403);
+
+        return view('desa.officials.edit', compact('village', 'official'));
+    }
+
+    /**
+     * Update an official.
+     */
+    public function officialsUpdate(Request $request, VillageOfficial $official): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $official->village_id === $village->id, 403);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            if ($official->photo_path) {
+                Storage::delete('public/'.$official->photo_path);
+            }
+            $validated['photo_path'] = str_replace('public/', '', $request->file('photo')->store('public/villages/officials'));
+        }
+
+        $official->update(array_filter($validated, fn ($key) => $key !== 'photo', ARRAY_FILTER_USE_KEY));
+
+        return redirect()->route('desa.officials.index')->with('success', 'Data perangkat desa berhasil diperbarui.');
+    }
+
+    /**
+     * Delete an official.
+     */
+    public function officialsDestroy(Request $request, VillageOfficial $official): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $official->village_id === $village->id, 403);
+
+        if ($official->photo_path) {
+            Storage::delete('public/'.$official->photo_path);
+        }
+        $official->delete();
+
+        return redirect()->route('desa.officials.index')->with('success', 'Perangkat desa berhasil dihapus.');
+    }
+
+    /**
+     * List village news.
+     */
+    public function newsIndex(Request $request): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        $news = $village->news;
+
+        return view('desa.news.index', compact('village', 'news'));
+    }
+
+    /**
+     * Show create news form.
+     */
+    public function newsCreate(Request $request): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        return view('desa.news.create', compact('village'));
+    }
+
+    /**
+     * Store a news article.
+     */
+    public function newsStore(Request $request): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+        ]);
+
+        $coverPath = null;
+        if ($request->hasFile('cover_image')) {
+            $coverPath = str_replace('public/', '', $request->file('cover_image')->store('public/villages/news'));
+        }
+
+        VillageNews::create([
+            'village_id' => $village->id,
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['title']),
+            'content' => $validated['content'],
+            'cover_image_path' => $coverPath,
+            'published_at' => now(),
+            'created_by' => $request->user()->id,
+        ]);
+
+        return redirect()->route('desa.news.index')->with('success', 'Berita berhasil dipublikasikan.');
+    }
+
+    /**
+     * Show edit news form.
+     */
+    public function newsEdit(Request $request, VillageNews $news): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $news->village_id === $village->id, 403);
+
+        return view('desa.news.edit', compact('village', 'news'));
+    }
+
+    /**
+     * Update a news article.
+     */
+    public function newsUpdate(Request $request, VillageNews $news): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $news->village_id === $village->id, 403);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+        ]);
+
+        if ($request->hasFile('cover_image')) {
+            if ($news->cover_image_path) {
+                Storage::delete('public/'.$news->cover_image_path);
+            }
+            $validated['cover_image_path'] = str_replace('public/', '', $request->file('cover_image')->store('public/villages/news'));
+        }
+
+        $news->update([
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['title']),
+            'content' => $validated['content'],
+            'cover_image_path' => $validated['cover_image_path'] ?? $news->cover_image_path,
+        ]);
+
+        return redirect()->route('desa.news.index')->with('success', 'Berita berhasil diperbarui.');
+    }
+
+    /**
+     * Delete a news article.
+     */
+    public function newsDestroy(Request $request, VillageNews $news): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $news->village_id === $village->id, 403);
+
+        if ($news->cover_image_path) {
+            Storage::delete('public/'.$news->cover_image_path);
+        }
+        $news->delete();
+
+        return redirect()->route('desa.news.index')->with('success', 'Berita berhasil dihapus.');
+    }
+
+    // ========================================
+    // VILLAGE SERVICES (Layanan Administrasi)
+    // ========================================
+
+    /**
+     * List village services.
+     */
+    public function servicesIndex(Request $request): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        $services = $village->services;
+
+        return view('desa.services.index', compact('village', 'services'));
+    }
+
+    /**
+     * Show create service form.
+     */
+    public function servicesCreate(Request $request): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        return view('desa.services.create', compact('village'));
+    }
+
+    /**
+     * Store a new service.
+     */
+    public function servicesStore(Request $request): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished(), 403);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:2000',
+            'requirements' => 'nullable|string|max:2000',
+        ]);
+
+        VillageService::create([
+            'village_id' => $village->id,
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? null,
+            'requirements' => $validated['requirements'] ?? null,
+        ]);
+
+        return redirect()->route('desa.services.index')->with('success', 'Layanan berhasil ditambahkan.');
+    }
+
+    /**
+     * Show edit service form.
+     */
+    public function servicesEdit(Request $request, VillageService $service): View
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $service->village_id === $village->id, 403);
+
+        return view('desa.services.edit', compact('village', 'service'));
+    }
+
+    /**
+     * Update a service.
+     */
+    public function servicesUpdate(Request $request, VillageService $service): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $service->village_id === $village->id, 403);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:2000',
+            'requirements' => 'nullable|string|max:2000',
+        ]);
+
+        $service->update($validated);
+
+        return redirect()->route('desa.services.index')->with('success', 'Layanan berhasil diperbarui.');
+    }
+
+    /**
+     * Delete a service.
+     */
+    public function servicesDestroy(Request $request, VillageService $service): RedirectResponse
+    {
+        $village = $request->user()->village;
+        abort_unless($village && $village->isPublished() && $service->village_id === $village->id, 403);
+
+        $service->delete();
+
+        return redirect()->route('desa.services.index')->with('success', 'Layanan berhasil dihapus.');
+    }
+}

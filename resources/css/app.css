@@ -1,0 +1,230 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* ═══════════════════════════════════════════════
+       Mercury Dark Theme — design2.md
+       ═══════════════════════════════════════════════ */
+
+    /* Font */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* ── Colors: Mercury Surfaces ── */
+    --color-onyx-canvas: #171721;
+    --color-graphite-card: #1e1e2a;
+    --color-obsidian-button: #272735;
+
+    /* ── Colors: Mercury Borders ── */
+    --color-slate-border: #70707d;
+    --color-mist-border: #e2e3ed;
+
+    /* ── Colors: Mercury Text ── */
+    --color-ash-text: #c3c3cc;
+    --color-ivory-text: #ededf3;
+
+    /* ── Colors: Mercury Accent ── */
+    --color-cobalt: #5266eb;
+    --color-cobalt-hover: #6478f0;
+    --color-pure-white: #ffffff;
+
+    /* ── Status colors (functional — retained) ── */
+    --color-status-pending-bg: #FEF3C7;
+    --color-status-pending-text: #92400E;
+    --color-status-approved-bg: #DCFCE7;
+    --color-status-approved-text: #166534;
+    --color-status-rejected-bg: #FEE2E2;
+    --color-status-rejected-text: #991B1B;
+    --color-status-draft-bg: #374151;
+    --color-status-draft-text: #d1d5db;
+
+    /* ── Village (Target B) — kept separate ── */
+    --color-desa-primary: #1D4ED8;
+    --color-desa-primary-hover: #1E40AF;
+    --color-desa-surface: #FFFFFF;
+    --color-desa-surface-alt: #F9FAFB;
+    --color-desa-secondary: #64748B;
+    --color-desa-light: #EFF6FF;
+
+    /* ── Legacy Portal aliases (for Breeze compat) ── */
+    --color-portal-primary: #5266eb;
+    --color-portal-primary-hover: #6478f0;
+    --color-portal-dark: #171721;
+    --color-portal-light: #272735;
+    --color-portal-bg: #171721;
+}
+
+/* ═══════════════════════════════════════════════
+   Animations — Velorah-inspired
+   ═══════════════════════════════════════════════ */
+
+@keyframes fade-rise {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes count-up {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Utility classes for animations */
+.animate-fade-rise {
+    animation: fade-rise 0.8s ease-out both;
+}
+.animate-fade-rise-d1 {
+    animation: fade-rise 0.8s ease-out 0.15s both;
+}
+.animate-fade-rise-d2 {
+    animation: fade-rise 0.8s ease-out 0.3s both;
+}
+.animate-fade-rise-d3 {
+    animation: fade-rise 0.8s ease-out 0.45s both;
+}
+.animate-fade-in {
+    animation: fade-in 0.6s ease-out both;
+}
+
+/* Scroll-triggered: hidden until in viewport */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger children */
+.scroll-reveal.is-visible .stagger-1 { transition-delay: 0.1s; }
+.scroll-reveal.is-visible .stagger-2 { transition-delay: 0.2s; }
+.scroll-reveal.is-visible .stagger-3 { transition-delay: 0.3s; }
+.scroll-reveal.is-visible .stagger-4 { transition-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════════
+   Liquid Glass — Velorah
+   ═══════════════════════════════════════════════ */
+
+.liquid-glass {
+    background: rgba(255, 255, 255, 0.03);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+.liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.2px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.35) 0%,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0) 45%,
+        rgba(255, 255, 255, 0) 55%,
+        rgba(255, 255, 255, 0.1) 75%,
+        rgba(255, 255, 255, 0.35) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   Velorah Link Animation
+   ═══════════════════════════════════════════════ */
+
+.velorah-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.velorah-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1.5px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transform-origin: bottom right;
+    transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.velorah-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+
+/* ═══════════════════════════════════════════════
+   Dark Form Overrides — for Breeze components
+   ═══════════════════════════════════════════════ */
+
+/* Make all Breeze text inputs dark */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+select,
+textarea {
+    background-color: var(--color-obsidian-button) !important;
+    border-color: var(--color-slate-border) !important;
+    color: var(--color-ivory-text) !important;
+}
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-ash-text) !important;
+}
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-cobalt) !important;
+    box-shadow: 0 0 0 3px rgba(82, 102, 235, 0.25) !important;
+}
+
+/* ═══════════════════════════════════════════════
+   Accessibility
+   ═══════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-rise,
+    .animate-fade-rise-d1,
+    .animate-fade-rise-d2,
+    .animate-fade-rise-d3,
+    .animate-fade-in {
+        animation: none !important;
+    }
+    .scroll-reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
