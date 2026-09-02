@@ -49,18 +49,18 @@
                     
                     {{-- Center: Links --}}
                     <div class="hidden md:flex items-center justify-center gap-8 w-2/4">
-                        <a href="#cara-kerja" class="velorah-link text-[13px] font-medium text-white/90 hover:text-white transition-colors">Cara Kerja</a>
-                        <a href="#template" class="velorah-link text-[13px] font-medium text-white/90 hover:text-white transition-colors">Template</a>
-                        <a href="#faq" class="velorah-link text-[13px] font-medium text-white/90 hover:text-white transition-colors">FAQ</a>
+                        <a href="#cara-kerja" class="velorah-link text-sm font-medium text-white/90 hover:text-white transition-colors">Cara Kerja</a>
+                        <a href="#template" class="velorah-link text-sm font-medium text-white/90 hover:text-white transition-colors">Template</a>
+                        <a href="#faq" class="velorah-link text-sm font-medium text-white/90 hover:text-white transition-colors">FAQ</a>
                     </div>
                     
                     {{-- Right: Actions --}}
                     <div class="flex items-center justify-end gap-4 w-1/4">
                         @auth
-                            <a href="{{ route('dashboard') }}" class="glass-button text-[13px] font-medium text-white px-5 py-2 rounded-full">Dashboard</a>
+                            <a href="{{ route('dashboard') }}" class="glass-button text-sm font-medium text-white px-5 py-2 rounded-full">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="hidden sm:block text-[13px] font-medium text-white/90 hover:text-white transition">Masuk</a>
-                            <a href="{{ route('register') }}" class="glass-button text-[13px] font-medium text-white px-6 py-2.5 rounded-full">
+                            <a href="{{ route('login') }}" class="hidden sm:block text-sm font-medium text-white/90 hover:text-white transition">Masuk</a>
+                            <a href="{{ route('register') }}" class="glass-button text-sm font-medium text-white px-6 py-2.5 rounded-full">
                                 Daftar Sekarang
                             </a>
                         @endauth
@@ -122,10 +122,10 @@
     {{-- ═══════════════════════════════════════
          CARA KERJA — 4 Steps
          ═══════════════════════════════════════ --}}
-    <section id="cara-kerja" class="py-24">
+    <section id="cara-kerja" class="py-24 bg-black/40 backdrop-blur-md border-y border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
-                <p class="text-xs uppercase tracking-[0.3em] text-cobalt mb-4">Cara Kerja</p>
+                <p class="text-sm uppercase tracking-[0.3em] text-sky-400 mb-4 font-semibold">Cara Kerja</p>
                 <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium">
                     Empat langkah.<br>Lima menit.
                 </h2>
@@ -146,7 +146,7 @@
                         <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center mb-5 group-hover:bg-white/20 transition">
                             <svg class="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $step['icon'] }}" /></svg>
                         </div>
-                        <div class="text-xs font-bold text-cobalt/60 uppercase tracking-widest mb-3">Langkah {{ $i + 1 }}</div>
+                        <div class="text-sm font-bold text-sky-400/90 uppercase tracking-widest mb-3">Langkah {{ $i + 1 }}</div>
                         <h3 class="text-lg font-bold text-ivory-text mb-2">{{ $step['title'] }}</h3>
                         <p class="text-sm text-ash-text leading-relaxed">{{ $step['desc'] }}</p>
                     </div>
@@ -158,10 +158,10 @@
     {{-- ═══════════════════════════════════════
          TEMPLATE SHOWCASE
          ═══════════════════════════════════════ --}}
-    <section id="template" class="py-24 bg-graphite-card/50">
+    <section id="template" class="py-24">
         <div class="max-w-7xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
-                <p class="text-xs uppercase tracking-[0.3em] text-cobalt mb-4">Pilihan Template</p>
+                <p class="text-sm uppercase tracking-[0.3em] text-sky-400 mb-4 font-semibold">Pilihan Template</p>
                 <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium mb-4">
                     Desain yang sudah siap pakai.
                 </h2>
@@ -174,15 +174,15 @@
                     <div class="aspect-[4/3] bg-slate-900 flex items-center justify-center overflow-hidden relative">
                         <iframe src="{{ url('/desa/ladang-panjang') }}" style="width: 400%; height: 400%; transform: scale(0.25); transform-origin: top left;" class="absolute top-0 left-0 border-0 pointer-events-none bg-slate-50"></iframe>
                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center z-10">
-                            <span class="bg-white text-cobalt text-sm font-bold px-4 py-2 rounded-full shadow-lg">Lihat Demo</span>
+                            <span class="bg-white text-sky-600 text-sm font-bold px-4 py-2 rounded-full shadow-lg">Lihat Demo</span>
                         </div>
                     </div>
                     <div class="p-6 flex items-center justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-ivory-text group-hover:text-cobalt transition">Template Klasik</h3>
+                            <h3 class="text-lg font-bold text-ivory-text group-hover:text-sky-400 transition">Template Klasik</h3>
                             <p class="text-sm text-ash-text mt-1">Tata letak sederhana dan informatif</p>
                         </div>
-                        <span class="text-xs font-bold text-cobalt/70 uppercase tracking-widest bg-cobalt/10 px-3 py-1 rounded-full">Gratis</span>
+                        <span class="text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-500/20 px-3 py-1 rounded-full">Gratis</span>
                     </div>
                 </a>
 
@@ -191,15 +191,15 @@
                     <div class="aspect-[4/3] bg-slate-900 flex items-center justify-center overflow-hidden relative">
                         <iframe src="{{ url('/desa/sumberan') }}" style="width: 400%; height: 400%; transform: scale(0.25); transform-origin: top left;" class="absolute top-0 left-0 border-0 pointer-events-none bg-white"></iframe>
                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center z-10">
-                            <span class="bg-white text-cobalt text-sm font-bold px-4 py-2 rounded-full shadow-lg">Lihat Demo</span>
+                            <span class="bg-white text-sky-600 text-sm font-bold px-4 py-2 rounded-full shadow-lg">Lihat Demo</span>
                         </div>
                     </div>
                     <div class="p-6 flex items-center justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-ivory-text group-hover:text-cobalt transition">Template Modern</h3>
+                            <h3 class="text-lg font-bold text-ivory-text group-hover:text-sky-400 transition">Template Modern</h3>
                             <p class="text-sm text-ash-text mt-1">Card grid dinamis dan hero overlay</p>
                         </div>
-                        <span class="text-xs font-bold text-cobalt/70 uppercase tracking-widest bg-cobalt/10 px-3 py-1 rounded-full">Gratis</span>
+                        <span class="text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-500/20 px-3 py-1 rounded-full">Gratis</span>
                     </div>
                 </a>
             </div>
@@ -210,10 +210,10 @@
          SHOWCASE VILLAGES
          ═══════════════════════════════════════ --}}
     @if($showcaseVillages->count() > 0)
-        <section class="py-24">
+        <section class="py-24 bg-black/40 backdrop-blur-md border-y border-white/5">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="scroll-reveal text-center mb-16">
-                    <p class="text-xs uppercase tracking-[0.3em] text-cobalt mb-4">Portofolio</p>
+                    <p class="text-sm uppercase tracking-[0.3em] text-sky-400 mb-4 font-semibold">Portofolio</p>
                     <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium mb-4">
                         Desa yang telah bergabung.
                     </h2>
@@ -237,7 +237,7 @@
                                 </div>
                             </div>
                             <div class="p-5">
-                                <h3 class="text-base font-bold text-ivory-text mb-1 group-hover:text-cobalt transition">{{ $village->name }}</h3>
+                                <h3 class="text-base font-bold text-ivory-text mb-1 group-hover:text-sky-400 transition">{{ $village->name }}</h3>
                                 <p class="text-sm text-ash-text">{{ $village->kecamatan }}, {{ $village->kabupaten }}</p>
                             </div>
                         </a>
@@ -253,7 +253,7 @@
     <section id="faq" class="py-24">
         <div class="max-w-3xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
-                <p class="text-xs uppercase tracking-[0.3em] text-cobalt mb-4">FAQ</p>
+                <p class="text-sm uppercase tracking-[0.3em] text-sky-400 mb-4 font-semibold">FAQ</p>
                 <h2 class="font-serif-velorah text-3xl sm:text-4xl text-white tracking-normal font-medium">
                     Pertanyaan umum.
                 </h2>
@@ -289,7 +289,7 @@
     {{-- ═══════════════════════════════════════
          CTA FINAL
          ═══════════════════════════════════════ --}}
-    <section class="relative py-32 overflow-hidden">
+    <section class="relative py-32 overflow-hidden bg-black/40 backdrop-blur-md border-y border-white/5">
         {{-- Background flows through completely from fixed body --}}
 
         <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
