@@ -9,6 +9,7 @@ use App\Models\VillageNews;
 use App\Models\VillageOfficial;
 use App\Models\VillageService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class VillageSeeder extends Seeder
 {
@@ -17,6 +18,13 @@ class VillageSeeder extends Seeder
      */
     public function run(): void
     {
+        // Ensure demo image directories exist
+        Storage::disk('public')->makeDirectory('villages/logos');
+        Storage::disk('public')->makeDirectory('villages/heroes');
+
+        // Copy demo placeholder images if they exist
+        $this->ensureDemoImages();
+
         // Create admin provinsi
         $admin = User::create([
             'name' => 'Admin Diskominfo',
@@ -36,6 +44,8 @@ class VillageSeeder extends Seeder
             'kecamatan' => 'Kecamatan Sukolilo',
             'kabupaten' => 'Kabupaten Pasuruan',
             'description' => 'Desa Ladang Panjang terletak di kaki Gunung Arjuno dengan potensi pertanian dan wisata alam yang menjanjikan. Didirikan sejak era kolonial, desa ini memiliki sejarah panjang dalam perjuangan kemerdekaan.',
+            'logo_path' => 'villages/logos/demo-logo.png',
+            'hero_image_path' => 'villages/heroes/demo-hero.png',
             'contact_phone' => '0343-123456',
             'contact_email' => 'desa.ladangpanjang@example.com',
             'office_hours' => 'Senin - Jumat, 08:00 - 15:00 WIB',
@@ -66,13 +76,17 @@ class VillageSeeder extends Seeder
             'kecamatan' => 'Kecamatan Gempol',
             'kabupaten' => 'Kabupaten Pasuruan',
             'description' => 'Desa Sumber Makmur dikenal sebagai sentra industri kerajinan tangan dan batik khas Pasuruan. Masyarakatnya aktif dalam kegiatan gotong royong dan pengembangan UMKM.',
+            'logo_path' => 'villages/logos/demo-logo.png',
+            'hero_image_path' => 'villages/heroes/demo-hero-2.png',
             'contact_phone' => '0343-654321',
             'contact_email' => 'desa.sumbermakmur@example.com',
             'office_hours' => 'Senin - Jumat, 08:00 - 14:00 WIB',
             'address' => 'Jl. Mawar No. 5, Kec. Gempol, Kab. Pasuruan',
             'template_id' => $modern->id,
-            'status' => 'pending_review',
-            'submitted_at' => now()->subDays(2),
+            'status' => 'published',
+            'submitted_at' => now()->subDays(5),
+            'approved_at' => now()->subDays(3),
+            'approved_by' => $admin->id,
         ]);
 
         $user2 = User::create([
@@ -135,6 +149,32 @@ class VillageSeeder extends Seeder
         ]);
 
         $this->seedOfficials($desa4);
+
+        // --- Desa 5: Pending Review (Modern template, for review demo) ---
+        $desa5 = Village::create([
+            'name' => 'Tanjung Sari',
+            'slug' => 'tanjung-sari',
+            'kecamatan' => 'Kecamatan Rembang',
+            'kabupaten' => 'Kabupaten Pasuruan',
+            'description' => 'Desa Tanjung Sari merupakan desa pesisir yang terkenal dengan hasil laut dan tradisi nelayan turun-temurun.',
+            'contact_phone' => '0343-111222',
+            'contact_email' => 'desa.tanjungsari@example.com',
+            'office_hours' => 'Senin - Jumat, 07:30 - 14:00 WIB',
+            'address' => 'Jl. Pantai Sari No. 3, Kec. Rembang, Kab. Pasuruan',
+            'template_id' => $modern->id,
+            'status' => 'pending_review',
+            'submitted_at' => now()->subDays(1),
+        ]);
+
+        User::create([
+            'name' => 'Hasan Basri',
+            'email' => 'hasan@tanjungsari.test',
+            'password' => 'password',
+            'role' => 'perwakilan_desa',
+            'village_id' => $desa5->id,
+        ]);
+
+        $this->seedOfficials($desa5);
     }
 
     /**
@@ -206,6 +246,28 @@ class VillageSeeder extends Seeder
             VillageService::create(array_merge($service, [
                 'village_id' => $village->id,
             ]));
+        }
+    }
+
+    /**
+     * Ensure demo placeholder images exist in storage.
+     */
+    private function ensureDemoImages(): void
+    {
+        // These files should already exist in storage/app/public/villages/
+        // from initial project setup. This method just ensures the directories exist.
+        $requiredFiles = [
+            'villages/logos/demo-logo.png',
+            'villages/heroes/demo-hero.png',
+            'villages/heroes/demo-hero-2.png',
+        ];
+
+        foreach ($requiredFiles as $file) {
+            if (! Storage::disk('public')->exists($file)) {
+                // Generate a 1x1 transparent pixel as minimal fallback
+                $dir = dirname($file);
+                Storage::disk('public')->makeDirectory($dir);
+            }
         }
     }
 }
