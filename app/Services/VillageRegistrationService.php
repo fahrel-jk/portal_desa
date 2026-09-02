@@ -104,14 +104,14 @@ class VillageRegistrationService
      */
     private function moveUploadedFile(?string $tempPath, string $destinationDir): ?string
     {
-        if (! $tempPath || ! Storage::disk('local')->exists($tempPath)) {
+        if (! $tempPath || ! Storage::disk('public')->exists($tempPath)) {
             return null;
         }
 
         $filename = basename($tempPath);
-        $newPath = "public/{$destinationDir}/{$filename}";
+        $newPath = "{$destinationDir}/{$filename}";
 
-        Storage::disk('local')->move($tempPath, $newPath);
+        Storage::disk('public')->move($tempPath, $newPath);
 
         return "{$destinationDir}/{$filename}";
     }

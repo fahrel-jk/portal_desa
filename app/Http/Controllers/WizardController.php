@@ -103,17 +103,17 @@ class WizardController extends Controller
         if ($request->hasFile('logo')) {
             // Delete old temp file if exists
             if (! empty($data['logo_path'])) {
-                Storage::disk('local')->delete($data['logo_path']);
+                Storage::disk('public')->delete($data['logo_path']);
             }
-            $data['logo_path'] = $request->file('logo')->store('temp/logos', 'local');
+            $data['logo_path'] = $request->file('logo')->store('temp/logos', 'public');
             $data['logo_name'] = $request->file('logo')->getClientOriginalName();
         }
 
         if ($request->hasFile('hero_image')) {
             if (! empty($data['hero_image_path'])) {
-                Storage::disk('local')->delete($data['hero_image_path']);
+                Storage::disk('public')->delete($data['hero_image_path']);
             }
-            $data['hero_image_path'] = $request->file('hero_image')->store('temp/heroes', 'local');
+            $data['hero_image_path'] = $request->file('hero_image')->store('temp/heroes', 'public');
             $data['hero_image_name'] = $request->file('hero_image')->getClientOriginalName();
         }
 

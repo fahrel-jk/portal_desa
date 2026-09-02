@@ -86,7 +86,7 @@ class DashboardController extends Controller
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = str_replace('public/', '', $request->file('photo')->store('public/villages/officials'));
+            $photoPath = $request->file('photo')->store('villages/officials', 'public');
         }
 
         VillageOfficial::create([
@@ -127,9 +127,9 @@ class DashboardController extends Controller
 
         if ($request->hasFile('photo')) {
             if ($official->photo_path) {
-                Storage::delete('public/'.$official->photo_path);
+                Storage::disk('public')->delete($official->photo_path);
             }
-            $validated['photo_path'] = str_replace('public/', '', $request->file('photo')->store('public/villages/officials'));
+            $validated['photo_path'] = $request->file('photo')->store('villages/officials', 'public');
         }
 
         $official->update(array_filter($validated, fn ($key) => $key !== 'photo', ARRAY_FILTER_USE_KEY));
@@ -146,7 +146,7 @@ class DashboardController extends Controller
         abort_unless($village && $village->isPublished() && $official->village_id === $village->id, 403);
 
         if ($official->photo_path) {
-            Storage::delete('public/'.$official->photo_path);
+            Storage::disk('public')->delete($official->photo_path);
         }
         $official->delete();
 
@@ -193,7 +193,7 @@ class DashboardController extends Controller
 
         $coverPath = null;
         if ($request->hasFile('cover_image')) {
-            $coverPath = str_replace('public/', '', $request->file('cover_image')->store('public/villages/news'));
+            $coverPath = $request->file('cover_image')->store('villages/news', 'public');
         }
 
         VillageNews::create([
@@ -236,9 +236,9 @@ class DashboardController extends Controller
 
         if ($request->hasFile('cover_image')) {
             if ($news->cover_image_path) {
-                Storage::delete('public/'.$news->cover_image_path);
+                Storage::disk('public')->delete($news->cover_image_path);
             }
-            $validated['cover_image_path'] = str_replace('public/', '', $request->file('cover_image')->store('public/villages/news'));
+            $validated['cover_image_path'] = $request->file('cover_image')->store('villages/news', 'public');
         }
 
         $news->update([
@@ -260,7 +260,7 @@ class DashboardController extends Controller
         abort_unless($village && $village->isPublished() && $news->village_id === $village->id, 403);
 
         if ($news->cover_image_path) {
-            Storage::delete('public/'.$news->cover_image_path);
+            Storage::disk('public')->delete($news->cover_image_path);
         }
         $news->delete();
 
