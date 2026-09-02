@@ -257,16 +257,19 @@ class VillageSeeder extends Seeder
         // These files should already exist in storage/app/public/villages/
         // from initial project setup. This method just ensures the directories exist.
         $requiredFiles = [
-            'villages/logos/demo-logo.png',
-            'villages/heroes/demo-hero.png',
-            'villages/heroes/demo-hero-2.png',
+            'villages/logos/demo-logo.png' => 'demo-logo.png',
+            'villages/heroes/demo-hero.png' => 'demo-hero.png',
+            'villages/heroes/demo-hero-2.png' => 'demo-hero-2.png',
         ];
 
-        foreach ($requiredFiles as $file) {
-            if (! Storage::disk('public')->exists($file)) {
-                // Generate a 1x1 transparent pixel as minimal fallback
-                $dir = dirname($file);
-                Storage::disk('public')->makeDirectory($dir);
+        foreach ($requiredFiles as $destination => $sourceFile) {
+            if (! Storage::disk('public')->exists($destination)) {
+                $sourcePath = database_path('seeders/demo-images/' . $sourceFile);
+                if (file_exists($sourcePath)) {
+                    $dir = dirname($destination);
+                    Storage::disk('public')->makeDirectory($dir);
+                    Storage::disk('public')->put($destination, file_get_contents($sourcePath));
+                }
             }
         }
     }
