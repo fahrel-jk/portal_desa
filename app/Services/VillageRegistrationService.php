@@ -61,6 +61,7 @@ class VillageRegistrationService
                 'office_hours' => $sessionData['office_hours'] ?? null,
                 'address' => $sessionData['address'] ?? null,
                 'template_id' => $sessionData['template_id'],
+                'theme_color' => $sessionData['theme_color'] ?? '#0c8c5e',
                 'status' => 'pending_review',
                 'submitted_at' => now(),
             ]);

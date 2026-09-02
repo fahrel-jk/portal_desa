@@ -170,46 +170,38 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {{-- Klasik --}}
-                <div class="scroll-reveal group bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all">
-                    <div class="aspect-[4/3] bg-obsidian-button flex items-center justify-center overflow-hidden relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-indigo-900/30"></div>
-                        <div class="relative text-center p-8">
-                            <div class="w-12 h-12 bg-white/10 rounded-xl mx-auto mb-4 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-ivory-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
-                            </div>
-                            <p class="text-ivory-text font-semibold text-lg">Preview Klasik</p>
-                            <p class="text-ash-text text-sm mt-1">Layout tradisional, terpercaya</p>
+                <a href="{{ url('/desa/ladang-panjang') }}" target="_blank" class="scroll-reveal group bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all block">
+                    <div class="aspect-[4/3] bg-slate-900 flex items-center justify-center overflow-hidden relative">
+                        <iframe src="{{ url('/desa/ladang-panjang') }}" style="width: 400%; height: 400%; transform: scale(0.25); transform-origin: top left;" class="absolute top-0 left-0 border-0 pointer-events-none bg-slate-50"></iframe>
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center z-10">
+                            <span class="bg-white text-cobalt text-sm font-bold px-4 py-2 rounded-full shadow-lg">Lihat Demo</span>
                         </div>
                     </div>
                     <div class="p-6 flex items-center justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-ivory-text">Template Klasik</h3>
+                            <h3 class="text-lg font-bold text-ivory-text group-hover:text-cobalt transition">Template Klasik</h3>
                             <p class="text-sm text-ash-text mt-1">Tata letak sederhana dan informatif</p>
                         </div>
                         <span class="text-xs font-bold text-cobalt/70 uppercase tracking-widest bg-cobalt/10 px-3 py-1 rounded-full">Gratis</span>
                     </div>
-                </div>
+                </a>
 
                 {{-- Modern --}}
-                <div class="scroll-reveal group bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all" style="transition-delay: 0.1s">
-                    <div class="aspect-[4/3] bg-obsidian-button flex items-center justify-center overflow-hidden relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-violet-900/30 to-fuchsia-900/30"></div>
-                        <div class="relative text-center p-8">
-                            <div class="w-12 h-12 bg-white/10 rounded-xl mx-auto mb-4 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-ivory-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                            </div>
-                            <p class="text-ivory-text font-semibold text-lg">Preview Modern</p>
-                            <p class="text-ash-text text-sm mt-1">Card-based, kontemporer</p>
+                <a href="{{ url('/desa/sumberan') }}" target="_blank" class="scroll-reveal group bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all block" style="transition-delay: 0.1s">
+                    <div class="aspect-[4/3] bg-slate-900 flex items-center justify-center overflow-hidden relative">
+                        <iframe src="{{ url('/desa/sumberan') }}" style="width: 400%; height: 400%; transform: scale(0.25); transform-origin: top left;" class="absolute top-0 left-0 border-0 pointer-events-none bg-white"></iframe>
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center z-10">
+                            <span class="bg-white text-cobalt text-sm font-bold px-4 py-2 rounded-full shadow-lg">Lihat Demo</span>
                         </div>
                     </div>
                     <div class="p-6 flex items-center justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-ivory-text">Template Modern</h3>
+                            <h3 class="text-lg font-bold text-ivory-text group-hover:text-cobalt transition">Template Modern</h3>
                             <p class="text-sm text-ash-text mt-1">Card grid dinamis dan hero overlay</p>
                         </div>
                         <span class="text-xs font-bold text-cobalt/70 uppercase tracking-widest bg-cobalt/10 px-3 py-1 rounded-full">Gratis</span>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>

@@ -19,6 +19,9 @@
                         Dashboard
                     </a>
                     @if(auth()->user()->isAdmin())
+                        <a href="{{ route('admin.monitoring') }}" class="velorah-link inline-flex items-center px-1 pt-1 text-sm font-medium text-ash-text hover:text-ivory-text transition-colors {{ request()->routeIs('admin.monitoring') ? 'text-ivory-text border-b-2 border-transparent' : '' }}">
+                            Monitoring
+                        </a>
                         <a href="{{ route('admin.feedback.index') }}" class="velorah-link inline-flex items-center px-1 pt-1 text-sm font-medium text-ash-text hover:text-ivory-text transition-colors {{ request()->routeIs('admin.feedback.*') ? 'text-ivory-text border-b-2 border-transparent' : '' }}">
                             Masukan
                         </a>
@@ -77,6 +80,9 @@
                 Dashboard
             </a>
             @if(auth()->user()->isAdmin())
+                <a href="{{ route('admin.monitoring') }}" class="block px-3 py-2 rounded-lg text-sm font-medium text-ash-text hover:text-ivory-text hover:bg-obsidian-button transition {{ request()->routeIs('admin.monitoring') ? 'text-ivory-text bg-obsidian-button' : '' }}">
+                    Monitoring
+                </a>
                 <a href="{{ route('admin.feedback.index') }}" class="block px-3 py-2 rounded-lg text-sm font-medium text-ash-text hover:text-ivory-text hover:bg-obsidian-button transition {{ request()->routeIs('admin.feedback.*') ? 'text-ivory-text bg-obsidian-button' : '' }}">
                     Masukan
                 </a>

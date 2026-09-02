@@ -79,6 +79,12 @@ Route::middleware(['auth', 'perwakilan_desa'])->prefix('desa/kelola')->name('des
     Route::get('/services/{service}/edit', [DesaDashboardController::class, 'servicesEdit'])->name('services.edit');
     Route::patch('/services/{service}', [DesaDashboardController::class, 'servicesUpdate'])->name('services.update');
     Route::delete('/services/{service}', [DesaDashboardController::class, 'servicesDestroy'])->name('services.destroy');
+
+    // Galleries
+    Route::get('/galleries', [\App\Http\Controllers\Desa\GalleryController::class, 'index'])->name('galleries.index');
+    Route::get('/galleries/create', [\App\Http\Controllers\Desa\GalleryController::class, 'create'])->name('galleries.create');
+    Route::post('/galleries', [\App\Http\Controllers\Desa\GalleryController::class, 'store'])->name('galleries.store');
+    Route::delete('/galleries/{gallery}', [\App\Http\Controllers\Desa\GalleryController::class, 'destroy'])->name('galleries.destroy');
 });
 
 // Admin routes (admin_provinsi only)
@@ -88,6 +94,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/villages/{village}/preview', [AdminDashboardController::class, 'preview'])->name('preview');
     Route::patch('/villages/{village}/approve', [AdminDashboardController::class, 'approve'])->name('approve');
     Route::patch('/villages/{village}/reject', [AdminDashboardController::class, 'reject'])->name('reject');
+    Route::patch('/villages/{village}/toggle-featured', [AdminDashboardController::class, 'toggleFeatured'])->name('toggle-featured');
+    Route::delete('/villages/{village}', [AdminDashboardController::class, 'destroy'])->name('destroy');
+
+    // Monitoring
+    Route::get('/monitoring', [\App\Http\Controllers\Admin\MonitoringController::class, 'index'])->name('monitoring');
 
     // Feedback
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');

@@ -32,10 +32,12 @@ class Village extends Model
         'address',
         'template_id',
         'status',
+        'is_featured',
         'rejection_reason',
         'submitted_at',
         'approved_at',
         'approved_by',
+        'theme_color',
     ];
 
     /**
@@ -48,6 +50,7 @@ class Village extends Model
         return [
             'submitted_at' => 'datetime',
             'approved_at' => 'datetime',
+            'is_featured' => 'boolean',
         ];
     }
 
@@ -89,6 +92,11 @@ class Village extends Model
     public function news(): HasMany
     {
         return $this->hasMany(VillageNews::class)->latest('published_at');
+    }
+
+    public function galleries(): HasMany
+    {
+        return $this->hasMany(VillageGallery::class)->latest();
     }
 
     /**

@@ -39,7 +39,37 @@ class DashboardController extends Controller
             'contact_email' => 'nullable|email|max:255',
             'office_hours' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:1000',
+            'theme_color' => 'nullable|string|max:20',
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'hero_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'remove_logo' => 'nullable|boolean',
+            'remove_hero' => 'nullable|boolean',
         ]);
+
+        if ($request->hasFile('logo')) {
+            if ($village->logo_path) {
+                Storage::disk('public')->delete($village->logo_path);
+            }
+            $validated['logo_path'] = $request->file('logo')->store('villages/logos', 'public');
+        } elseif ($request->boolean('remove_logo') && $village->logo_path) {
+            Storage::disk('public')->delete($village->logo_path);
+            $validated['logo_path'] = null;
+        }
+
+        if ($request->hasFile('hero_image')) {
+            if ($village->hero_image_path) {
+                Storage::disk('public')->delete($village->hero_image_path);
+            }
+            $validated['hero_image_path'] = $request->file('hero_image')->store('villages/heroes', 'public');
+        } elseif ($request->boolean('remove_hero') && $village->hero_image_path) {
+            Storage::disk('public')->delete($village->hero_image_path);
+            $validated['hero_image_path'] = null;
+        }
+
+        unset($validated['logo']);
+        unset($validated['hero_image']);
+        unset($validated['remove_logo']);
+        unset($validated['remove_hero']);
 
         $village->update($validated);
 

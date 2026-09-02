@@ -17,11 +17,12 @@ class LandingPageController extends Controller
             'total_districts' => Village::where('status', 'published')->distinct('kecamatan')->count('kecamatan'),
         ];
 
-        // Get 3 recently published villages for showcase
+        // Get featured villages for showcase
         $showcaseVillages = Village::with('template')
             ->where('status', 'published')
+            ->where('is_featured', true)
             ->latest('approved_at')
-            ->take(3)
+            ->take(6)
             ->get();
 
         return view('welcome', compact('stats', 'showcaseVillages'));

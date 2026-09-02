@@ -107,17 +107,34 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <x-portal.status-badge :status="$village->status" />
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                    <td class="px-6 py-4 whitespace-nowrap text-right flex items-center justify-end gap-3">
                                         <a href="{{ route('admin.review', $village) }}"
                                             class="text-sm font-medium text-cobalt hover:text-cobalt-hover transition">
                                             Detail
                                         </a>
+                                        
                                         @if($village->status === 'published')
                                             <a href="{{ url('/desa/' . $village->slug) }}"
-                                                class="ml-3 text-sm font-medium text-green-400 hover:text-green-300 transition" target="_blank">
+                                                class="text-sm font-medium text-green-400 hover:text-green-300 transition" target="_blank">
                                                 Lihat
                                             </a>
+                                            
+                                            <form action="{{ route('admin.toggle-featured', $village) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="text-sm font-medium transition {{ $village->is_featured ? 'text-amber-400 hover:text-amber-300' : 'text-ash-text hover:text-ivory-text' }}" title="Tampilkan di Beranda">
+                                                    ★
+                                                </button>
+                                            </form>
                                         @endif
+
+                                        <form action="{{ route('admin.destroy', $village) }}" method="POST" class="inline" onsubmit="return confirm('PERINGATAN: Anda akan menghapus desa ini beserta seluruh datanya secara permanen. Apakah Anda yakin?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-sm font-medium text-red-500 hover:text-red-400 transition" title="Hapus Desa">
+                                                <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

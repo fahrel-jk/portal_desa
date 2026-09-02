@@ -67,6 +67,7 @@ class WizardController extends Controller
     {
         $validated = $request->validate([
             'template_id' => 'required|exists:templates,id',
+            'theme_color' => 'nullable|string|max:20',
         ]);
 
         session(['wizard.step2' => $validated]);

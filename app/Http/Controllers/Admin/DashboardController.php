@@ -8,6 +8,7 @@ use App\Notifications\VillageApprovedNotification;
 use App\Notifications\VillageRejectedNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -106,5 +107,48 @@ class DashboardController extends Controller
 
         return redirect()->route('admin.dashboard')
             ->with('success', "Desa \"{$village->name}\" telah ditolak.");
+    }
+
+    /**
+     * Toggle featured status for landing page.
+     */
+    public function toggleFeatured(Village $village): RedirectResponse
+    {
+        $village->update([
+            'is_featured' => !$village->is_featured,
+        ]);
+
+        $status = $village->is_featured ? 'ditampilkan di beranda' : 'disembunyikan dari beranda';
+        
+        return back()->with('success', "Desa \"{$village->name}\" sekarang $status.");
+    }
+
+    /**
+     * Delete a village completely.
+     */
+    public function destroy(Village $village): RedirectResponse
+    {
+        // Nullify the user's village_id so they can register again
+        if ($village->user) {
+            $village->user->update(['village_id' => null]);
+        }
+
+        // Delete associated files in storage
+        if ($village->logo_path) Storage::disk('public')->delete($village->logo_path);
+        if ($village->hero_image_path) Storage::disk('public')->delete($village->hero_image_path);
+
+        foreach ($village->officials as $official) {
+            if ($official->photo_path) Storage::disk('public')->delete($official->photo_path);
+        }
+
+        foreach ($village->news as $news) {
+            if ($news->cover_image_path) Storage::disk('public')->delete($news->cover_image_path);
+        }
+
+        // The related models (officials, news, services, galleries) will cascade delete via foreign keys,
+        // but we explicitly delete the village now.
+        $village->delete();
+
+        return back()->with('success', "Desa \"{$village->name}\" beserta semua datanya berhasil dihapus secara permanen.");
     }
 }

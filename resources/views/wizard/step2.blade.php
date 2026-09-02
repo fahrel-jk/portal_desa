@@ -66,7 +66,42 @@
                         @endforeach
                     </div>
 
-                    <x-input-error :messages="$errors->get('template_id')" class="mb-4" />
+                    <x-input-error :messages="$errors->get('template_id')" class="mb-8" />
+
+                    {{-- Theme Color Selection --}}
+                    <h3 class="text-lg font-semibold text-ivory-text mb-1 border-t border-slate-border/15 pt-6 mt-2">Pilih Warna Tema</h3>
+                    <p class="text-sm text-ash-text mb-6">Pilih warna utama yang merepresentasikan desa Anda.</p>
+
+                    @php
+                        $colors = [
+                            ['hex' => '#0c8c5e', 'name' => 'Hijau Mint'],
+                            ['hex' => '#1e40af', 'name' => 'Biru Tua'],
+                            ['hex' => '#991b1b', 'name' => 'Merah Marun'],
+                            ['hex' => '#5b21b6', 'name' => 'Ungu Gelap'],
+                            ['hex' => '#047857', 'name' => 'Zamrud'],
+                            ['hex' => '#0f172a', 'name' => 'Hitam Elegan']
+                        ];
+                        $selectedColor = old('theme_color', $data['theme_color'] ?? '#0c8c5e');
+                    @endphp
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+                        @foreach($colors as $color)
+                            <label for="color-{{ Str::slug($color['name']) }}"
+                                class="relative flex items-center gap-3 p-3 cursor-pointer rounded-xl border-2 transition-all duration-200
+                                {{ $selectedColor == $color['hex'] ? 'border-portal-primary bg-cobalt/10' : 'border-slate-border/15 bg-graphite-card hover:border-slate-border' }}"
+                                onclick="selectColor(this)">
+                                
+                                <input type="radio" id="color-{{ Str::slug($color['name']) }}" name="theme_color"
+                                    value="{{ $color['hex'] }}" class="sr-only"
+                                    {{ $selectedColor == $color['hex'] ? 'checked' : '' }}>
+                                
+                                <div class="w-6 h-6 rounded-full shadow-sm flex-shrink-0" style="background-color: {{ $color['hex'] }}"></div>
+                                <span class="text-sm font-medium text-ivory-text">{{ $color['name'] }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    
+                    <x-input-error :messages="$errors->get('theme_color')" class="mb-4" />
 
                     <div class="flex justify-between">
                         <a href="{{ route('wizard.step1') }}"
@@ -113,6 +148,19 @@
                 indicatorDiv.classList.remove('border-slate-border');
                 indicatorDiv.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>';
             }
+        }
+
+        function selectColor(label) {
+            // Remove selection from all
+            document.querySelectorAll('input[name="theme_color"]').forEach(radio => {
+                const parent = radio.closest('label');
+                parent.classList.remove('border-portal-primary', 'bg-cobalt/10');
+                parent.classList.add('border-slate-border/15', 'bg-graphite-card');
+            });
+
+            // Add selection to clicked
+            label.classList.add('border-portal-primary', 'bg-cobalt/10');
+            label.classList.remove('border-slate-border/15', 'bg-graphite-card');
         }
     </script>
 </x-app-layout>
