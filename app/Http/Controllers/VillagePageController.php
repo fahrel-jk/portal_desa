@@ -19,7 +19,7 @@ class VillagePageController extends Controller
             return view('village.unavailable', ['slug' => $slug]);
         }
 
-        $village->load('template', 'officials', 'news', 'services');
+        $village->load('template', 'officials', 'news', 'services', 'galleries', 'titikLokasis');
 
         $templateSlug = $village->template->slug;
         $viewName = "village.templates.{$templateSlug}";

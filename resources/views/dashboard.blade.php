@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-10">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {{-- Flash Messages --}}
             @if(session('success'))
                 <div class="mb-6 bg-status-approved-bg/20 border border-green-500/20 rounded-xl p-4 flex items-start gap-3">
@@ -20,9 +20,9 @@
             @if(isset($village))
                 {{-- Village exists — show status --}}
                 <div class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 mb-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-ivory-text">{{ $village->name }}</h3>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <h3 class="text-lg font-bold text-ivory-text truncate">{{ $village->name }}</h3>
                             <p class="text-sm text-ash-text">{{ $village->kecamatan }}, {{ $village->kabupaten }}</p>
                         </div>
                         <x-portal.status-badge :status="$village->status" />
@@ -66,7 +66,7 @@
 
                 @if($village->status === 'published')
                     {{-- Quick actions for published village --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <a href="{{ route('desa.profile.edit') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
@@ -129,6 +129,59 @@
                                 <div>
                                     <h4 class="font-semibold text-ivory-text">Galeri</h4>
                                     <p class="text-xs text-ash-text">Kelola foto-foto desa</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.titik-lokasi.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Titik Lokasi</h4>
+                                    <p class="text-xs text-ash-text">Kelola peta fasilitas desa</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.operators.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Operator</h4>
+                                    <p class="text-xs text-ash-text">Kelola admin web desa</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.pengajuan-masuk.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Pengajuan</h4>
+                                    <p class="text-xs text-ash-text">Proses layanan warga</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.anggaran.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Anggaran</h4>
+                                    <p class="text-xs text-ash-text">Kelola APBDes</p>
                                 </div>
                             </div>
                         </a>

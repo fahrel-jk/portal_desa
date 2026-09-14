@@ -30,7 +30,10 @@ class Village extends Model
         'contact_email',
         'office_hours',
         'address',
+        'latitude',
+        'longitude',
         'template_id',
+        'geojson_batas_wilayah',
         'status',
         'is_featured',
         'rejection_reason',
@@ -51,6 +54,7 @@ class Village extends Model
             'submitted_at' => 'datetime',
             'approved_at' => 'datetime',
             'is_featured' => 'boolean',
+            'geojson_batas_wilayah' => 'array',
         ];
     }
 
@@ -105,6 +109,22 @@ class Village extends Model
     public function services(): HasMany
     {
         return $this->hasMany(VillageService::class);
+    }
+
+    /**
+     * Get the anggaran (APBDes) records of this village.
+     */
+    public function anggarans(): HasMany
+    {
+        return $this->hasMany(Anggaran::class);
+    }
+
+    /**
+     * Get the location points (titik lokasi) of this village.
+     */
+    public function titikLokasis(): HasMany
+    {
+        return $this->hasMany(TitikLokasi::class);
     }
 
     /**

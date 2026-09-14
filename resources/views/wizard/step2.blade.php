@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-graphite-card overflow-hidden border border-slate-border/15 rounded-2xl p-8">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-graphite-card overflow-hidden border border-slate-border/15 rounded-2xl p-5 sm:p-8">
                 <x-portal.step-indicator :current="2" :total="4" />
 
                 <h3 class="text-lg font-semibold text-ivory-text mb-1">Pilih Template</h3>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <h2 class="font-bold text-xl text-ivory-text leading-tight">
                 Kelola Berita
             </h2>
@@ -9,7 +9,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             
             @if(session('success'))
                 <div class="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">

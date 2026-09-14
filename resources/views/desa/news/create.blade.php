@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <h2 class="font-bold text-xl text-ivory-text leading-tight">
                 Tambah Berita
             </h2>
@@ -9,7 +9,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-graphite-card overflow-hidden border border-slate-border/15 rounded-2xl p-8">
                 
                 <form method="POST" action="{{ route('desa.news.store') }}" enctype="multipart/form-data">

@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\FeedbackController;
+use App\Http\Controllers\ApbdesController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Desa\AnggaranController;
 use App\Http\Controllers\Desa\DashboardController as DesaDashboardController;
+use App\Http\Controllers\Desa\TitikLokasiController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VillagePageController;
@@ -18,6 +21,11 @@ Route::get('/dashboard', function () {
 
     if ($user->isAdmin()) {
         return redirect()->route('admin.dashboard');
+    }
+
+    // Warga layanan
+    if ($user->isWargaLayanan()) {
+        return redirect()->route('layanan.dashboard');
     }
 
     // Perwakilan desa — check if they have a village
@@ -85,6 +93,33 @@ Route::middleware(['auth', 'perwakilan_desa'])->prefix('desa/kelola')->name('des
     Route::get('/galleries/create', [\App\Http\Controllers\Desa\GalleryController::class, 'create'])->name('galleries.create');
     Route::post('/galleries', [\App\Http\Controllers\Desa\GalleryController::class, 'store'])->name('galleries.store');
     Route::delete('/galleries/{gallery}', [\App\Http\Controllers\Desa\GalleryController::class, 'destroy'])->name('galleries.destroy');
+
+    // Titik Lokasi (Peta Interaktif)
+    Route::get('/titik-lokasi', [TitikLokasiController::class, 'index'])->name('titik-lokasi.index');
+    Route::get('/titik-lokasi/create', [TitikLokasiController::class, 'create'])->name('titik-lokasi.create');
+    Route::post('/titik-lokasi', [TitikLokasiController::class, 'store'])->name('titik-lokasi.store');
+    Route::get('/titik-lokasi/{titikLokasi}/edit', [TitikLokasiController::class, 'edit'])->name('titik-lokasi.edit');
+    Route::patch('/titik-lokasi/{titikLokasi}', [TitikLokasiController::class, 'update'])->name('titik-lokasi.update');
+    Route::delete('/titik-lokasi/{titikLokasi}', [TitikLokasiController::class, 'destroy'])->name('titik-lokasi.destroy');
+    
+    // Operators
+    Route::get('/operators', [\App\Http\Controllers\Desa\OperatorController::class, 'index'])->name('operators.index');
+    Route::get('/operators/create', [\App\Http\Controllers\Desa\OperatorController::class, 'create'])->name('operators.create');
+    Route::post('/operators', [\App\Http\Controllers\Desa\OperatorController::class, 'store'])->name('operators.store');
+    Route::delete('/operators/{operator}', [\App\Http\Controllers\Desa\OperatorController::class, 'destroy'])->name('operators.destroy');
+
+    // Pengajuan Masuk
+    Route::get('/pengajuan-masuk', [\App\Http\Controllers\Desa\PengajuanMasukController::class, 'index'])->name('pengajuan-masuk.index');
+    Route::get('/pengajuan-masuk/{id}', [\App\Http\Controllers\Desa\PengajuanMasukController::class, 'show'])->name('pengajuan-masuk.show');
+    Route::patch('/pengajuan-masuk/{id}', [\App\Http\Controllers\Desa\PengajuanMasukController::class, 'update'])->name('pengajuan-masuk.update');
+
+    // Anggaran (APBDes)
+    Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran.index');
+    Route::get('/anggaran/create', [AnggaranController::class, 'create'])->name('anggaran.create');
+    Route::post('/anggaran', [AnggaranController::class, 'store'])->name('anggaran.store');
+    Route::get('/anggaran/{anggaran}/edit', [AnggaranController::class, 'edit'])->name('anggaran.edit');
+    Route::patch('/anggaran/{anggaran}', [AnggaranController::class, 'update'])->name('anggaran.update');
+    Route::delete('/anggaran/{anggaran}', [AnggaranController::class, 'destroy'])->name('anggaran.destroy');
 });
 
 // Admin routes (admin_provinsi only)
@@ -103,9 +138,29 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Feedback
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
     Route::patch('/feedback/{feedback}/read', [FeedbackController::class, 'markAsRead'])->name('feedback.read');
+    
+    // Access Requests Review
+    Route::get('/access-requests', [\App\Http\Controllers\Admin\AccessRequestReviewController::class, 'index'])->name('access-requests.index');
+    Route::get('/access-requests/{accessRequest}', [\App\Http\Controllers\Admin\AccessRequestReviewController::class, 'show'])->name('access-requests.show');
+    Route::patch('/access-requests/{accessRequest}/approve', [\App\Http\Controllers\Admin\AccessRequestReviewController::class, 'approve'])->name('access-requests.approve');
+    Route::patch('/access-requests/{accessRequest}/reject', [\App\Http\Controllers\Admin\AccessRequestReviewController::class, 'reject'])->name('access-requests.reject');
+});
+
+// Warga layanan routes
+Route::prefix('layanan')->middleware(['auth', 'warga_layanan'])->name('layanan.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Layanan\PengajuanController::class, 'index'])->name('dashboard'); // fallback dashboard
+    Route::get('/riwayat', [\App\Http\Controllers\Layanan\PengajuanController::class, 'index'])->name('pengajuan.index');
+    Route::get('/ajukan/{layanan}', [\App\Http\Controllers\Layanan\PengajuanController::class, 'create'])->name('pengajuan.create');
+    Route::post('/ajukan', [\App\Http\Controllers\Layanan\PengajuanController::class, 'store'])->name('pengajuan.store');
+    Route::get('/{kode_tracking}', [\App\Http\Controllers\Layanan\PengajuanController::class, 'show'])->name('pengajuan.show');
+    Route::get('/{kode_tracking}/download', [\App\Http\Controllers\Layanan\PengajuanController::class, 'downloadResult'])->name('pengajuan.download');
 });
 
 // Public Village Pages
+Route::get('/desa/{slug}/request-akses', [\App\Http\Controllers\AccessRequestController::class, 'create'])->name('desa.request-akses.create');
+Route::post('/desa/{slug}/request-akses', [\App\Http\Controllers\AccessRequestController::class, 'store'])->name('desa.request-akses.store');
+Route::get('/desa/{slug}/apbdes', [ApbdesController::class, 'show'])->name('village.apbdes');
+Route::get('/desa/{slug}/apbdes/pdf', [ApbdesController::class, 'exportPdf'])->name('village.apbdes.pdf');
 Route::get('/desa/{slug}', [VillagePageController::class, 'show'])->name('village.show');
 
 require __DIR__.'/auth.php';

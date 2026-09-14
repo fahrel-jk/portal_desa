@@ -13,6 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        @stack('styles')
     </head>
     <body class="font-sans antialiased bg-onyx-canvas text-ivory-text">
         <div class="min-h-screen">
@@ -47,5 +49,7 @@
                 document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
             });
         </script>
+
+        @stack('scripts')
     </body>
 </html>

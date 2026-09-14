@@ -1,378 +1,529 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth bg-[#f8fafc]">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $village->name }} — Portal Desa</title>
     <meta name="description" content="{{ Str::limit($village->description, 160) }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=libre-baskerville:400,700|ibm-plex-sans:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        body { 
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: #f8fafc;
-            color: #0f172a;
-        }
-        
-        .shadow-formal {
-            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
-        }
-        
-        .shadow-formal-hover {
-            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
-        }
-
-        .prose-klasik p {
-            margin-bottom: 1.25em;
-            line-height: 1.8;
-            color: #334155;
-            text-align: justify;
-        }
-        .prose-klasik p:last-child { margin-bottom: 0; }
         :root {
-            --color-primary: {{ $village->theme_color ?? '#1e293b' }};
+            --background: #FAF7F0;
+            --foreground: #1A1A1A;
+            --deep: #313F33;
+            --primary: #313F33;
+            --primary-hover: #263328;
+            --primary-foreground: #FFFFFF;
+            --accent: #BA704F;
+            --accent-hover: #A05B3D;
+            --accent-foreground: #FFFFFF;
+            --surface: #FFFFFF;
+            --muted: #E8E5DA;
+            --muted-foreground: #6B7280;
+            --border: #E5E2D5;
+            --card: #FFFFFF;
+            --secondary: #F3F0E6;
         }
+        body { 
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+        .font-serif { font-family: 'Libre Baskerville', serif; }
         
-        .bg-klasik-primary { background-color: var(--color-primary); }
-        .text-klasik-primary { color: var(--color-primary); }
-        .border-klasik-primary { border-color: var(--color-primary); }
+        .bg-background { background-color: var(--background); }
+        .text-foreground { color: var(--foreground); }
+        .bg-deep { background-color: var(--deep); }
+        .bg-surface { background-color: var(--surface); }
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-hover:hover { background-color: var(--primary-hover); }
+        .bg-accent { background-color: var(--accent); }
+        .bg-accent-hover:hover { background-color: var(--accent-hover); }
+        .bg-muted { background-color: var(--muted); }
+        .bg-card { background-color: var(--card); }
+        .bg-secondary { background-color: var(--secondary); }
         
-        /* Using primary color for accents to keep it monochromatic and formal */
-        .bg-klasik-accent { background-color: var(--color-primary); }
-        .text-klasik-accent { color: var(--color-primary); }
-        .border-klasik-accent { border-color: var(--color-primary); }
+        .text-primary { color: var(--primary); }
+        .text-primary-foreground { color: var(--primary-foreground); }
+        .text-accent { color: var(--accent); }
+        .text-accent-foreground { color: var(--accent-foreground); }
+        .text-muted-foreground { color: var(--muted-foreground); }
+        
+        .border-border { border-color: var(--border); }
+        .hover\:border-primary:hover { border-color: var(--primary); }
+        
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col" style="selection-background-color: var(--color-primary); selection-color: white;">
+<body class="antialiased min-h-screen flex flex-col">
 
-    {{-- ═══════════════════════════════════════
-         HEADER — Structured, Formal
-         ═══════════════════════════════════════ --}}
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                {{-- Logo & Typography --}}
-                <div class="flex items-center gap-4">
-                    @if($village->logo_path)
-                        <img src="{{ Storage::url($village->logo_path) }}" alt="Logo {{ $village->name }}" class="w-12 h-12 object-contain drop-shadow-sm">
-                    @else
-                        <div class="w-12 h-12 rounded-lg bg-klasik-primary text-white flex items-center justify-center font-bold text-xl shadow-inner">
-                            {{ strtoupper(mb_substr($village->name, 0, 1)) }}
-                        </div>
-                    @endif
-                    <div class="flex flex-col">
-                        <span class="font-bold text-lg text-slate-900 tracking-tight leading-tight uppercase">Pemerintah Desa {{ $village->name }}</span>
-                        <span class="text-sm text-slate-500 font-medium">Kecamatan {{ $village->kecamatan }}, Kab. {{ $village->kabupaten }}</span>
-                    </div>
+<div class="min-h-screen bg-background text-foreground flex flex-col">
+    {{-- Header --}}
+    <header class="bg-surface relative z-40 border-b border-border sticky top-0 shadow-sm" x-data="{ mobileMenuOpen: false }">
+        <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
+            <a href="#beranda" class="flex items-center gap-3">
+                @if($village->logo_path)
+                    <img src="{{ Storage::url($village->logo_path) }}" alt="Logo {{ $village->name }}" class="w-10 h-10 object-contain drop-shadow-sm rounded">
+                @else
+                    <span class="rounded-sm border border-primary/30 bg-primary/10 text-primary grid size-10 place-items-center font-serif text-sm font-bold uppercase">
+                        {{ substr($village->name, 0, 2) }}
+                    </span>
+                @endif
+                <span>
+                    <span class="block font-serif text-[15px] font-bold leading-none">{{ $village->name }}</span>
+                    <span class="mt-1 block text-[10px] uppercase tracking-[0.14em] text-muted-foreground">Kecamatan {{ $village->kecamatan }}</span>
+                </span>
+            </a>
+
+            {{-- Desktop Navigation --}}
+            <nav class="hidden items-center gap-7 text-sm text-muted-foreground lg:flex">
+                <a href="#profil" class="transition-colors hover:text-accent">Profil</a>
+                <a href="#layanan" class="transition-colors hover:text-accent">Layanan</a>
+                <a href="#berita" class="transition-colors hover:text-accent">Berita</a>
+                @if($village->galleries->count() > 0)
+                <a href="#galeri" class="transition-colors hover:text-accent">Galeri</a>
+                @endif
+                @if($village->latitude && $village->longitude)
+                <a href="#lokasi" class="transition-colors hover:text-accent">Lokasi</a>
+                @endif
+                <a href="{{ route('village.apbdes', $village->slug) }}" class="transition-colors hover:text-accent">APBDes</a>
+                <a href="#kontak" class="transition-colors hover:text-accent">Kontak</a>
+            </nav>
+
+
+            <div class="flex items-center gap-2">
+                {{-- Desktop action buttons --}}
+                <div class="hidden items-center gap-2 lg:flex">
+                    <a href="/login" class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md font-medium transition-colors text-muted-foreground hover:bg-muted hover:text-foreground h-9 px-3 text-xs">Login Admin</a>
+                    <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md font-medium transition-colors bg-accent text-accent-foreground hover:bg-accent-hover h-9 px-3 text-xs">Hubungi Kami</a>
                 </div>
 
-                {{-- Desktop Menu --}}
-                <nav class="hidden lg:flex items-center gap-8">
-                    <a href="#profil" class="text-sm font-semibold text-slate-600 hover:text-klasik-accent uppercase tracking-wide transition">Profil</a>
-                    @if($village->officials->count() > 0)
-                        <a href="#perangkat" class="text-sm font-semibold text-slate-600 hover:text-klasik-accent uppercase tracking-wide transition">Perangkat</a>
-                    @endif
-                    @if($village->news->count() > 0)
-                        <a href="#berita" class="text-sm font-semibold text-slate-600 hover:text-klasik-accent uppercase tracking-wide transition">Berita</a>
-                    @endif
-                    @if($village->services->count() > 0)
-                        <a href="#layanan" class="text-sm font-semibold text-slate-600 hover:text-klasik-accent uppercase tracking-wide transition">Layanan</a>
-                    @endif
-                    @if($village->galleries->count() > 0)
-                        <a href="#galeri" class="text-sm font-semibold text-slate-600 hover:text-klasik-accent uppercase tracking-wide transition">Galeri</a>
-                    @endif
-                </nav>
-
-                {{-- Mobile Menu Button --}}
-                <button class="lg:hidden p-2 text-slate-600 bg-slate-100 rounded hover:bg-slate-200 transition" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                {{-- Mobile hamburger button --}}
+                <button 
+                    @click="mobileMenuOpen = !mobileMenuOpen" 
+                    class="lg:hidden inline-flex items-center justify-center size-10 rounded border border-border text-foreground hover:bg-muted transition-colors"
+                    :aria-expanded="mobileMenuOpen"
+                    aria-label="Buka menu navigasi"
+                >
+                    <svg x-show="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+                    <svg x-show="mobileMenuOpen" x-cloak xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                 </button>
             </div>
-            
-            {{-- Mobile Menu --}}
-            <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 py-4">
-                <div class="flex flex-col gap-2">
-                    <a href="#profil" class="px-4 py-2 bg-slate-50 text-slate-700 font-medium rounded">Profil</a>
-                    @if($village->officials->count() > 0)
-                        <a href="#perangkat" class="px-4 py-2 bg-slate-50 text-slate-700 font-medium rounded">Perangkat</a>
-                    @endif
-                    @if($village->news->count() > 0)
-                        <a href="#berita" class="px-4 py-2 bg-slate-50 text-slate-700 font-medium rounded">Berita</a>
-                    @endif
-                    @if($village->services->count() > 0)
-                        <a href="#layanan" class="px-4 py-2 bg-slate-50 text-slate-700 font-medium rounded">Layanan</a>
-                    @endif
+        </div>
+
+        {{-- Mobile Menu Panel --}}
+        <div 
+            x-show="mobileMenuOpen" 
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-2"
+            x-cloak
+            class="lg:hidden border-t border-border bg-surface"
+        >
+            <nav class="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+                <div class="flex flex-col gap-1">
+                    <a @click="mobileMenuOpen = false" href="#profil" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Profil
+                    </a>
+                    <a @click="mobileMenuOpen = false" href="#layanan" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2z"></path><path d="M14 2v6h6"></path></svg>
+                        Layanan
+                    </a>
+                    <a @click="mobileMenuOpen = false" href="#berita" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2m0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8z"></path></svg>
+                        Berita
+                    </a>
                     @if($village->galleries->count() > 0)
-                        <a href="#galeri" class="px-4 py-2 bg-slate-50 text-slate-700 font-medium rounded">Galeri</a>
+                    <a @click="mobileMenuOpen = false" href="#galeri" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+                        Galeri
+                    </a>
                     @endif
+                    @if($village->latitude && $village->longitude)
+                    <a @click="mobileMenuOpen = false" href="#lokasi" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Lokasi
+                    </a>
+                    @endif
+                    <a href="{{ route('village.apbdes', $village->slug) }}" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        APBDes
+                    </a>
+                    <a @click="mobileMenuOpen = false" href="#kontak" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+                        Kontak
+                    </a>
                 </div>
-            </div>
+
+                {{-- Mobile action buttons --}}
+                <div class="mt-3 pt-3 border-t border-border flex flex-col gap-2">
+                    <a href="/login" class="inline-flex min-h-10 items-center justify-center gap-2 font-medium transition-colors text-muted-foreground hover:bg-muted hover:text-foreground h-9 px-3 text-xs border border-border">Login Admin</a>
+                    <a @click="mobileMenuOpen = false" href="{{ route('desa.request-akses.create', $village->slug) }}" class="inline-flex min-h-10 items-center justify-center gap-2 font-medium transition-colors bg-accent text-accent-foreground hover:bg-accent-hover h-10 px-3 text-sm">Hubungi Kami</a>
+                </div>
+            </nav>
         </div>
     </header>
 
-    {{-- ═══════════════════════════════════════
-         HERO SECTION — Formal, Strong
-         ═══════════════════════════════════════ --}}
-    <section class="relative bg-klasik-primary overflow-hidden">
-        @if($village->hero_image_path)
-            <div class="absolute inset-0">
-                <img src="{{ Storage::url($village->hero_image_path) }}" alt="{{ $village->name }}" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/50"></div>
-            </div>
-        @else
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjM2IzZDRjIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PHBhdGggZD0iTTAgNjBMMjAgNDBoNDBMMzAgMTAwaDQwbDIwLTIwIi8+PC9nPjwvc3ZnPg==')] opacity-10"></div>
-        @endif
-        
-        <div class="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 flex flex-col items-center text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white/90 text-sm font-medium mb-6">
-                <svg class="w-4 h-4" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                Portal Resmi Pemerintahan
-            </div>
-            
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg">
-                Desa {{ $village->name }}
-            </h1>
-            
-            <p class="text-lg text-slate-300 font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
-                Mewujudkan pelayanan prima, transparan, dan akuntabel demi kesejahteraan masyarakat Kecamatan {{ $village->kecamatan }}.
-            </p>
-        </div>
-        
-        {{-- Floating Contact Strip --}}
-        <div class="absolute bottom-0 w-full bg-klasik-accent/90 backdrop-blur">
-            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
-                <div class="flex flex-wrap justify-center sm:justify-between items-center gap-x-8 gap-y-3 text-sm text-white font-medium">
-                    @if($village->address)
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            {{ Str::limit($village->address, 50) }}
-                        </div>
-                    @endif
-                    <div class="flex items-center gap-6">
+    <main class="flex-grow">
+        {{-- Hero --}}
+        <section id="beranda" class="bg-background">
+            <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-12 sm:px-6 md:py-16 lg:grid-cols-12 lg:items-center lg:gap-14">
+                <div class="lg:col-span-7">
+                    <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">
+                        <span class="h-px w-7 bg-accent"></span>Portal Resmi Pemerintahan Desa
+                    </p>
+                    <h1 class="mt-4 max-w-[18ch] font-serif text-4xl font-bold leading-[1.16] sm:text-5xl">Pelayanan desa yang dekat, jelas, dan terpercaya.</h1>
+                    <p class="mt-5 max-w-xl text-base leading-7 text-muted-foreground">
+                        @if($village->description)
+                            {{ $village->description }}
+                        @else
+                            Urus surat, periksa data keluarga, dan ikuti agenda balai desa dalam satu tempat yang rapi dan mudah dijangkau.
+                        @endif
+                    </p>
+                    <div class="mt-7 flex flex-wrap gap-3">
+                        <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary-hover h-12 px-5">
+                            Hubungi Kami
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </a>
+                        <a href="#layanan" class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors border border-border bg-surface text-foreground hover:bg-muted h-12 px-5">Lihat Layanan</a>
+                    </div>
+                    <div class="mt-10 flex max-w-lg flex-wrap gap-x-8 gap-y-3 border-t border-border pt-5 text-xs text-muted-foreground">
+                        @if($village->address)
+                        <span class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-accent"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg> 
+                            {{ $village->address }}
+                        </span>
+                        @endif
                         @if($village->contact_phone)
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                {{ $village->contact_phone }}
-                            </div>
+                        <span class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-accent"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg> 
+                            {{ $village->contact_phone }}
+                        </span>
                         @endif
-                        @if($village->contact_email)
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                {{ $village->contact_email }}
-                            </div>
+                        @if($village->office_hours)
+                        <span class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-accent"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            {{ $village->office_hours }}
+                        </span>
                         @endif
                     </div>
                 </div>
+                <figure class="lg:col-span-5">
+                    <div class="overflow-hidden rounded-md bg-muted">
+                        @if($village->hero_image_path)
+                            <img src="{{ Storage::url($village->hero_image_path) }}" alt="Pemandangan Desa {{ $village->name }}" class="aspect-[5/4] w-full object-cover"/>
+                        @else
+                            <img src="https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?auto=format&fit=crop&q=80&w=1280" alt="Pemandangan desa" class="aspect-[5/4] w-full object-cover"/>
+                        @endif
+                    </div>
+                    <figcaption class="mt-2 text-xs text-muted-foreground">Pemandangan Desa {{ $village->name }}</figcaption>
+                </figure>
             </div>
-        </div>
-    </section>
+        </section>
 
-    {{-- ═══════════════════════════════════════
-         MAIN CONTENT
-         ═══════════════════════════════════════ --}}
-    <main class="flex-grow pt-16 pb-24">
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        {{-- Layanan --}}
+        @if($village->services->count() > 0)
+        <section id="layanan" class="border-y border-border bg-secondary py-14 md:py-20 scroll-mt-20">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6">
+                <div class="mb-7 flex items-end justify-between gap-4">
+                    <div>
+                        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent"><span class="h-px w-7 bg-accent"></span>Layanan Utama</p>
+                        <h2 class="mt-3 font-serif text-2xl font-bold sm:text-3xl">Urusan warga dalam satu tempat</h2>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 items-start">
+                    @foreach($village->services as $service)
+                        <article class="group flex flex-col border border-border bg-card p-5 transition-colors hover:border-primary/45 sm:p-6 h-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="size-6 text-accent mb-4"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+                            <h3 class="font-serif text-lg font-bold">{{ $service->name }}</h3>
+                            @if($service->description)
+                                <p class="mt-2 text-sm leading-6 text-muted-foreground">{{ $service->description }}</p>
+                            @endif
+                            
+                            @if($service->requirements)
+                            <div class="mt-5 pt-4 border-t border-border mt-auto">
+                                <details class="group/details">
+                                    <summary class="cursor-pointer font-semibold inline-flex items-center justify-between w-full py-1 text-xs uppercase tracking-wider text-primary select-none">
+                                        <span>Syarat & Ketentuan</span>
+                                        <svg class="w-4 h-4 transition-transform duration-300 group-open/details:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                                    </summary>
+                                    <div class="mt-4 p-4 border border-border bg-secondary space-y-2 text-[13px] leading-relaxed text-foreground">
+                                        @foreach(explode("\n", $service->requirements) as $reqLine)
+                                            @if(trim($reqLine))
+                                                <div class="flex items-start gap-2.5">
+                                                    <span class="inline-block w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-accent"></span>
+                                                    <span>{{ preg_replace('/^\d+\.\s*/', '', trim($reqLine)) }}</span>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </details>
+                            </div>
+                            @endif
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        @endif
+
+        {{-- Berita --}}
+        @if($village->news->count() > 0)
+        <section id="berita" class="bg-background py-14 md:py-20 scroll-mt-20">
+            <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 sm:px-6 lg:grid-cols-12">
+                <div class="lg:col-span-8">
+                    <div class="mb-5 flex items-end justify-between">
+                        <div>
+                            <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent"><span class="h-px w-7 bg-accent"></span>Kabar Desa</p>
+                            <h2 class="mt-3 font-serif text-2xl font-bold">Yang sedang berlangsung</h2>
+                        </div>
+                    </div>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        @foreach($village->news->take(4) as $news)
+                            <article class="group border border-border bg-card overflow-hidden">
+                                @if($news->cover_image_path)
+                                    <img src="{{ Storage::url($news->cover_image_path) }}" alt="{{ $news->title }}" class="aspect-[16/10] w-full object-cover"/>
+                                @else
+                                    <div class="aspect-[16/10] w-full bg-muted flex items-center justify-center">
+                                        <span class="text-muted-foreground font-serif text-sm">Tidak ada gambar</span>
+                                    </div>
+                                @endif
+                                <div class="p-5">
+                                    <p class="text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">{{ $news->published_at ? $news->published_at->format('d F Y') : $news->created_at->format('d F Y') }}</p>
+                                    <h3 class="mt-2 font-serif text-lg font-bold leading-7 text-primary">{{ $news->title }}</h3>
+                                    <p class="mt-2 text-sm text-muted-foreground line-clamp-2">{{ Str::limit(strip_tags($news->content), 100) }}</p>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
                 
-                {{-- ─── Main Column (8 cols) ─── --}}
-                <div class="lg:col-span-8 space-y-16">
+                {{-- Aparatur & Statistik (Dummy data for template purposes) --}}
+                <div class="lg:col-span-4">
+                    <div class="border border-border bg-card p-5 mb-6">
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent mb-4">Profil Desa</p>
+                        <h3 class="font-serif text-lg font-bold text-primary mb-3">Tentang Kami</h3>
+                        <p class="text-sm text-muted-foreground leading-relaxed">{{ Str::limit($village->description ?? 'Portal desa ini dibangun untuk memudahkan pelayanan masyarakat dalam mendapatkan informasi dan mengurus administrasi di tingkat desa secara mandiri, transparan, dan efisien.', 250) }}</p>
+                    </div>
                     
-                    {{-- Profil / Selayang Pandang --}}
-                    @if($village->description)
-                        <section id="profil" class="scroll-mt-28">
-                            <div class="border-l-4 border-klasik-accent pl-4 mb-6">
-                                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Selayang Pandang</h2>
-                                <p class="text-sm text-slate-500 mt-1">Profil singkat dan sejarah Desa {{ $village->name }}</p>
-                            </div>
-                            <div class="bg-white p-8 rounded-xl shadow-formal border border-slate-100 prose-klasik text-[15px]">
-                                {!! nl2br(e($village->description)) !!}
-                            </div>
-                        </section>
-                    @endif
-
-                    {{-- Layanan Desa --}}
-                    @if($village->services->count() > 0)
-                        <section id="layanan" class="scroll-mt-28">
-                            <div class="border-l-4 border-klasik-accent pl-4 mb-6">
-                                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Layanan Administrasi</h2>
-                                <p class="text-sm text-slate-500 mt-1">Informasi pelayanan publik untuk masyarakat</p>
-                            </div>
-                            <div class="grid grid-cols-1 gap-4">
-                                @foreach($village->services as $service)
-                                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-formal-hover transition-shadow flex flex-col sm:flex-row gap-6">
-                                        <div class="flex-grow">
-                                            <h4 class="text-lg font-bold text-slate-900 mb-2">{{ $service->name }}</h4>
-                                            @if($service->description)
-                                                <p class="text-sm text-slate-600 mb-4">{{ $service->description }}</p>
-                                            @endif
-                                            @if($service->requirements)
-                                                <div class="bg-slate-50 p-4 rounded border border-slate-100">
-                                                    <span class="block text-xs font-bold text-slate-800 uppercase tracking-wide mb-2">Syarat Ketentuan:</span>
-                                                    <p class="text-sm text-slate-600 whitespace-pre-line">{{ $service->requirements }}</p>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </section>
-                    @endif
-
-                    {{-- Berita Terkini --}}
-                    @if($village->news->count() > 0)
-                        <section id="berita" class="scroll-mt-28">
-                            <div class="flex items-end justify-between border-b-2 border-slate-200 pb-4 mb-6">
-                                <div class="border-l-4 border-klasik-accent pl-4">
-                                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Berita Terkini</h2>
-                                    <p class="text-sm text-slate-500 mt-1">Informasi terbaru seputar desa</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                @foreach($village->news as $news)
-                                    <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden group hover:shadow-formal transition-all duration-300">
-                                        @if($news->cover_image_path)
-                                            <div class="aspect-[16/9] overflow-hidden bg-slate-100 relative">
-                                                <img src="{{ Storage::url($news->cover_image_path) }}" alt="{{ $news->title }}"
-                                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                                                <div class="absolute top-4 left-4 bg-klasik-accent text-white text-xs font-bold px-3 py-1.5 rounded shadow">
-                                                    {{ $news->published_at->format('d M Y') }}
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <div class="p-6">
-                                            @if(!$news->cover_image_path)
-                                                <div class="text-xs font-bold text-klasik-accent mb-3">
-                                                    {{ $news->published_at->format('d M Y') }}
-                                                </div>
-                                            @endif
-                                            <h3 class="text-lg font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-klasik-accent transition-colors">
-                                                {{ $news->title }}
-                                            </h3>
-                                            <p class="text-sm text-slate-600 line-clamp-3 mb-4">
-                                                {{ Str::limit(strip_tags($news->content), 120) }}
-                                            </p>
-                                        </div>
-                                    </article>
-                                @endforeach
-                            </div>
-                        </section>
-                    @endif
-
-                    {{-- Galeri Foto --}}
-                    @if($village->galleries->count() > 0)
-                        <section id="galeri" class="scroll-mt-28">
-                            <div class="border-l-4 border-klasik-accent pl-4 mb-6">
-                                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Galeri Desa</h2>
-                                <p class="text-sm text-slate-500 mt-1">Koleksi foto kegiatan dan potensi desa</p>
-                            </div>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                                @foreach($village->galleries as $gallery)
-                                    <div class="relative bg-white p-1 rounded-lg shadow-sm border border-slate-200 group">
-                                        <div class="aspect-square overflow-hidden rounded relative">
-                                            <img src="{{ Storage::url($gallery->image_path) }}" alt="{{ $gallery->caption }}"
-                                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                            @if($gallery->caption)
-                                                <div class="absolute inset-x-0 bottom-0 bg-slate-900/80 p-3 opacity-0 group-hover:opacity-100 transition duration-300">
-                                                    <p class="text-white text-xs font-medium text-center line-clamp-2">{{ $gallery->caption }}</p>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </section>
-                    @endif
-                </div>
-
-                {{-- ─── Sidebar (4 cols) ─── --}}
-                <aside class="lg:col-span-4 space-y-8">
-                    
-                    {{-- Perangkat Desa --}}
                     @if($village->officials->count() > 0)
-                        <div class="bg-white rounded-xl shadow-formal border border-slate-100 overflow-hidden" id="perangkat">
-                            <div class="bg-klasik-primary px-6 py-4 border-b border-klasik-primary">
-                                <h3 class="font-bold text-white text-lg flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                    Struktur Pemerintahan
-                                </h3>
-                            </div>
-                            <div class="p-6">
-                                <div class="space-y-5">
-                                    @foreach($village->officials as $official)
-                                        <div class="flex items-center gap-4">
-                                            @if($official->photo_path)
-                                                <img src="{{ Storage::url($official->photo_path) }}" alt="{{ $official->name }}"
-                                                     class="w-12 h-12 rounded-full object-cover border border-slate-200 p-0.5">
-                                            @else
-                                                <div class="w-12 h-12 rounded-full bg-slate-100 border border-slate-200 text-slate-600 flex items-center justify-center font-bold text-base">
-                                                    {{ strtoupper(mb_substr($official->name, 0, 1)) }}
-                                                </div>
-                                            @endif
-                                            <div class="min-w-0">
-                                                <div class="font-bold text-slate-900 text-sm truncate">{{ $official->name }}</div>
-                                                <div class="text-xs font-semibold text-klasik-accent uppercase tracking-wide mt-0.5">{{ $official->position }}</div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Informasi Jam Kerja & Kontak --}}
-                    <div class="bg-white rounded-xl shadow-formal border border-slate-100 overflow-hidden">
-                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-100">
-                            <h3 class="font-bold text-slate-900 text-lg">Pusat Bantuan</h3>
-                        </div>
-                        <div class="p-6 space-y-4">
-                            @if($village->office_hours)
+                    <div class="border border-border bg-card p-5">
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent mb-4">Aparatur Desa</p>
+                        <div class="space-y-4">
+                            @foreach($village->officials as $official)
+                            <div class="flex items-center gap-3">
+                                @if($official->photo_path)
+                                    <img src="{{ Storage::url($official->photo_path) }}" class="w-12 h-12 rounded bg-muted object-cover">
+                                @else
+                                    <div class="w-12 h-12 rounded bg-secondary flex items-center justify-center text-primary font-bold font-serif">
+                                        {{ substr($official->name, 0, 1) }}
+                                    </div>
+                                @endif
                                 <div>
-                                    <span class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Jam Operasional</span>
-                                    <p class="text-sm font-medium text-slate-900 flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-klasik-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                        {{ $village->office_hours }}
-                                    </p>
+                                    <h4 class="font-bold text-sm text-primary">{{ $official->name }}</h4>
+                                    <p class="text-xs text-muted-foreground">{{ $official->position }}</p>
                                 </div>
-                            @endif
-                            @if($village->address)
-                                <div class="pt-4 border-t border-slate-100">
-                                    <span class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Alamat Balai Desa</span>
-                                    <p class="text-sm font-medium text-slate-900 flex items-start gap-2">
-                                        <svg class="w-4 h-4 text-klasik-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                        <span class="leading-relaxed">{{ $village->address }}</span>
-                                    </p>
-                                </div>
-                            @endif
+                            </div>
+                            @endforeach
                         </div>
                     </div>
-
-                </aside>
+                    @endif
+                </div>
             </div>
-        </div>
+        </section>
+        @endif
+        {{-- Galeri --}}
+        @if($village->galleries->count() > 0)
+        <section id="galeri" class="border-y border-border bg-secondary py-14 md:py-20 scroll-mt-20">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6">
+                <div class="mb-7 flex items-end justify-between">
+                    <div>
+                        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent"><span class="h-px w-7 bg-accent"></span>Dokumentasi</p>
+                        <h2 class="mt-3 font-serif text-2xl font-bold sm:text-3xl">Galeri Desa</h2>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    @foreach($village->galleries as $gallery)
+                    <div class="overflow-hidden rounded-md border border-border bg-card group relative aspect-square">
+                        <img src="{{ Storage::url($gallery->image_path) }}" alt="{{ $gallery->caption ?? 'Galeri' }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        @if($gallery->caption)
+                            <div class="absolute bottom-0 left-0 w-full bg-deep/80 p-3 text-xs text-primary-foreground backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                {{ $gallery->caption }}
+                            </div>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        @endif
+
+        {{-- Lokasi / Peta Desa --}}
+        @if($village->latitude && $village->longitude)
+        <section id="lokasi" class="bg-background py-14 md:py-20 scroll-mt-20">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6">
+                <div class="mb-7 flex items-end justify-between">
+                    <div>
+                        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent"><span class="h-px w-7 bg-accent"></span>Peta & Lokasi Penting</p>
+                        <h2 class="mt-3 font-serif text-2xl font-bold sm:text-3xl">Jelajahi {{ $village->name }}</h2>
+                    </div>
+                    <a href="https://maps.google.com/?q={{ $village->latitude }},{{ $village->longitude }}" target="_blank" class="hidden sm:inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors border border-border bg-surface text-foreground hover:bg-muted h-10 px-4">
+                        Buka di Google Maps
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                </div>
+                
+                <div class="rounded-lg border border-border bg-card overflow-hidden shadow-sm relative z-0">
+                    <div id="village-map" class="w-full h-[400px] md:h-[500px]"></div>
+                </div>
+                <div class="mt-4 flex flex-wrap gap-4 text-xs font-medium">
+                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary inline-block shadow-sm"></span> Balai Desa / Pemerintahan</div>
+                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-accent inline-block shadow-sm"></span> Pendidikan</div>
+                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-secondary border border-border inline-block shadow-sm"></span> Kesehatan</div>
+                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-muted-foreground inline-block shadow-sm"></span> Lainnya</div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var map = L.map('village-map', {
+                    zoomControl: false,
+                    attributionControl: true
+                }).setView([{{ $village->latitude }}, {{ $village->longitude }}], 15);
+                
+                L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; OpenStreetMap',
+                    maxZoom: 19
+                }).addTo(map);
+                
+                // Colors from theme
+                var colorPrimary = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#313F33';
+                var colorAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#BA704F';
+                var colorSecondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim() || '#F3F0E6';
+                var colorDefault = getComputedStyle(document.documentElement).getPropertyValue('--muted-foreground').trim() || '#6B7280';
+
+                // Balai Desa (Main point)
+                L.circleMarker([{{ $village->latitude }}, {{ $village->longitude }}], {
+                    radius: 9, fillColor: colorPrimary, color: '#fff', weight: 2, opacity: 1, fillOpacity: 1
+                }).addTo(map).bindPopup('<div class="font-serif font-bold text-sm">Balai Desa {{ $village->name }}</div>');
+
+                // Titik Lokasi Points
+                var titikLokasis = @json($village->titikLokasis ?? []);
+                if (titikLokasis && titikLokasis.length > 0) {
+                    titikLokasis.forEach(function (titik) {
+                        var mc = colorDefault;
+                        if (titik.kategori === 'kesehatan') mc = colorSecondary;
+                        if (titik.kategori === 'pendidikan') mc = colorAccent;
+                        if (titik.kategori === 'pemerintahan') mc = colorPrimary;
+
+                        var popupContent = '<div class="font-sans text-xs">';
+                        if (titik.foto) {
+                            var imgUrl = '{{ Storage::url("") }}' + titik.foto;
+                            popupContent += '<img src="' + imgUrl + '" class="w-full h-24 object-cover rounded mb-2 shadow-sm" alt="' + titik.nama_lokasi + '">';
+                        }
+                        popupContent += '<strong>' + titik.nama_lokasi + '</strong><br><span class="text-muted-foreground uppercase tracking-wider" style="font-size: 10px;">' + titik.kategori + '</span></div>';
+
+                        L.circleMarker([titik.latitude, titik.longitude], {
+                            radius: 7, fillColor: mc, color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9
+                        }).addTo(map).bindPopup(popupContent, { minWidth: 150 });
+                    });
+                }
+                
+                // GeoJSON Batas Wilayah
+                @if($village->geojson_batas_wilayah)
+                    try {
+                        L.geoJSON(@json($village->geojson_batas_wilayah), {
+                            style: { color: colorPrimary, weight: 2, opacity: 0.5, fillOpacity: 0.05 }
+                        }).addTo(map);
+                    } catch (e) { console.warn('GeoJSON error:', e); }
+                @endif
+                
+                // Fix map size issues in some browsers
+                setTimeout(() => map.invalidateSize(), 400);
+            });
+        </script>
+        @endif
     </main>
 
-    {{-- ═══════════════════════════════════════
-         FOOTER — Formal, Authoritative
-         ═══════════════════════════════════════ --}}
-    <footer class="bg-klasik-primary text-white border-t-4 border-klasik-accent mt-auto">
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex items-center gap-4">
-                    @if($village->logo_path)
-                        <img src="{{ Storage::url($village->logo_path) }}" class="h-10 w-auto bg-white rounded p-1">
-                    @endif
-                    <div>
-                        <div class="font-bold text-base uppercase tracking-wide">Pemerintah Desa {{ $village->name }}</div>
-                        <div class="text-slate-400 text-xs mt-0.5">Kec. {{ $village->kecamatan }}, Kab. {{ $village->kabupaten }}</div>
-                    </div>
-                </div>
-                <div class="text-slate-400 text-sm text-center md:text-right">
-                    Hak Cipta &copy; {{ date('Y') }}. <br class="hidden sm:block">
-                    Diberdayakan oleh <a href="{{ url('/') }}" class="text-white font-medium hover:text-klasik-accent transition-colors">Portal Desa</a> Provinsi Jawa Timur.
-                </div>
+    {{-- Footer --}}
+    <footer id="kontak" class="bg-deep text-primary-foreground">
+        <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3">
+            <div>
+                <p class="font-serif text-lg font-bold">Desa {{ $village->name }}</p>
+                <p class="mt-3 max-w-sm text-sm leading-6 text-primary-foreground/75">Portal resmi pelayanan dan informasi Pemerintah Desa {{ $village->name }}.</p>
+            </div>
+            <div>
+                <p class="text-sm font-semibold">Kantor Desa</p>
+                @if($village->address)
+                <p class="mt-3 flex gap-2 text-sm text-primary-foreground/75">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 size-4 shrink-0"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg> 
+                    {{ $village->address }}
+                </p>
+                @endif
+                @if($village->office_hours)
+                <p class="mt-2 flex gap-2 text-sm text-primary-foreground/75">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 size-4 shrink-0"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    {{ $village->office_hours }}
+                </p>
+                @endif
+            </div>
+            <div>
+                <p class="text-sm font-semibold">Hubungi Kami</p>
+                @if($village->contact_phone)
+                <p class="mt-3 flex items-center gap-2 text-sm text-primary-foreground/75">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg> 
+                    {{ $village->contact_phone }}
+                </p>
+                @endif
+                @if($village->contact_email)
+                <p class="mt-2 flex items-center gap-2 text-sm text-primary-foreground/75">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg> 
+                    {{ $village->contact_email }}
+                </p>
+                @endif
             </div>
         </div>
+        <div class="border-t border-primary-foreground/20">
+            <div class="mx-auto max-w-7xl px-4 py-4 text-xs text-primary-foreground/60 sm:px-6">© {{ date('Y') }} Pemerintah Desa {{ $village->name }}. All rights reserved.</div>
+        </div>
     </footer>
+</div>
+
+{{-- Back to Top Button --}}
+<div 
+    x-data="{ showBackToTop: false }" 
+    x-init="window.addEventListener('scroll', () => { showBackToTop = window.scrollY > 400 })"
+>
+    <button
+        x-show="showBackToTop"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-4"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 translate-y-4"
+        x-cloak
+        @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+        class="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center size-11 rounded border border-border bg-surface text-primary shadow-lg hover:bg-muted transition-colors"
+        aria-label="Kembali ke atas"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+    </button>
+</div>
+
 </body>
 </html>

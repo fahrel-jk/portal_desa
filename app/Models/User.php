@@ -73,4 +73,12 @@ class User extends Authenticatable
     {
         return $this->role === 'perwakilan_desa';
     }
+
+    /**
+     * Check if the user is a warga layanan.
+     */
+    public function isWargaLayanan(): bool
+    {
+        return $this->role === 'warga_layanan';
+    }
 }

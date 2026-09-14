@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Portal Desa — Buat Halaman Desa dalam 5 Menit</title>
-    <meta name="description" content="Platform termudah untuk membuat halaman resmi desa. Pilih template, isi data, dan halaman desa Anda siap diakses publik dalam hitungan menit.">
+    <x-seo-meta />
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
@@ -32,37 +31,62 @@
             <source src="{{ asset('video_desa.mp4') }}" type="video/mp4">
         </video>
         {{-- Overlay ringan agar teks tetap terbaca tanpa menggelapkan video --}}
-        <div class="absolute inset-0 bg-onyx-canvas/40"></div>
+        <div class="absolute inset-0 bg-black/40"></div>
     </div>
 
     {{-- ═══════════════════════════════════════
          NAVIGATION — Transparent over hero, Center aligned links
          ═══════════════════════════════════════ --}}
-    <nav class="fixed w-full top-0 z-50 transition-all duration-300" x-data="{ scrolled: false }" @scroll.window="scrolled = (window.scrollY > 40)">
+    <nav class="fixed w-full top-0 z-50 transition-all duration-300" x-data="{ scrolled: false, mobileOpen: false }" @scroll.window="scrolled = (window.scrollY > 40)">
         <div :class="scrolled ? 'bg-black/40 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20' : 'bg-transparent py-2'" class="transition-all duration-300">
-            <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
                 <div class="flex justify-between h-16 items-center">
                     {{-- Left: Logo --}}
-                    <div class="flex items-center gap-2.5 w-1/4">
-                        <span class="font-serif-velorah text-2xl text-white tracking-tight">Portal Desa</span>
+                    <div class="flex items-center gap-2.5 shrink-0">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo Portal Desa" class="w-8 h-8 object-contain rounded">
+                        <span class="font-serif-velorah text-xl sm:text-2xl text-white tracking-tight">Portal Desa</span>
                     </div>
                     
-                    {{-- Center: Links --}}
-                    <div class="hidden md:flex items-center justify-center gap-8 w-2/4">
+                    {{-- Center: Links (desktop) --}}
+                    <div class="hidden md:flex items-center justify-center gap-8">
                         <a href="#cara-kerja" class="velorah-link text-sm font-medium text-white/90 hover:text-white transition-colors">Cara Kerja</a>
                         <a href="#template" class="velorah-link text-sm font-medium text-white/90 hover:text-white transition-colors">Template</a>
                         <a href="#faq" class="velorah-link text-sm font-medium text-white/90 hover:text-white transition-colors">FAQ</a>
                     </div>
                     
-                    {{-- Right: Actions --}}
-                    <div class="flex items-center justify-end gap-4 w-1/4">
+                    {{-- Right: Actions (desktop) --}}
+                    <div class="hidden md:flex items-center justify-end gap-4 shrink-0">
                         @auth
                             <a href="{{ route('dashboard') }}" class="glass-button text-sm font-medium text-white px-5 py-2 rounded-full">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="hidden sm:block text-sm font-medium text-white/90 hover:text-white transition">Masuk</a>
+                            <a href="{{ route('login') }}" class="text-sm font-medium text-white/90 hover:text-white transition">Masuk</a>
                             <a href="{{ route('register') }}" class="glass-button text-sm font-medium text-white px-6 py-2.5 rounded-full">
                                 Daftar Sekarang
                             </a>
+                        @endauth
+                    </div>
+
+                    {{-- Mobile Hamburger --}}
+                    <button @click="mobileOpen = !mobileOpen" class="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition" aria-label="Toggle menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path x-show="mobileOpen" x-cloak stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                {{-- Mobile Menu --}}
+                <div x-show="mobileOpen" x-collapse x-cloak class="md:hidden border-t border-white/10 pb-4 pt-2">
+                    <div class="flex flex-col gap-1">
+                        <a href="#cara-kerja" @click="mobileOpen=false" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition">Cara Kerja</a>
+                        <a href="#template" @click="mobileOpen=false" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition">Template</a>
+                        <a href="#faq" @click="mobileOpen=false" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition">FAQ</a>
+                        <div class="h-px bg-white/10 my-2"></div>
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-white bg-white/10 text-center">Dashboard</a>
+                        @else
+                            <a href="{{ route('login') }}" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition">Masuk</a>
+                            <a href="{{ route('register') }}" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-white bg-white/10 text-center mt-1">Daftar Sekarang</a>
                         @endauth
                     </div>
                 </div>
@@ -77,8 +101,8 @@
         {{-- Background flows through completely from fixed body --}}
 
         <div class="relative z-10 max-w-5xl mx-auto px-6 text-center mt-20">
-            <h1 class="animate-fade-rise font-serif-velorah text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-white tracking-normal leading-[1.1] mb-6">
-                Bawa desa Anda ke<br>era digital.
+            <h1 class="animate-fade-rise font-serif-velorah text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white tracking-normal leading-[1.1] mb-6">
+                Bawa desa Anda ke<br class="hidden sm:inline">era digital.
             </h1>
             <p class="animate-fade-rise-d1 max-w-2xl mx-auto text-[15px] sm:text-base leading-relaxed text-white/80 mb-10 font-light">
                 Platform termudah untuk membuat halaman resmi desa. Pilih template, isi data, dan halaman desa Anda siap diakses publik dalam hitungan menit — tanpa perlu coding.
@@ -147,8 +171,8 @@
                             <svg class="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $step['icon'] }}" /></svg>
                         </div>
                         <div class="text-sm font-bold text-sky-400/90 uppercase tracking-widest mb-3">Langkah {{ $i + 1 }}</div>
-                        <h3 class="text-lg font-bold text-ivory-text mb-2">{{ $step['title'] }}</h3>
-                        <p class="text-sm text-ash-text leading-relaxed">{{ $step['desc'] }}</p>
+                        <h3 class="text-lg font-bold text-white mb-2">{{ $step['title'] }}</h3>
+                        <p class="text-sm text-white/70 leading-relaxed">{{ $step['desc'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -165,22 +189,22 @@
                 <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium mb-4">
                     Desain yang sudah siap pakai.
                 </h2>
-                <p class="text-ash-text max-w-xl mx-auto">Pilih tampilan yang paling cocok untuk desa Anda. Kedua template didesain profesional dan responsif di semua perangkat.</p>
+                <p class="text-white/70 max-w-xl mx-auto">Pilih tampilan yang paling cocok untuk desa Anda. Kedua template didesain profesional dan responsif di semua perangkat.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {{-- Klasik --}}
-                <a href="{{ url('/desa/ladang-panjang') }}" target="_blank" class="scroll-reveal group bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all block">
+                <a href="{{ url('/desa/pujon-kidul') }}" target="_blank" class="scroll-reveal group bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all block">
                     <div class="aspect-[4/3] bg-slate-900 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="{{ url('/desa/ladang-panjang') }}" style="width: 400%; height: 400%; transform: scale(0.25); transform-origin: top left;" class="absolute top-0 left-0 border-0 pointer-events-none bg-slate-50"></iframe>
+                        <iframe src="{{ url('/desa/pujon-kidul') }}" style="width: 400%; height: 400%; transform: scale(0.25); transform-origin: top left;" class="absolute top-0 left-0 border-0 pointer-events-none bg-slate-50"></iframe>
                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center z-10">
                             <span class="bg-white text-sky-600 text-sm font-bold px-4 py-2 rounded-full shadow-lg">Lihat Demo</span>
                         </div>
                     </div>
                     <div class="p-6 flex items-center justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-ivory-text group-hover:text-sky-400 transition">Template Klasik</h3>
-                            <p class="text-sm text-ash-text mt-1">Tata letak sederhana dan informatif</p>
+                            <h3 class="text-lg font-bold text-white group-hover:text-sky-400 transition">Template Klasik</h3>
+                            <p class="text-sm text-white/70 mt-1">Tata letak sederhana dan informatif</p>
                         </div>
                         <span class="text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-500/20 px-3 py-1 rounded-full">Gratis</span>
                     </div>
@@ -196,8 +220,8 @@
                     </div>
                     <div class="p-6 flex items-center justify-between">
                         <div>
-                            <h3 class="text-lg font-bold text-ivory-text group-hover:text-sky-400 transition">Template Modern</h3>
-                            <p class="text-sm text-ash-text mt-1">Card grid dinamis dan hero overlay</p>
+                            <h3 class="text-lg font-bold text-white group-hover:text-sky-400 transition">Template Modern</h3>
+                            <p class="text-sm text-white/70 mt-1">Card grid dinamis dan hero overlay</p>
                         </div>
                         <span class="text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-500/20 px-3 py-1 rounded-full">Gratis</span>
                     </div>
@@ -207,45 +231,135 @@
     </section>
 
     {{-- ═══════════════════════════════════════
-         SHOWCASE VILLAGES
+         SEARCH & SHOWCASE VILLAGES
          ═══════════════════════════════════════ --}}
-    @if($showcaseVillages->count() > 0)
-        <section class="py-24 bg-black/40 backdrop-blur-md border-y border-white/5">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="scroll-reveal text-center mb-16">
-                    <p class="text-sm uppercase tracking-[0.3em] text-sky-400 mb-4 font-semibold">Portofolio</p>
-                    <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium mb-4">
-                        Desa yang telah bergabung.
-                    </h2>
-                    <p class="text-ash-text max-w-xl mx-auto">Lihat bagaimana desa-desa lain memanfaatkan Portal Desa untuk hadir secara digital.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    @foreach($showcaseVillages as $i => $village)
-                        <a href="{{ url('/desa/' . $village->slug) }}" class="scroll-reveal group block bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all hover:-translate-y-1" style="transition-delay: {{ $i * 0.1 }}s">
-                            <div class="aspect-[4/3] bg-obsidian-button relative overflow-hidden">
-                                @if($village->hero_image_path)
-                                    <img src="{{ Storage::url($village->hero_image_path) }}" alt="{{ $village->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                                @else
-                                    <div class="w-full h-full bg-gradient-to-br from-cobalt/20 to-purple-900/20 flex items-center justify-center">
-                                        <svg class="w-16 h-16 text-slate-border/30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/><path d="M14.14 11.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
-                                    </div>
-                                @endif
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition"></div>
-                                <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur text-xs font-bold px-2.5 py-1 rounded-full text-white/90 border border-white/20">
-                                    {{ $village->template->name }}
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <h3 class="text-base font-bold text-ivory-text mb-1 group-hover:text-sky-400 transition">{{ $village->name }}</h3>
-                                <p class="text-sm text-ash-text">{{ $village->kecamatan }}, {{ $village->kabupaten }}</p>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
+    <section id="pencarian" class="py-24 bg-black/40 backdrop-blur-md border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="scroll-reveal text-center mb-10">
+                <p class="text-sm uppercase tracking-[0.3em] text-sky-400 mb-4 font-semibold">Portofolio & Pencarian</p>
+                <h2 class="font-serif-velorah text-3xl sm:text-4xl md:text-5xl text-white tracking-normal font-medium mb-4">
+                    Temukan desa Anda.
+                </h2>
+                <p class="text-white/70 max-w-xl mx-auto">Cari dan jelajahi halaman desa yang telah bergabung di Portal Desa.</p>
             </div>
-        </section>
-    @endif
+
+            {{-- Search Form --}}
+            <div class="scroll-reveal max-w-3xl mx-auto mb-16">
+                <form action="{{ url('/') }}#pencarian" method="GET" class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row gap-2 sm:gap-3 shadow-xl shadow-black/20">
+                    <div class="flex-grow">
+                        <label for="q" class="sr-only">Cari Desa</label>
+                        <input type="text" name="q" id="q" value="{{ request('q') }}" placeholder="Cari nama desa..." class="w-full h-11 bg-white/10 border border-white/20 rounded-xl px-4 text-white placeholder:text-white/50 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors">
+                    </div>
+                    
+                    <div class="w-full sm:w-48 shrink-0">
+                        <label for="kecamatan" class="sr-only">Kecamatan</label>
+                        <select name="kecamatan" id="kecamatan" class="w-full h-11 bg-white/10 border border-white/20 rounded-xl px-4 text-white focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors appearance-none">
+                            <option value="" class="text-slate-800">Semua Kecamatan</option>
+                            @foreach($kecamatans as $kec)
+                                <option value="{{ $kec }}" {{ request('kecamatan') == $kec ? 'selected' : '' }} class="text-slate-800">{{ $kec }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="w-full sm:w-48 shrink-0">
+                        <label for="kabupaten" class="sr-only">Kabupaten</label>
+                        <select name="kabupaten" id="kabupaten" class="w-full h-11 bg-white/10 border border-white/20 rounded-xl px-4 text-white focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors appearance-none">
+                            <option value="" class="text-slate-800">Semua Kabupaten</option>
+                            @foreach($kabupatens as $kab)
+                                <option value="{{ $kab }}" {{ request('kabupaten') == $kab ? 'selected' : '' }} class="text-slate-800">{{ $kab }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button type="submit" aria-label="Cari Desa" class="h-11 px-6 bg-sky-500 hover:bg-sky-400 text-white font-bold rounded-xl transition-colors flex-1 sm:flex-none flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <span>Cari</span>
+                        </button>
+                        @if($isSearching)
+                            <a href="{{ url('/') }}#pencarian" class="h-11 w-11 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-xl transition-colors shrink-0 flex items-center justify-center" aria-label="Reset Filter" title="Reset">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+
+            @if($isSearching)
+                {{-- Search Results --}}
+                @if($searchResults->count() > 0)
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        @foreach($searchResults as $village)
+                            <a href="{{ url('/desa/' . $village->slug) }}" class="group block bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all hover:-translate-y-1">
+                                <div class="aspect-[4/3] bg-slate-900 relative overflow-hidden">
+                                    @if($village->hero_image_path)
+                                        <img src="{{ Storage::url($village->hero_image_path) }}" alt="{{ $village->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                    @else
+                                        <div class="w-full h-full bg-gradient-to-br from-sky-900/40 to-indigo-900/40 flex items-center justify-center">
+                                            <svg class="w-16 h-16 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/><path d="M14.14 11.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+                                        </div>
+                                    @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+                                    <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur text-xs font-bold px-2.5 py-1 rounded-full text-white/90 border border-white/20">
+                                        {{ $village->template->name }}
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="text-base font-bold text-white mb-1 group-hover:text-sky-400 transition">{{ $village->name }}</h3>
+                                    <p class="text-sm text-white/70">{{ $village->kecamatan }}, {{ $village->kabupaten }}</p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                    
+                    {{-- Default tailwind pagination uses SVG icons which are fine, but might need style override if broken, let's wrap it --}}
+                    <div class="flex justify-center mt-10" id="pagination-container">
+                        {{ $searchResults->links() }}
+                    </div>
+                    <style>
+                        #pagination-container nav { background: transparent; }
+                        #pagination-container p { color: rgba(255,255,255,0.7) !important; }
+                        #pagination-container span[aria-current="page"] > span { background-color: #0ea5e9 !important; border-color: #0ea5e9 !important; color: white !important; }
+                        #pagination-container a { color: white !important; background-color: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.2) !important; }
+                        #pagination-container a:hover { background-color: rgba(255,255,255,0.2) !important; }
+                    </style>
+                @else
+                    <div class="text-center bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-10 max-w-2xl mx-auto">
+                        <svg class="w-16 h-16 text-white/30 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        <h3 class="text-xl font-bold text-white mb-2">Desa tidak ditemukan</h3>
+                        <p class="text-white/70">Tidak ada desa yang cocok dengan kriteria pencarian Anda.</p>
+                    </div>
+                @endif
+            @else
+                {{-- Showcase --}}
+                @if($showcaseVillages->count() > 0)
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($showcaseVillages as $i => $village)
+                            <a href="{{ url('/desa/' . $village->slug) }}" class="scroll-reveal group block bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all hover:-translate-y-1" style="transition-delay: {{ $i * 0.1 }}s">
+                                <div class="aspect-[4/3] bg-slate-900 relative overflow-hidden">
+                                    @if($village->hero_image_path)
+                                        <img src="{{ Storage::url($village->hero_image_path) }}" alt="{{ $village->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                    @else
+                                        <div class="w-full h-full bg-gradient-to-br from-sky-900/40 to-indigo-900/40 flex items-center justify-center">
+                                            <svg class="w-16 h-16 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/><path d="M14.14 11.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+                                        </div>
+                                    @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+                                    <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur text-xs font-bold px-2.5 py-1 rounded-full text-white/90 border border-white/20">
+                                        {{ $village->template->name }}
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="text-base font-bold text-white mb-1 group-hover:text-sky-400 transition">{{ $village->name }}</h3>
+                                    <p class="text-sm text-white/70">{{ $village->kecamatan }}, {{ $village->kabupaten }}</p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            @endif
+        </div>
+    </section>
 
     {{-- ═══════════════════════════════════════
          FAQ ACCORDION
@@ -274,10 +388,10 @@
                     <div class="scroll-reveal" style="transition-delay: {{ $i * 0.05 }}s"
                          x-data="{ open: false }">
                         <button @click="open = !open" class="w-full flex items-center justify-between bg-white/5 backdrop-blur-md rounded-xl px-6 py-5 text-left border border-white/10 hover:bg-white/10 transition group">
-                            <span class="text-sm sm:text-base font-medium text-ivory-text pr-4">{{ $faq['q'] }}</span>
-                            <svg class="w-5 h-5 text-ash-text shrink-0 transition-transform duration-300" :class="open ? 'rotate-45' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                            <span class="text-sm sm:text-base font-medium text-white pr-4">{{ $faq['q'] }}</span>
+                            <svg class="w-5 h-5 text-white/70 shrink-0 transition-transform duration-300" :class="open ? 'rotate-45' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                         </button>
-                        <div x-show="open" x-collapse x-cloak class="px-6 pb-5 pt-2 text-sm text-ash-text leading-relaxed bg-white/5 backdrop-blur-md rounded-b-xl -mt-2 border-x border-b border-white/10">
+                        <div x-show="open" x-collapse x-cloak class="px-6 pb-5 pt-2 text-sm text-white/70 leading-relaxed bg-white/5 backdrop-blur-md rounded-b-xl -mt-2 border-x border-b border-white/10">
                             {{ $faq['a'] }}
                         </div>
                     </div>
@@ -401,9 +515,7 @@
             
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 pt-4">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-6 h-6 bg-white/20 rounded-md flex items-center justify-center backdrop-blur-md">
-                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                    </div>
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo Portal Desa" class="w-6 h-6 object-contain rounded">
                     <span class="font-bold text-white text-sm tracking-tight">Portal Desa</span>
                 </div>
                 <p class="text-white/60 text-xs">

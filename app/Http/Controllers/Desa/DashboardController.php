@@ -39,6 +39,8 @@ class DashboardController extends Controller
             'contact_email' => 'nullable|email|max:255',
             'office_hours' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:1000',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
             'theme_color' => 'nullable|string|max:20',
             'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'hero_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',

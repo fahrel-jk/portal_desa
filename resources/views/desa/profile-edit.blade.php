@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <h2 class="font-bold text-xl text-ivory-text leading-tight">
                 Edit Profil Desa
             </h2>
@@ -9,8 +9,8 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-graphite-card overflow-hidden border border-slate-border/15 rounded-2xl p-8">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-graphite-card overflow-hidden border border-slate-border/15 rounded-2xl p-5 sm:p-8">
                 
                 @if(session('success'))
                     <div class="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">
@@ -106,36 +106,119 @@
                         <x-input-error :messages="$errors->get('address')" class="mt-2" />
                     </div>
 
+                    {{-- Koordinat Kantor Desa (Peta Interaktif) --}}
+                    <div class="mb-8 pt-6 border-t border-slate-border/15">
+                        <h3 class="text-lg font-semibold text-ivory-text mb-1">Koordinat Kantor Desa</h3>
+                        <p class="text-sm text-ash-text mb-4">Tentukan lokasi kantor desa di peta. Klik pada peta untuk memindahkan marker. Titik ini akan menjadi pusat peta di halaman publik desa.</p>
+
+                        <div id="map-profil" class="w-full rounded-xl border border-slate-border/15 overflow-hidden mb-3" style="height: 340px; z-index: 1; cursor: crosshair;"></div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="flex-1 text-xs text-ash-text font-mono bg-obsidian-button/30 rounded-md px-3 py-2 border border-slate-border/10">
+                                Koordinat: <span id="lat-display">{{ $village->latitude ? number_format($village->latitude, 7) : 'belum ditentukan' }}</span>, <span id="lng-display">{{ $village->longitude ? number_format($village->longitude, 7) : 'belum ditentukan' }}</span>
+                            </div>
+                            @if($village->latitude && $village->longitude)
+                                <button type="button" onclick="clearKoordinat()" class="text-xs text-red-400 hover:text-red-300 font-medium transition">Hapus Koordinat</button>
+                            @endif
+                        </div>
+
+                        <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude', $village->latitude) }}">
+                        <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude', $village->longitude) }}">
+                        <x-input-error :messages="$errors->get('latitude')" class="mt-2" />
+                    </div>
+
                     {{-- Theme Color Selection --}}
                     <div class="mb-8 pt-6 border-t border-slate-border/15">
-                        <h3 class="text-lg font-semibold text-ivory-text mb-1">Pilih Warna Tema</h3>
-                        <p class="text-sm text-ash-text mb-4">Ubah warna utama yang merepresentasikan desa Anda pada halaman publik.</p>
+                        <h3 class="text-lg font-semibold text-ivory-text mb-1">Pilih Tema Warna (Tampilan Publik)</h3>
+                        <p class="text-sm text-ash-text mb-4">Pilih nuansa warna yang paling cocok dengan karakter desa Anda.</p>
 
                         @php
-                            $colors = [
-                                ['hex' => '#0c8c5e', 'name' => 'Hijau Mint'],
-                                ['hex' => '#1e40af', 'name' => 'Biru Tua'],
-                                ['hex' => '#991b1b', 'name' => 'Merah Marun'],
-                                ['hex' => '#5b21b6', 'name' => 'Ungu Gelap'],
-                                ['hex' => '#047857', 'name' => 'Zamrud'],
-                                ['hex' => '#0f172a', 'name' => 'Hitam Elegan']
+                            $themes = [
+                                // Tema Klasik
+                                [
+                                    'id' => 'sawah-terakota',
+                                    'name' => 'Sawah & Terakota (Klasik)',
+                                    'desc' => 'Hijau natural & merah bata',
+                                    'color_primary' => 'oklch(0.53 0.074 139)',
+                                    'color_accent' => 'oklch(0.65 0.095 42)'
+                                ],
+                                [
+                                    'id' => 'laut-pasir',
+                                    'name' => 'Laut & Pasir (Klasik)',
+                                    'desc' => 'Biru klasik & emas pesisir',
+                                    'color_primary' => 'oklch(0.45 0.08 250)',
+                                    'color_accent' => 'oklch(0.65 0.07 50)'
+                                ],
+                                [
+                                    'id' => 'kopi-senja',
+                                    'name' => 'Kopi & Senja (Klasik)',
+                                    'desc' => 'Coklat tanah & jingga senja',
+                                    'color_primary' => 'oklch(0.40 0.05 50)',
+                                    'color_accent' => 'oklch(0.60 0.12 35)'
+                                ],
+                                [
+                                    'id' => 'batu-pinus',
+                                    'name' => 'Batu & Pinus (Klasik)',
+                                    'desc' => 'Abu-abu batu & hijau pinus',
+                                    'color_primary' => 'oklch(0.40 0.02 200)',
+                                    'color_accent' => 'oklch(0.45 0.08 140)'
+                                ],
+                                // Tema Modern
+                                [
+                                    'id' => 'sumberan-sage',
+                                    'name' => 'Sumberan Sage (Modern)',
+                                    'desc' => 'Sage green & terracotta',
+                                    'color_primary' => '#c4654a',
+                                    'color_accent' => '#87a878'
+                                ],
+                                [
+                                    'id' => 'laut-senja',
+                                    'name' => 'Laut Senja (Modern)',
+                                    'desc' => 'Teal laut & amber hangat',
+                                    'color_primary' => '#0f766e',
+                                    'color_accent' => '#3b82f6'
+                                ],
+                                [
+                                    'id' => 'kopi-susu',
+                                    'name' => 'Kopi Susu (Modern)',
+                                    'desc' => 'Coklat kopi & krem latte',
+                                    'color_primary' => '#8c5a45',
+                                    'color_accent' => '#bfa38f'
+                                ],
+                                [
+                                    'id' => 'monokrom-elegan',
+                                    'name' => 'Monokrom (Modern)',
+                                    'desc' => 'Slate abu-abu elegan',
+                                    'color_primary' => '#334155',
+                                    'color_accent' => '#94a3b8'
+                                ]
                             ];
-                            $selectedColor = old('theme_color', $village->theme_color ?? '#0c8c5e');
+                            // Default back to sawah-terakota if it's an old hex color
+                            $selectedColor = old('theme_color', $village->theme_color ?? 'sumberan-sage');
+                            if (str_starts_with($selectedColor, '#')) {
+                                $selectedColor = 'sawah-terakota';
+                            }
                         @endphp
 
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-2">
-                            @foreach($colors as $color)
-                                <label for="color-{{ Str::slug($color['name']) }}"
-                                    class="relative flex items-center gap-3 p-3 cursor-pointer rounded-xl border-2 transition-all duration-200
-                                    {{ $selectedColor == $color['hex'] ? 'border-portal-primary bg-cobalt/10' : 'border-slate-border/15 bg-graphite-card hover:border-slate-border' }}"
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
+                            @foreach($themes as $theme)
+                                <label for="theme-{{ $theme['id'] }}"
+                                    class="relative flex items-center gap-4 p-4 cursor-pointer rounded-xl border-2 transition-all duration-200
+                                    {{ $selectedColor == $theme['id'] ? 'border-portal-primary bg-cobalt/10' : 'border-slate-border/15 bg-graphite-card hover:border-slate-border' }}"
                                     onclick="selectColor(this)">
                                     
-                                    <input type="radio" id="color-{{ Str::slug($color['name']) }}" name="theme_color"
-                                        value="{{ $color['hex'] }}" class="sr-only"
-                                        {{ $selectedColor == $color['hex'] ? 'checked' : '' }}>
+                                    <input type="radio" id="theme-{{ $theme['id'] }}" name="theme_color"
+                                        value="{{ $theme['id'] }}" class="sr-only"
+                                        {{ $selectedColor == $theme['id'] ? 'checked' : '' }}>
                                     
-                                    <div class="w-6 h-6 rounded-full shadow-sm flex-shrink-0" style="background-color: {{ $color['hex'] }}"></div>
-                                    <span class="text-sm font-medium text-ivory-text">{{ $color['name'] }}</span>
+                                    <div class="flex flex-shrink-0 -space-x-2">
+                                        <div class="w-8 h-8 rounded-full shadow-sm border-2 border-white relative z-10" style="background-color: {{ $theme['color_primary'] }}"></div>
+                                        <div class="w-8 h-8 rounded-full shadow-sm border-2 border-white relative z-0" style="background-color: {{ $theme['color_accent'] }}"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-ivory-text">{{ $theme['name'] }}</div>
+                                        <div class="text-xs text-ash-text mt-0.5">{{ $theme['desc'] }}</div>
+                                    </div>
                                 </label>
                             @endforeach
                         </div>
@@ -165,5 +248,80 @@
             label.classList.add('border-portal-primary', 'bg-cobalt/10');
             label.classList.remove('border-slate-border/15', 'bg-graphite-card');
         }
+
+        function clearKoordinat() {
+            document.getElementById('latitude').value = '';
+            document.getElementById('longitude').value = '';
+            document.getElementById('lat-display').textContent = 'belum ditentukan';
+            document.getElementById('lng-display').textContent = 'belum ditentukan';
+            if (window._profilMarker) {
+                window._profilMap.removeLayer(window._profilMarker);
+                window._profilMarker = null;
+            }
+        }
     </script>
+
+    @push('styles')
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    @endpush
+
+    @push('scripts')
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const existingLat = {{ $village->latitude ?? 'null' }};
+                const existingLng = {{ $village->longitude ?? 'null' }};
+
+                // Default center: existing village coords or Surabaya
+                const centerLat = existingLat || -7.2575;
+                const centerLng = existingLng || 112.7521;
+                const defaultZoom = existingLat ? 16 : 10;
+
+                const map = L.map('map-profil').setView([centerLat, centerLng], defaultZoom);
+                window._profilMap = map;
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    maxZoom: 19
+                }).addTo(map);
+
+                let marker = null;
+                window._profilMarker = null;
+
+                // Show existing marker
+                if (existingLat && existingLng) {
+                    marker = L.marker([existingLat, existingLng]).addTo(map);
+                    window._profilMarker = marker;
+                }
+
+                // Restore from old() if validation failed
+                const oldLat = document.getElementById('latitude').value;
+                const oldLng = document.getElementById('longitude').value;
+                if (oldLat && oldLng && (!existingLat || oldLat != existingLat)) {
+                    if (marker) map.removeLayer(marker);
+                    marker = L.marker([parseFloat(oldLat), parseFloat(oldLng)]).addTo(map);
+                    window._profilMarker = marker;
+                    map.setView([parseFloat(oldLat), parseFloat(oldLng)], 16);
+                }
+
+                map.on('click', function (e) {
+                    const { lat, lng } = e.latlng;
+
+                    if (marker) {
+                        marker.setLatLng(e.latlng);
+                    } else {
+                        marker = L.marker(e.latlng).addTo(map);
+                    }
+                    window._profilMarker = marker;
+
+                    document.getElementById('latitude').value = lat.toFixed(7);
+                    document.getElementById('longitude').value = lng.toFixed(7);
+                    document.getElementById('lat-display').textContent = lat.toFixed(7);
+                    document.getElementById('lng-display').textContent = lng.toFixed(7);
+                });
+
+                setTimeout(() => map.invalidateSize(), 200);
+            });
+        </script>
+    @endpush
 </x-app-layout>

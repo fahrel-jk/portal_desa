@@ -1,350 +1,701 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth bg-white">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $village->name }} — Portal Desa</title>
-    <meta name="description" content="{{ Str::limit($village->description, 160) }}">
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
+    <x-seo-meta 
+        title="{{ $village->name }} - Portal Desa {{ $village->kabupaten }}" 
+        description="{{ Str::limit($village->description ?: 'Portal resmi Desa ' . $village->name . ', Kecamatan ' . $village->kecamatan . ', Kabupaten ' . $village->kabupaten, 160) }}" 
+        image="{{ $village->logo_path ? Storage::url($village->logo_path) : asset('images/logo.png') }}" 
+    />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    @if($village->latitude && $village->longitude)
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    @endif
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
     <style>
-        body { 
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
-        }
-        
-        /* Subtle forensic shadow */
-        .shadow-mintlify {
-            box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.04);
-        }
-        
-        .shadow-mintlify-hover {
-            box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.06);
-        }
+        @php
+            $theme = $village->theme_color ?? 'sumberan-sage';
+            
+            $bg = '#eef0ea'; $fg = '#2a2f23'; $card = '#ffffff'; $card_fg = '#2a2f23';
+            $primary = '#c4654a'; $primary_fg = '#ffffff';
+            $secondary = '#87a878'; $secondary_fg = '#ffffff';
+            $muted = '#d7dacb'; $muted_fg = '#5c6652';
+            $accent = '#e8a87c'; $accent_fg = '#3d2b1f';
+            $border = 'rgba(42, 47, 35, 0.10)';
 
-        .prose-modern p {
-            margin-bottom: 1.5em;
-            line-height: 1.75;
-            color: #111827;
-        }
-        .prose-modern p:last-child { margin-bottom: 0; }
-        
-        /* Primary theme color */
+            if ($theme === 'laut-senja') {
+                $bg = '#f0f2f5'; $fg = '#1e293b'; $card = '#ffffff'; $card_fg = '#1e293b';
+                $primary = '#0f766e'; $primary_fg = '#ffffff';
+                $secondary = '#3b82f6'; $secondary_fg = '#ffffff';
+                $muted = '#e2e8f0'; $muted_fg = '#64748b';
+                $accent = '#f59e0b'; $accent_fg = '#451a03';
+                $border = 'rgba(30, 41, 59, 0.10)';
+            } elseif ($theme === 'kopi-susu') {
+                $bg = '#f5f0eb'; $fg = '#43302b'; $card = '#ffffff'; $card_fg = '#43302b';
+                $primary = '#8c5a45'; $primary_fg = '#ffffff';
+                $secondary = '#bfa38f'; $secondary_fg = '#ffffff';
+                $muted = '#e6dfd8'; $muted_fg = '#7a645d';
+                $accent = '#d97743'; $accent_fg = '#ffffff';
+                $border = 'rgba(67, 48, 43, 0.10)';
+            } elseif ($theme === 'monokrom-elegan') {
+                $bg = '#f8fafc'; $fg = '#0f172a'; $card = '#ffffff'; $card_fg = '#0f172a';
+                $primary = '#334155'; $primary_fg = '#ffffff';
+                $secondary = '#94a3b8'; $secondary_fg = '#ffffff';
+                $muted = '#f1f5f9'; $muted_fg = '#64748b';
+                $accent = '#475569'; $accent_fg = '#ffffff';
+                $border = 'rgba(15, 23, 42, 0.10)';
+            }
+        @endphp
+
         :root {
-            --color-primary: {{ $village->theme_color ?? '#0c8c5e' }};
+            --bg: {{ $bg }};
+            --fg: {{ $fg }};
+            --card: {{ $card }};
+            --card-fg: {{ $card_fg }};
+            --primary: {{ $primary }};
+            --primary-fg: {{ $primary_fg }};
+            --secondary: {{ $secondary }};
+            --secondary-fg: {{ $secondary_fg }};
+            --muted: {{ $muted }};
+            --muted-fg: {{ $muted_fg }};
+            --accent: {{ $accent }};
+            --accent-fg: {{ $accent_fg }};
+            --border: {{ $border }};
         }
 
-        .bg-mint { background-color: var(--color-primary); }
-        .text-mint { color: var(--color-primary); }
-        .border-mint { border-color: var(--color-primary); }
-        /* A very light version of the primary color for wash backgrounds */
-        .bg-mint-wash { background-color: color-mix(in srgb, var(--color-primary) 5%, white); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        details summary::-webkit-details-marker { display: none; }
+        details summary { list-style: none; }
+        
+        body {
+            font-family: 'Figtree', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--fg);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--fg);
+            letter-spacing: -0.025em;
+            line-height: 1.15;
+        }
+
+        .eyebrow {
+            font-family: 'Figtree', sans-serif;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--primary);
+        }
+
+        /* Hero image container */
+        .hero-container {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Frosted glass panel — WHITE, readable */
+        .hero-glass {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 1.25rem;
+        }
+
+        /* Dark info badge */
+        .hero-badge {
+            background: rgba(42, 47, 35, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1rem;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--primary);
+            color: var(--primary-fg);
+            font-weight: 600;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.75rem;
+            font-size: 0.9375rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            border: none;
+        }
+        .btn-primary:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 30%, transparent);
+        }
+
+        .btn-ghost {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: transparent;
+            color: var(--fg);
+            font-weight: 600;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.75rem;
+            font-size: 0.9375rem;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-ghost:hover { background-color: color-mix(in srgb, var(--muted) 40%, transparent); }
+
+        /* Card */
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 1.25rem;
+        }
+
+        /* Gallery caption pill at bottom of photo */
+        .gallery-caption {
+            position: absolute;
+            bottom: 0.75rem;
+            left: 0.75rem;
+            right: 0.75rem;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 0.75rem;
+            padding: 0.5rem 0.875rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--fg);
+        }
+
+        /* Divider line for stats */
+        .stat-divider {
+            width: 1px;
+            align-self: stretch;
+            background-color: var(--border);
+        }
+
+        /* Floating Navbar Pill */
+        .navbar-pill {
+            background-color: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col" style="selection-background-color: var(--color-primary); selection-color: white;">
+<body class="flex flex-col min-h-screen">
 
     {{-- ═══════════════════════════════════════
-         FLOATING NAVIGATION
+         NAVIGATION — Solid, above hero
          ═══════════════════════════════════════ --}}
-    <nav class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-gray-100" x-data="{ mobileOpen: false }">
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                {{-- Logo --}}
-                <div class="flex items-center gap-3">
+    <div style="position: sticky; top: 0.75rem; z-index: 50; padding: 0 0.75rem; margin-bottom: 1.5rem;" class="sm:mb-8">
+        <style>
+            @media (min-width: 640px) {
+                .navbar-sticky-wrap { top: 1.5rem !important; padding: 0 1rem !important; }
+            }
+        </style>
+        <header class="navbar-pill" x-data="{ mobileOpen: false }" :style="mobileOpen ? 'border-radius: 1.5rem;' : 'border-radius: 9999px;'" style="border-radius: 9999px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; height: 4.5rem;">
+
+                {{-- Logo & Village Name --}}
+                <a href="#" class="flex items-center gap-3 no-underline">
                     @if($village->logo_path)
-                        <img src="{{ Storage::url($village->logo_path) }}" alt="Logo {{ $village->name }}"
-                             class="w-8 h-8 rounded object-contain">
+                        <img src="{{ Storage::url($village->logo_path) }}" alt="Logo {{ $village->name }}" class="w-10 h-10 object-contain rounded-full" style="border: 1px solid var(--border);">
                     @else
-                        <div class="w-8 h-8 rounded flex items-center justify-center font-bold text-sm bg-zinc-950 text-white">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-base" style="background-color: var(--primary); color: var(--primary-fg); font-family: Outfit, sans-serif;">
                             {{ strtoupper(mb_substr($village->name, 0, 1)) }}
                         </div>
                     @endif
-                    <span class="font-semibold text-sm tracking-tight text-zinc-950">
-                        {{ $village->name }}
-                    </span>
-                </div>
+                    <div class="hidden sm:flex flex-col leading-tight">
+                        <span class="font-bold text-[15px]" style="color: var(--fg); font-family: Outfit, sans-serif;">Desa {{ $village->name }}</span>
+                        <span class="text-[11px] font-medium" style="color: var(--muted-fg);">Portal resmi desa</span>
+                    </div>
+                </a>
 
-                {{-- Desktop Links --}}
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="#profil" class="text-[14px] font-medium text-zinc-600 hover:text-zinc-950 transition-colors">Profil</a>
-                    @if($village->officials->count() > 0)
-                        <a href="#perangkat" class="text-[14px] font-medium text-zinc-600 hover:text-zinc-950 transition-colors">Perangkat</a>
+                {{-- Desktop Navigation --}}
+                <nav class="hidden lg:flex items-center gap-7">
+                    <a href="#profil" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Profil</a>
+                    @if($village->services->count() > 0)
+                        <a href="#layanan" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Layanan</a>
                     @endif
                     @if($village->news->count() > 0)
-                        <a href="#berita" class="text-[14px] font-medium text-zinc-600 hover:text-zinc-950 transition-colors">Berita</a>
+                        <a href="#berita" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Berita</a>
                     @endif
-                    @if($village->services->count() > 0)
-                        <a href="#layanan" class="text-[14px] font-medium text-zinc-600 hover:text-zinc-950 transition-colors">Layanan</a>
+                    @if($village->officials->count() > 0)
+                        <a href="#perangkat" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Perangkat</a>
                     @endif
                     @if($village->galleries->count() > 0)
-                        <a href="#galeri" class="text-[14px] font-medium text-zinc-600 hover:text-zinc-950 transition-colors">Galeri</a>
+                        <a href="#galeri" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Galeri</a>
                     @endif
-                </div>
+                    @if($village->latitude && $village->longitude)
+                        <a href="#lokasi" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Lokasi</a>
+                    @endif
+                    <a href="{{ route('village.apbdes', $village->slug) }}" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">APBDes</a>
 
-                {{-- Mobile Toggle --}}
-                <button @click="mobileOpen = !mobileOpen" class="md:hidden p-2 rounded text-zinc-600 hover:bg-zinc-100 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <div class="h-5 w-px" style="background-color: var(--border);"></div>
+
+                    <a href="{{ route('login') }}" class="text-[13px] font-medium px-4 py-1.5 rounded-lg border no-underline transition-colors" style="color: var(--muted-fg); border-color: var(--border);" onmouseover="this.style.borderColor='var(--fg)';this.style.color='var(--fg)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-fg)'">Login Admin</a>
+                    <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="btn-primary text-[13px] !py-2 !px-5 !rounded-full no-underline">Hubungi kami</a>
+                </nav>
+
+                {{-- Mobile Hamburger --}}
+                <button aria-label="Toggle menu" class="lg:hidden p-2 rounded-lg" style="color: var(--fg);" @click="mobileOpen = !mobileOpen">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
 
             {{-- Mobile Menu --}}
-            <div x-show="mobileOpen" @click.away="mobileOpen = false" x-transition x-cloak class="md:hidden pb-4 border-t border-gray-100">
-                <div class="flex flex-col py-2 gap-1">
-                    <a href="#profil" @click="mobileOpen = false" class="px-3 py-2 rounded-md text-[14px] font-medium text-zinc-700 hover:bg-zinc-50">Profil</a>
-                    @if($village->officials->count() > 0)
-                        <a href="#perangkat" @click="mobileOpen = false" class="px-3 py-2 rounded-md text-[14px] font-medium text-zinc-700 hover:bg-zinc-50">Perangkat</a>
+            <div x-show="mobileOpen" x-collapse x-cloak class="lg:hidden border-t py-4" style="border-color: var(--border);">
+                <div class="flex flex-col gap-1">
+                    <a href="#profil" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Profil</a>
+                    @if($village->services->count() > 0)
+                        <a href="#layanan" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Layanan</a>
                     @endif
                     @if($village->news->count() > 0)
-                        <a href="#berita" @click="mobileOpen = false" class="px-3 py-2 rounded-md text-[14px] font-medium text-zinc-700 hover:bg-zinc-50">Berita</a>
+                        <a href="#berita" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Berita</a>
                     @endif
-                    @if($village->services->count() > 0)
-                        <a href="#layanan" @click="mobileOpen = false" class="px-3 py-2 rounded-md text-[14px] font-medium text-zinc-700 hover:bg-zinc-50">Layanan</a>
+                    @if($village->officials->count() > 0)
+                        <a href="#perangkat" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Perangkat</a>
                     @endif
                     @if($village->galleries->count() > 0)
-                        <a href="#galeri" @click="mobileOpen = false" class="px-3 py-2 rounded-md text-[14px] font-medium text-zinc-700 hover:bg-zinc-50">Galeri</a>
+                        <a href="#galeri" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Galeri</a>
                     @endif
+                    @if($village->latitude && $village->longitude)
+                        <a href="#lokasi" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Lokasi</a>
+                    @endif
+                    <a href="{{ route('village.apbdes', $village->slug) }}" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">APBDes</a>
+                    <div class="h-px my-2" style="background-color: var(--border);"></div>
+                    <a href="{{ route('login') }}" class="px-3 py-2 text-sm font-medium rounded-lg border no-underline" style="color: var(--fg); border-color: var(--border);">Login Admin</a>
+                    <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="btn-primary text-sm text-center mt-1 no-underline">Hubungi kami</a>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    {{-- ═══════════════════════════════════════
+         HERO — Rounded image, glass panel
+         ═══════════════════════════════════════ --}}
+    <section style="padding: 1.5rem 1rem 2rem;">
+        <div style="max-width: 1120px; margin: 0 auto;">
+            <div style="border-radius: 1.25rem; overflow: hidden; position: relative; min-height: 320px; background-color: #4a6741; background-size: cover; background-position: center; {{ $village->hero_image_path ? 'background-image: url(' . Storage::url($village->hero_image_path) . ');' : '' }}" class="sm:!min-h-[520px]">
+                {{-- Gradient overlay --}}
+                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.35), transparent 60%);"></div>
+
+                {{-- Content --}}
+                <div style="position: relative; z-index: 10; display: flex; flex-direction: column; justify-content: flex-end; min-height: 320px; padding: 1.25rem;" class="sm:!min-h-[520px] sm:!p-8">
+                    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.25rem;">
+
+                        {{-- Glass Panel --}}
+                        <div style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 1rem; padding: 1.25rem; max-width: 500px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);" class="sm:!p-8 sm:!rounded-[1.25rem]">
+                            <div class="eyebrow" style="margin-bottom: 0.75rem; color: rgba(255, 255, 255, 0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Desa di {{ $village->kabupaten }}</div>
+                            <h1 style="font-family: Outfit, sans-serif; font-size: clamp(1.75rem, 6vw, 4.5rem); font-weight: 800; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.4); line-height: 1.05; margin-bottom: 0.75rem; letter-spacing: -0.04em;">
+                                {{ ucwords(strtolower($village->name)) }}
+                            </h1>
+                            <p style="font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.5rem; font-weight: 500;">
+                                @if($village->description && Str::length($village->description) > 10)
+                                    {{ Str::limit(strip_tags($village->description), 120) }}
+                                @else
+                                    Ruang hidup yang tumbuh di antara kampung, persawahan, dan semangat gotong royong warganya.
+                                @endif
+                            </p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                                @if($village->contact_phone)
+                                    <a href="tel:{{ $village->contact_phone }}" class="btn-primary" style="text-decoration: none;">Hubungi kami</a>
+                                @else
+                                    <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="btn-primary" style="text-decoration: none;">Hubungi kami</a>
+                                @endif
+                                @if($village->contact_email)
+                                    <a href="mailto:{{ $village->contact_email }}" class="btn-ghost" style="text-decoration: none; color: white; border-color: rgba(255,255,255,0.4);">Kirim email</a>
+                                @else
+                                    <a href="#profil" class="btn-ghost" style="text-decoration: none; color: white; border-color: rgba(255,255,255,0.4);">Jelajahi Desa</a>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- Dark Badge --}}
+                        @if($village->office_hours)
+                            <div style="background: rgba(42,47,35,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.12); border-radius: 1rem; padding: 1.25rem; max-width: 220px; display: none;" class="hidden md:block" id="hero-badge-desktop">
+                                <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Hari Pelayanan</div>
+                                <div style="font-family: Outfit, sans-serif; font-size: 1.125rem; font-weight: 700; color: white; margin-bottom: 0.25rem;">Senin—Jumat</div>
+                                <div style="font-size: 13px; color: rgba(255,255,255,0.8);">{{ $village->office_hours }}</div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
+    </section>
+
+    <style>
+        @media (min-width: 768px) {
+            #hero-badge-desktop { display: block !important; }
+        }
+        @media (max-width: 639px) {
+            .stat-divider-mobile { display: none !important; }
+        }
+        @media (min-width: 640px) {
+            #galeri-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            #berita-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (min-width: 1024px) {
+            #profil-grid { grid-template-columns: 1fr 380px !important; }
+            #galeri-grid { grid-template-columns: repeat(3, 1fr) !important; }
+            #berita-grid { grid-template-columns: repeat(4, 1fr) !important; }
+            #lokasi-grid { grid-template-columns: 7fr 5fr !important; }
+        }
+    </style>
 
     {{-- ═══════════════════════════════════════
-         HERO SECTION — Dark teal / Image
+         STATISTICS — 3 numbers, thin dividers
          ═══════════════════════════════════════ --}}
-    <section class="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden bg-zinc-900">
-        @if($village->hero_image_path)
-            <div class="absolute inset-0">
-                <img src="{{ Storage::url($village->hero_image_path) }}" alt="{{ $village->name }}"
-                     class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/50"></div>
-            </div>
-        @else
-            {{-- Abstract subtle gradient --}}
-            <div class="absolute inset-0 bg-gradient-to-br from-[#0a192f] via-[#0f2c4d] to-[#0a192f]"></div>
-            <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20" style="background-color: var(--color-primary);"></div>
-        @endif
-
-        <div class="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            @if($village->logo_path)
-                <img src="{{ Storage::url($village->logo_path) }}" alt="Logo"
-                     class="w-16 h-16 mx-auto rounded-lg object-contain bg-white/10 backdrop-blur border border-white/20 mb-8 shadow-2xl">
-            @endif
-            
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6 max-w-4xl mx-auto" style="letter-spacing: -1.14px;">
-                {{ $village->name }}
-            </h1>
-            <p class="text-lg md:text-xl text-zinc-300 font-medium max-w-2xl mx-auto mb-10" style="letter-spacing: -0.2px;">
-                Kecamatan {{ $village->kecamatan }}, Kabupaten {{ $village->kabupaten }}
-            </p>
-            
-            @if($village->contact_phone || $village->contact_email)
-                <div class="flex flex-wrap justify-center gap-4 text-sm font-medium">
-                    @if($village->contact_phone)
-                        <a href="tel:{{ $village->contact_phone }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-zinc-950 rounded hover:bg-zinc-100 transition-colors">
-                            <svg class="w-4 h-4 text-mint" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                            Hubungi Kami
-                        </a>
-                    @endif
-                    @if($village->contact_email)
-                        <a href="mailto:{{ $village->contact_email }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white border border-white/20 rounded hover:bg-white/20 transition-colors backdrop-blur-sm">
-                            Kirim Email
-                        </a>
-                    @endif
+    <section style="padding: 2.5rem 0; border-bottom: 1px solid var(--border);">
+        <div style="max-width: 900px; margin: 0 auto; padding: 0 1.5rem;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0;" class="flex-col sm:flex-row">
+                <div style="flex: 1; min-width: 180px; padding: 0.5rem 1.5rem;">
+                    <div style="font-family: Outfit, sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--primary);">1.240</div>
+                    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-fg); margin-top: 0.25rem;">Jiwa penduduk</div>
                 </div>
-            @endif
+                <div style="width: 1px; align-self: stretch; background-color: var(--border);" class="hidden md:block"></div>
+                <div style="flex: 1; min-width: 180px; padding: 0.5rem 1.5rem;">
+                    <div style="font-family: Outfit, sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--primary);">4</div>
+                    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-fg); margin-top: 0.25rem;">Dusun / RW</div>
+                </div>
+                <div style="width: 1px; align-self: stretch; background-color: var(--border);" class="hidden md:block"></div>
+                <div style="flex: 1; min-width: 180px; padding: 0.5rem 1.5rem;">
+                    <div style="font-family: Outfit, sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--primary);">1928</div>
+                    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-fg); margin-top: 0.25rem;">Tahun berdiri</div>
+                </div>
+            </div>
         </div>
     </section>
 
     {{-- ═══════════════════════════════════════
-         MAIN CONTENT
+         PROFIL + KONTAK + PERANGKAT
          ═══════════════════════════════════════ --}}
-    <main class="flex-grow pb-24 pt-12">
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-                
-                {{-- ─── Left Column (8 cols) ─── --}}
-                <div class="lg:col-span-8 space-y-20">
+    <section id="profil" class="scroll-mt-20" style="padding: 4rem 0 5rem;">
+        <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+            <div id="profil-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
 
-                    {{-- Profil --}}
-                    @if($village->description)
-                        <section id="profil" class="scroll-mt-24">
-                            <h2 class="text-2xl font-semibold text-zinc-950 mb-6 tracking-tight">Profil Desa</h2>
-                            <div class="prose-modern text-[16px] text-zinc-800 bg-white border border-zinc-100 rounded-[16px] p-6 sm:p-8 shadow-mintlify">
-                                {!! nl2br(e($village->description)) !!}
-                            </div>
-                        </section>
-                    @endif
-
-                    {{-- Berita --}}
-                    @if($village->news->count() > 0)
-                        <section id="berita" class="scroll-mt-24">
-                            <h2 class="text-2xl font-semibold text-zinc-950 mb-6 tracking-tight">Berita Terbaru</h2>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                @foreach($village->news as $news)
-                                    <article class="group bg-white rounded-[16px] border border-zinc-100 shadow-mintlify overflow-hidden flex flex-col hover:shadow-mintlify-hover transition-shadow duration-300">
-                                        @if($news->cover_image_path)
-                                            <div class="aspect-[16/9] overflow-hidden bg-zinc-50 border-b border-zinc-100">
-                                                <img src="{{ Storage::url($news->cover_image_path) }}" alt="{{ $news->title }}"
-                                                     class="w-full h-full object-cover">
-                                            </div>
-                                        @endif
-                                        <div class="p-6 flex-grow flex flex-col">
-                                            <div class="text-[13px] font-medium text-mint mb-3 uppercase tracking-wider" style="letter-spacing: 0.65px;">
-                                                {{ $news->published_at->format('d M Y') }}
-                                            </div>
-                                            <h3 class="text-[18px] font-semibold text-zinc-950 mb-2 line-clamp-2 leading-snug">
-                                                {{ $news->title }}
-                                            </h3>
-                                            <p class="text-[15px] text-zinc-600 line-clamp-3 leading-relaxed flex-grow mb-4">
-                                                {{ Str::limit(strip_tags($news->content), 120) }}
-                                            </p>
-                                            <div class="mt-auto pt-4 border-t border-zinc-100">
-                                                <span class="text-[14px] font-medium text-zinc-950 hover:text-mint transition-colors inline-flex items-center gap-1 cursor-pointer">
-                                                    Baca selengkapnya <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </article>
-                                @endforeach
-                            </div>
-                        </section>
-                    @endif
-
-                    {{-- Layanan --}}
-                    @if($village->services->count() > 0)
-                        <section id="layanan" class="scroll-mt-24">
-                            <h2 class="text-2xl font-semibold text-zinc-950 mb-6 tracking-tight">Layanan Administrasi</h2>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                @foreach($village->services as $service)
-                                    <div class="bg-mint-wash rounded-[16px] p-6 border border-zinc-50/0 hover:border-mint/20 transition-colors">
-                                        <div class="text-[13px] font-medium text-mint uppercase tracking-wider mb-2" style="letter-spacing: 0.65px;">
-                                            Layanan
-                                        </div>
-                                        <h4 class="text-[20px] font-semibold text-zinc-950 mb-3 tracking-tight">{{ $service->name }}</h4>
-                                        @if($service->description)
-                                            <p class="text-[15px] text-zinc-800 mb-4 leading-relaxed">{{ $service->description }}</p>
-                                        @endif
-                                        @if($service->requirements)
-                                            <div class="pt-4 border-t border-mint/10">
-                                                <p class="text-[13px] font-semibold text-zinc-950 uppercase tracking-wider mb-2" style="letter-spacing: 0.65px;">Persyaratan</p>
-                                                <p class="text-[14px] text-zinc-600 whitespace-pre-line leading-relaxed">{{ $service->requirements }}</p>
-                                            </div>
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
-                        </section>
-                    @endif
-
-                    {{-- Galeri Foto --}}
-                    @if($village->galleries->count() > 0)
-                        <section id="galeri" class="scroll-mt-24">
-                            <h2 class="text-2xl font-semibold text-zinc-950 mb-6 tracking-tight">Galeri Desa</h2>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                                @foreach($village->galleries as $gallery)
-                                    <div class="group relative rounded-[16px] overflow-hidden aspect-square bg-zinc-100 shadow-mintlify border border-zinc-100">
-                                        <img src="{{ Storage::url($gallery->image_path) }}" alt="{{ $gallery->caption }}"
-                                             class="w-full h-full object-cover">
-                                        @if($gallery->caption)
-                                            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                <p class="text-white text-[13px] font-medium line-clamp-2 leading-snug">{{ $gallery->caption }}</p>
-                                            </div>
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
-                        </section>
-                    @endif
+                {{-- Left Column: Profile Text --}}
+                <div class="card" style="padding: 2rem 2.5rem;">
+                    <div class="eyebrow" style="margin-bottom: 1rem;">Profil desa</div>
+                    <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.25rem; color: var(--fg);">
+                        Sebuah kampung yang tumbuh bersama warganya.
+                    </h2>
+                    <div style="font-size: 15px; line-height: 1.75; color: var(--muted-fg);">
+                        @if($village->description && Str::length($village->description) > 80)
+                            {!! nl2br(e($village->description)) !!}
+                        @else
+                            <p>Desa {{ $village->name }} terdiri dari empat dusun dengan kehidupan warga yang bertumpu pada pertanian, usaha rumahan, dan ruang-ruang komunal. Portal ini menjadi pintu informasi yang sederhana dan dekat bagi seluruh warga.</p>
+                            <p style="font-size: 13px; font-style: italic; opacity: 0.7; margin-top: 1rem;">Data pada contoh template ini dapat disesuaikan oleh setiap desa.</p>
+                        @endif
+                    </div>
                 </div>
 
-                {{-- ─── Right Column (4 cols) ─── --}}
-                <aside class="lg:col-span-4 space-y-10">
+                {{-- Right Column: Contact + Officials (5 cols) --}}
+                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
 
-                    {{-- Informasi Singkat --}}
-                    <div class="bg-white rounded-[16px] border border-zinc-100 shadow-mintlify p-6">
-                        <h3 class="text-[13px] font-medium text-mint uppercase tracking-wider mb-5" style="letter-spacing: 0.65px;">
-                            Informasi Kontak
-                        </h3>
-                        <div class="space-y-4">
+                    {{-- Contact Card --}}
+                    <div class="card" style="padding: 1.75rem;">
+                        <div class="eyebrow" style="margin-bottom: 1.25rem;">Informasi kontak</div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 14.5px;">
                             @if($village->address)
-                                <div>
-                                    <p class="text-[13px] text-zinc-500 font-medium mb-1">Alamat Kantor</p>
-                                    <p class="text-[14px] text-zinc-950 font-medium leading-relaxed">{{ $village->address }}</p>
+                                <div style="display: flex; gap: 1rem;">
+                                    <span style="font-weight: 500; width: 72px; flex-shrink: 0; color: var(--muted-fg);">Alamat</span>
+                                    <span style="font-weight: 500; color: var(--fg);">{{ $village->address }}</span>
                                 </div>
                             @endif
                             @if($village->contact_phone)
-                                <div class="pt-4 border-t border-zinc-100">
-                                    <p class="text-[13px] text-zinc-500 font-medium mb-1">Telepon</p>
-                                    <p class="text-[14px] text-zinc-950 font-medium">{{ $village->contact_phone }}</p>
+                                <div style="display: flex; gap: 1rem;">
+                                    <span style="font-weight: 500; width: 72px; flex-shrink: 0; color: var(--muted-fg);">Telepon</span>
+                                    <span style="font-weight: 500; color: var(--fg);">{{ $village->contact_phone }}</span>
                                 </div>
                             @endif
                             @if($village->contact_email)
-                                <div class="pt-4 border-t border-zinc-100">
-                                    <p class="text-[13px] text-zinc-500 font-medium mb-1">Email</p>
-                                    <p class="text-[14px] text-zinc-950 font-medium truncate">{{ $village->contact_email }}</p>
-                                </div>
-                            @endif
-                            @if($village->office_hours)
-                                <div class="pt-4 border-t border-zinc-100">
-                                    <p class="text-[13px] text-zinc-500 font-medium mb-1">Jam Layanan</p>
-                                    <p class="text-[14px] text-zinc-950 font-medium">{{ $village->office_hours }}</p>
+                                <div style="display: flex; gap: 1rem;">
+                                    <span style="font-weight: 500; width: 72px; flex-shrink: 0; color: var(--muted-fg);">Email</span>
+                                    <span style="font-weight: 500; color: var(--fg);">{{ $village->contact_email }}</span>
                                 </div>
                             @endif
                         </div>
                     </div>
 
-                    {{-- Perangkat Desa --}}
+                    {{-- Perangkat Card --}}
                     @if($village->officials->count() > 0)
-                        <div class="bg-white rounded-[16px] border border-zinc-100 shadow-mintlify p-6" id="perangkat">
-                            <h3 class="text-[13px] font-medium text-mint uppercase tracking-wider mb-5" style="letter-spacing: 0.65px;">
-                                Perangkat Desa
-                            </h3>
-                            <div class="space-y-4">
+                        <div id="perangkat" class="card scroll-mt-20" style="padding: 1.75rem;">
+                            <div class="eyebrow" style="margin-bottom: 1.25rem;">Perangkat desa</div>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
                                 @foreach($village->officials as $official)
-                                    <div class="flex items-center gap-4">
+                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem; margin: -0.5rem; border-radius: 0.75rem; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='var(--muted)'" onmouseout="this.style.backgroundColor='transparent'">
                                         @if($official->photo_path)
-                                            <img src="{{ Storage::url($official->photo_path) }}" alt="{{ $official->name }}"
-                                                 class="w-10 h-10 rounded border border-zinc-200 object-cover bg-zinc-50">
+                                            <img src="{{ Storage::url($official->photo_path) }}" alt="{{ $official->name }}" class="w-12 h-12 rounded-xl object-cover shrink-0 border" style="border-color: var(--border);">
                                         @else
-                                            <div class="w-10 h-10 rounded bg-zinc-100 text-zinc-600 flex items-center justify-center font-semibold text-sm border border-zinc-200">
+                                            <div class="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-base shrink-0" style="background-color: var(--muted); color: var(--fg); font-family: Outfit, sans-serif;">
                                                 {{ strtoupper(mb_substr($official->name, 0, 1)) }}
                                             </div>
                                         @endif
-                                        <div class="min-w-0">
-                                            <div class="font-medium text-zinc-950 text-[14px] truncate">{{ $official->name }}</div>
-                                            <div class="text-[13px] text-zinc-500 mt-0.5">{{ $official->position }}</div>
+                                        <div>
+                                            <div class="font-bold text-[15px]" style="font-family: Outfit, sans-serif; color: var(--fg);">{{ $official->name }}</div>
+                                            <div class="text-[12.5px] font-medium" style="color: var(--muted-fg);">{{ $official->position }}</div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                     @endif
-
-                </aside>
+                </div>
             </div>
         </div>
-    </main>
+    </section>
+
+    {{-- ═══════════════════════════════════════
+         LAYANAN (Services)
+         ═══════════════════════════════════════ --}}
+    @if($village->services->count() > 0)
+        <section id="layanan" class="scroll-mt-20" style="padding-bottom: 4rem;">
+            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+                <div class="eyebrow" style="margin-bottom: 0.75rem;">Layanan warga</div>
+                <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; margin-bottom: 2rem; color: var(--fg);">Administrasi satu pintu</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style="align-items: start;">
+                    @foreach($village->services as $service)
+                        <div class="card transition-all duration-300 group flex flex-col" style="padding: 1.5rem; align-self: start; border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+                            <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shrink-0" style="background-color: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary);">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            </div>
+                            <h3 class="font-bold text-lg mb-3" style="font-family: Outfit, sans-serif;">{{ $service->name }}</h3>
+                            @if($service->description)
+                                <p class="text-[14px] leading-relaxed mb-6" style="color: var(--muted-fg);">{{ $service->description }}</p>
+                            @endif
+                            @if($service->requirements)
+                                <div class="mt-auto pt-4 border-t" style="border-color: var(--border);">
+                                    <details class="group/details">
+                                        <summary class="cursor-pointer font-semibold inline-flex items-center justify-between w-full py-1 text-xs uppercase tracking-wider transition-colors select-none" style="color: var(--primary);">
+                                            <span>Syarat & Ketentuan</span>
+                                            <svg class="w-4 h-4 transition-transform duration-300 group-open/details:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                                        </summary>
+                                        <div class="mt-4 p-4 rounded-xl border space-y-2 text-[13px] leading-relaxed" style="background-color: color-mix(in srgb, var(--bg) 70%, transparent); border-color: var(--border); color: var(--fg);">
+                                            @foreach(explode("\n", $service->requirements) as $reqLine)
+                                                @if(trim($reqLine))
+                                                    <div class="flex items-start gap-2.5">
+                                                        <span class="inline-block w-1.5 h-1.5 rounded-full mt-2 shrink-0" style="background-color: var(--primary);"></span>
+                                                        <span>{{ preg_replace('/^\d+\.\s*/', '', trim($reqLine)) }}</span>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </details>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ═══════════════════════════════════════
+         BERITA (News)
+         ═══════════════════════════════════════ --}}
+    @if($village->news->count() > 0)
+        <section id="berita" class="scroll-mt-20" style="padding-bottom: 4rem;">
+            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+                <div class="eyebrow" style="margin-bottom: 0.75rem;">Kabar desa</div>
+                <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; margin-bottom: 2rem; color: var(--fg);">Berita & pengumuman</h2>
+                <div id="berita-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                    @foreach($village->news->take(4) as $news)
+                        <article class="group flex flex-col">
+                            @if($news->cover_image_path)
+                                <div class="overflow-hidden rounded-xl mb-3 aspect-[4/3]" style="background-color: var(--muted);">
+                                    <img src="{{ Storage::url($news->cover_image_path) }}" alt="{{ $news->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                </div>
+                            @endif
+                            <div class="text-[11px] font-bold uppercase tracking-wider mb-1.5" style="color: var(--muted-fg);">
+                                {{ $news->published_at->translatedFormat('d M Y') }}
+                            </div>
+                            <h3 class="font-bold text-[15px] leading-snug mb-1.5 line-clamp-2 transition-colors" style="font-family: Outfit, sans-serif;">
+                                {{ $news->title }}
+                            </h3>
+                            <p class="text-[13px] line-clamp-2 mt-auto" style="color: var(--muted-fg);">
+                                {{ Str::limit(strip_tags($news->content), 80) }}
+                            </p>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ═══════════════════════════════════════
+         GALERI — Grid 3×2 with caption pills
+         ═══════════════════════════════════════ --}}
+    @if($village->galleries->count() > 0)
+        <section id="galeri" class="scroll-mt-20" style="padding-bottom: 4rem;">
+            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
+                    <div>
+                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Galeri desa</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Wajah dan keseharian</h2>
+                    </div>
+                    <div style="font-size: 13px; font-weight: 500; color: var(--muted-fg);">{{ $village->galleries->count() }} dokumentasi</div>
+                </div>
+
+                <div id="galeri-grid" style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                    @foreach($village->galleries->take(6) as $gallery)
+                        <div style="position: relative; border-radius: 0.75rem; overflow: hidden; aspect-ratio: 4/3; background-color: var(--muted); cursor: pointer;" class="group">
+                            <img src="{{ Storage::url($gallery->image_path) }}" alt="{{ $gallery->caption ?? 'Galeri' }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            @if($gallery->caption)
+                                <div class="gallery-caption">{{ $gallery->caption }}</div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ═══════════════════════════════════════
+         PETA / LOKASI — Map + Legend card
+         ═══════════════════════════════════════ --}}
+    @if($village->latitude && $village->longitude)
+        <section id="lokasi" class="scroll-mt-20" style="padding-bottom: 4rem;">
+            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+                <div class="card" style="padding: 1.25rem;">
+                    <div id="lokasi-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: stretch;">
+                        
+                        {{-- Map --}}
+                        <div id="peta-desa" style="height: 380px; border-radius: 0.75rem; overflow: hidden; z-index: 10; border: 1px solid var(--border);"></div>
+                        
+                        {{-- Legend --}}
+                        <div style="display: flex; flex-direction: column; justify-content: center; padding: 1rem 1.5rem;">
+                            <div class="eyebrow" style="margin-bottom: 0.75rem;">Lokasi</div>
+                            <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.75rem); font-weight: 700; margin-bottom: 1rem; color: var(--fg);">Temukan kami</h2>
+                            <p style="font-size: 14.5px; line-height: 1.6; margin-bottom: 1.5rem; color: var(--muted-fg);">
+                                Balai desa berada di jalur utama kampung dan mudah dijangkau dari pusat kecamatan.
+                            </p>
+
+                            @if($village->titikLokasis->count() > 0)
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary);"></div>
+                                        <span style="font-size: 13.5px; font-weight: 500;">Balai / Kantor Desa</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary);"></div>
+                                        <span style="font-size: 13.5px; font-weight: 500;">Fasilitas Kesehatan</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--accent);"></div>
+                                        <span style="font-size: 13.5px; font-weight: 500;">Pendidikan</span>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <a href="https://maps.google.com/?q={{ $village->latitude }},{{ $village->longitude }}" target="_blank" class="btn-ghost" style="text-decoration: none; display: inline-flex; width: fit-content;">
+                                Buka petunjuk arah
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
 
     {{-- ═══════════════════════════════════════
          FOOTER
          ═══════════════════════════════════════ --}}
-    <footer class="bg-white border-t border-zinc-100 mt-auto">
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
+    <footer style="margin-top: auto; padding: 2rem 0; border-top: 1px solid var(--border); background-color: var(--bg);">
+        <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
                     @if($village->logo_path)
-                        <img src="{{ Storage::url($village->logo_path) }}" class="h-6 w-auto rounded">
+                        <img src="{{ Storage::url($village->logo_path) }}" alt="Logo" style="width: 36px; height: 36px; border-radius: 50%; object-fit: contain; border: 1px solid var(--border);">
+                    @else
+                        <div style="width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; background-color: var(--primary); color: var(--primary-fg); font-family: Outfit, sans-serif;">
+                            {{ strtoupper(mb_substr($village->name, 0, 1)) }}
+                        </div>
                     @endif
-                    <span class="font-semibold text-[14px] text-zinc-950">{{ $village->name }}</span>
+                    <div>
+                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; color: var(--fg);">Desa {{ $village->name }}</div>
+                        <div style="font-size: 11.5px; color: var(--muted-fg);">&copy; {{ date('Y') }} Pemerintah Desa {{ $village->name }}</div>
+                    </div>
                 </div>
-                <p class="text-zinc-500 text-[13px] text-center sm:text-right font-medium">
-                    &copy; {{ date('Y') }} {{ $village->name }}. Diberdayakan oleh 
-                    <a href="{{ url('/') }}" class="text-zinc-950 hover:text-mint transition-colors">Portal Desa</a>.
-                </p>
+                <div style="display: flex; gap: 1.5rem; font-size: 12.5px; font-weight: 500;">
+                    <a href="#profil" style="color: var(--muted-fg); text-decoration: none;">Profil</a>
+                    <a href="#galeri" style="color: var(--muted-fg); text-decoration: none;">Galeri</a>
+                    <a href="#lokasi" style="color: var(--muted-fg); text-decoration: none;">Lokasi</a>
+                </div>
             </div>
         </div>
     </footer>
+
+    {{-- ═══════════════════════════════════════
+         LEAFLET MAP SCRIPT
+         ═══════════════════════════════════════ --}}
+    @if($village->latitude && $village->longitude)
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const villageLat = {{ $village->latitude }};
+                const villageLng = {{ $village->longitude }};
+
+                const map = L.map('peta-desa', { zoomControl: false }).setView([villageLat, villageLng], 14);
+                L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+                    subdomains: 'abcd',
+                    maxZoom: 20
+                }).addTo(map);
+
+                const colorPrimary = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+                const colorSecondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim();
+                const colorAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+                const colorFg = getComputedStyle(document.documentElement).getPropertyValue('--fg').trim();
+
+                // Village center marker
+                L.circleMarker([villageLat, villageLng], {
+                    radius: 11, fillColor: colorPrimary, color: '#fff', weight: 3, opacity: 1, fillOpacity: 1
+                }).addTo(map).bindPopup('<div style="font-family:Figtree,sans-serif;font-weight:600;font-size:13px">Balai Desa {{ e($village->name) }}</div>');
+
+                const titikLokasis = @json($village->titikLokasis);
+                titikLokasis.forEach(function (titik) {
+                    let mc = colorFg;
+                    if (titik.kategori === 'kesehatan') mc = colorSecondary;
+                    if (titik.kategori === 'pendidikan') mc = colorAccent;
+                    if (titik.kategori === 'pemerintahan') mc = colorPrimary;
+
+                    L.circleMarker([titik.latitude, titik.longitude], {
+                        radius: 7, fillColor: mc, color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9
+                    }).addTo(map).bindPopup('<div style="font-family:Figtree,sans-serif;font-size:12px"><strong>' + titik.nama_lokasi + '</strong><br><span style="color:#888">' + titik.kategori + '</span></div>');
+                });
+
+                @if($village->geojson_batas_wilayah)
+                    try {
+                        L.geoJSON(@json($village->geojson_batas_wilayah), {
+                            style: { color: colorPrimary, weight: 2, opacity: 0.4, fillOpacity: 0.04 }
+                        }).addTo(map);
+                    } catch (e) { console.warn('GeoJSON error:', e); }
+                @endif
+
+                setTimeout(() => map.invalidateSize(), 400);
+            });
+        </script>
+    @endif
+
 </body>
 </html>

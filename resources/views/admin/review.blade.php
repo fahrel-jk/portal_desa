@@ -1,21 +1,21 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <h2 class="font-bold text-xl text-ivory-text leading-tight">
                 Review Desa: {{ $village->name }}
             </h2>
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3">
                 <a href="{{ route('admin.preview', $village) }}" target="_blank" class="text-sm font-semibold text-cobalt hover:underline bg-cobalt/10 px-3 py-1.5 rounded-lg border border-cobalt/20 flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                    Preview Tampilan Publik
+                    Preview
                 </a>
-                <a href="{{ route('admin.dashboard') }}" class="text-sm text-ash-text hover:underline">← Kembali ke Dashboard</a>
+                <a href="{{ route('admin.dashboard') }}" class="text-sm text-ash-text hover:underline">← Kembali</a>
             </div>
         </div>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {{-- Main Content --}}
                 <div class="lg:col-span-2 space-y-6">
@@ -163,7 +163,7 @@
                             @if($village->rejection_reason)
                                 <div>
                                     <span class="text-ash-text">Alasan penolakan:</span>
-                                    <div class="mt-1 text-red-400 bg-red-500/10 rounded-lg p-2 border border-red-500/20">{{ $village->rejection_reason }}</div>
+                                    <div class="mt-1 text-red-700 bg-red-500/10 rounded-lg p-2 border border-red-500/20">{{ $village->rejection_reason }}</div>
                                 </div>
                             @endif
                         </div>

@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-graphite-card overflow-hidden border border-slate-border/15 rounded-2xl p-8">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-graphite-card overflow-hidden border border-slate-border/15 rounded-2xl p-5 sm:p-8">
                 <div class="text-center mb-8">
                     <div class="w-16 h-16 bg-cobalt/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,7 +72,7 @@
                         </h4>
                         <a href="{{ route('wizard.step3') }}" class="text-sm text-cobalt hover:underline">Ubah</a>
                     </div>
-                    <div class="flex gap-4 text-sm">
+                    <div class="flex flex-col sm:flex-row gap-4 text-sm">
                         <div>
                             <span class="text-ash-text">Logo:</span>
                             <span class="font-medium {{ !empty($step3['logo_name']) ? 'text-green-600' : 'text-ash-text' }}">
@@ -138,7 +138,7 @@
                 <!-- Submit -->
                 <form method="POST" action="{{ route('wizard.submit') }}">
                     @csrf
-                    <div class="flex items-center justify-between">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                         <a href="{{ route('wizard.step4') }}"
                             class="inline-flex items-center px-4 py-2 bg-graphite-card border border-slate-border rounded-md font-semibold text-xs text-ivory-text uppercase tracking-widest shadow-sm hover:bg-obsidian-button/30 transition">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -15,17 +15,17 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 
     /* ── Colors: Mercury Surfaces ── */
-    --color-onyx-canvas: #171721;
-    --color-graphite-card: #1e1e2a;
-    --color-obsidian-button: #272735;
+    --color-onyx-canvas: #f9fafb;
+    --color-graphite-card: #ffffff;
+    --color-obsidian-button: #f3f4f6;
 
     /* ── Colors: Mercury Borders ── */
-    --color-slate-border: #70707d;
-    --color-mist-border: #e2e3ed;
+    --color-slate-border: #e5e7eb;
+    --color-mist-border: #d1d5db;
 
     /* ── Colors: Mercury Text ── */
-    --color-ash-text: #c3c3cc;
-    --color-ivory-text: #ededf3;
+    --color-ash-text: #4b5563;
+    --color-ivory-text: #111827;
 
     /* ── Colors: Mercury Accent ── */
     --color-cobalt: #5266eb;
