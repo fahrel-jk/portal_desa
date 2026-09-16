@@ -13,6 +13,11 @@ class AccessRequestController extends Controller
     {
         $village = Village::where('slug', $slug)->firstOrFail();
         
+        // If user is already logged in as warga for this village, go straight to dashboard
+        if (auth()->check() && auth()->user()->isWargaLayanan() && auth()->user()->village_id == $village->id) {
+            return redirect()->route('layanan.dashboard');
+        }
+        
         return view('desa.request-akses', compact('village'));
     }
 

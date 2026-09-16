@@ -63,13 +63,60 @@
                         <x-input-error :messages="$errors->get('hero_image')" class="mt-2" />
                     </div>
 
-                    <!-- Deskripsi / Sejarah -->
+                    <!-- Deskripsi Singkat -->
                     <div class="mb-6">
-                        <x-input-label for="description" value="Deskripsi / Sejarah Singkat Desa" />
-                        <textarea id="description" name="description" rows="5"
+                        <x-input-label for="description" value="Deskripsi Singkat Desa (Untuk Landing Page)" />
+                        <textarea id="description" name="description" rows="3"
                             class="mt-1 block w-full border-slate-border focus:border-cobalt focus:ring-cobalt rounded-md shadow-sm"
-                            placeholder="Ceritakan sejarah singkat dan keunggulan desa Anda...">{{ old('description', $village->description) }}</textarea>
+                            placeholder="Ceritakan gambaran umum desa Anda dalam satu paragraf pendek...">{{ old('description', $village->description) }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    </div>
+
+                    <!-- Sejarah Desa -->
+                    <div class="mb-6 pb-6 border-b border-slate-border/15">
+                        <x-input-label for="history" value="Sejarah Lengkap Desa (Untuk Halaman Profil)" />
+                        <textarea id="history" name="history" rows="6"
+                            class="mt-1 block w-full border-slate-border focus:border-cobalt focus:ring-cobalt rounded-md shadow-sm"
+                            placeholder="Ceritakan sejarah asal mula, pendiri, atau peristiwa penting desa Anda...">{{ old('history', $village->history) }}</textarea>
+                        <x-input-error :messages="$errors->get('history')" class="mt-2" />
+                    </div>
+
+                    <!-- Visi -->
+                    <div class="mb-6 border-t border-slate-border/15 pt-6">
+                        <x-input-label for="visi" value="Visi Desa" />
+                        <textarea id="visi" name="visi" rows="3"
+                            class="mt-1 block w-full border-slate-border focus:border-cobalt focus:ring-cobalt rounded-md shadow-sm"
+                            placeholder="Contoh: Terwujudnya Desa yang Aman, Sehat, Cerdas, dan Berbudaya">{{ old('visi', $village->visi) }}</textarea>
+                        <x-input-error :messages="$errors->get('visi')" class="mt-2" />
+                    </div>
+
+                    <!-- Misi -->
+                    <div class="mb-6">
+                        <x-input-label for="misi" value="Misi Desa" />
+                        <p class="text-xs text-slate-500 mb-2">Tuliskan setiap poin misi di baris baru. Sistem otomatis akan membuatkan nomor berurutan.</p>
+                        <textarea id="misi" name="misi" rows="6"
+                            class="mt-1 block w-full border-slate-border focus:border-cobalt focus:ring-cobalt rounded-md shadow-sm"
+                            placeholder="Meningkatkan kualitas pelayanan publik.&#10;Membangun infrastruktur desa yang memadai.&#10;Memberdayakan ekonomi kerakyatan.">{{ old('misi', $village->misi) }}</textarea>
+                        <x-input-error :messages="$errors->get('misi')" class="mt-2" />
+                    </div>
+
+                    <!-- Gambar Bagan Struktur Desa -->
+                    <div class="mb-6 pb-6 border-b border-slate-border/15">
+                        <x-input-label for="bagan_struktur" value="Gambar Bagan Struktur Organisasi Desa" />
+                        <div class="mt-2">
+                            @if($village->bagan_struktur_path)
+                                <div class="relative group h-auto w-full mb-3 rounded-lg overflow-hidden border border-slate-border max-w-md">
+                                    <img src="{{ Storage::url($village->bagan_struktur_path) }}" alt="Bagan Struktur" class="w-full object-contain bg-slate-100">
+                                    <label class="absolute inset-0 bg-red-500/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer" title="Hapus Gambar Bagan">
+                                        <input type="checkbox" name="remove_bagan" value="1" class="sr-only">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                    </label>
+                                </div>
+                            @endif
+                            <input type="file" id="bagan_struktur" name="bagan_struktur" class="block w-full text-sm text-ash-text file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-cobalt file:text-white hover:file:bg-cobalt/90 cursor-pointer">
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Format: JPG, PNG, WEBP (Maks 4MB). Disarankan format landscape (mendatar).</p>
+                        <x-input-error :messages="$errors->get('bagan_struktur')" class="mt-2" />
                     </div>
 
                     <!-- Kontak -->

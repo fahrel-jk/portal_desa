@@ -131,6 +131,84 @@
                 </div>
             </div>
 
+            {{-- Riwayat Permohonan PPID --}}
+            <div>
+                <div class="flex items-center justify-between mb-4 mt-8">
+                    <h3 class="text-lg font-bold text-ivory-text">
+                        Riwayat Permohonan Informasi (PPID)
+                    </h3>
+                    <a href="{{ route('layanan.ppid.create') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-cobalt text-white rounded-lg text-sm font-semibold hover:bg-cobalt/90 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Ajukan Permohonan
+                    </a>
+                </div>
+                
+                <div class="bg-graphite-card border border-slate-border/15 rounded-2xl overflow-hidden">
+                    @if($ppidRequests->isEmpty())
+                        <div class="text-center py-10">
+                            <div class="w-16 h-16 bg-obsidian-button rounded-full flex items-center justify-center mx-auto mb-3">
+                                <svg class="w-8 h-8 text-ash-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <p class="text-ash-text">Anda belum memiliki riwayat permohonan informasi PPID.</p>
+                        </div>
+                    @else
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="text-xs uppercase bg-obsidian-button/50 text-ash-text border-b border-slate-border/15">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-4 font-semibold">Tujuan / Instansi</th>
+                                        <th scope="col" class="px-6 py-4 font-semibold">Tanggal</th>
+                                        <th scope="col" class="px-6 py-4 font-semibold">Status</th>
+                                        <th scope="col" class="px-6 py-4 font-semibold text-right">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-border/15 text-ash-text">
+                                    @foreach($ppidRequests as $item)
+                                        <tr class="hover:bg-obsidian-button/30 transition-colors">
+                                            <td class="px-6 py-4 font-medium text-ivory-text">
+                                                {{ Str::limit($item->agency, 30) }}
+                                            </td>
+                                            <td class="px-6 py-4 text-xs">
+                                                {{ $item->created_at->format('d M Y, H:i') }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                @if($item->status === 'pending')
+                                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                                                        Pending
+                                                    </span>
+                                                @elseif($item->status === 'processed')
+                                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-cobalt/10 text-cobalt border border-cobalt/20">
+                                                        Diproses
+                                                    </span>
+                                                @elseif($item->status === 'completed')
+                                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-green-500/10 text-green-500 border border-green-500/20">
+                                                        Selesai
+                                                    </span>
+                                                @elseif($item->status === 'rejected')
+                                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-red-500/10 text-red-500 border border-red-500/20">
+                                                        Ditolak
+                                                    </span>
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-4 text-right">
+                                                <a href="{{ route('layanan.ppid.show', $item->id) }}" class="inline-flex items-center px-4 py-2 bg-obsidian-button border border-slate-border/20 rounded-lg text-xs font-semibold text-ivory-text hover:border-cobalt/50 hover:text-cobalt transition-colors">
+                                                    Detail
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        @if($ppidRequests->hasPages())
+                            <div class="p-4 border-t border-slate-border/15 bg-obsidian-button/20">
+                                {{ $ppidRequests->links() }}
+                            </div>
+                        @endif
+                    @endif
+                </div>
+            </div>
+
         </div>
     </div>
 </x-app-layout>

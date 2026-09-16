@@ -24,12 +24,16 @@ class Village extends Model
         'kecamatan',
         'kabupaten',
         'description',
+        'history',
         'logo_path',
         'hero_image_path',
         'contact_phone',
         'contact_email',
         'office_hours',
         'address',
+        'visi',
+        'misi',
+        'bagan_struktur_path',
         'latitude',
         'longitude',
         'template_id',
@@ -98,6 +102,32 @@ class Village extends Model
         return $this->hasMany(VillageNews::class)->latest('published_at');
     }
 
+    /**
+     * Get the demographics data for this village.
+     */
+    public function demographics(): HasMany
+    {
+        return $this->hasMany(VillageDemographic::class);
+    }
+
+    /**
+     * Get the complaints for this village.
+     */
+    public function complaints(): HasMany
+    {
+        return $this->hasMany(VillageComplaint::class)->latest();
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(VillageDocument::class)->latest();
+    }
+
+    public function faqs(): HasMany
+    {
+        return $this->hasMany(VillageFaq::class)->orderBy('order')->latest();
+    }
+
     public function galleries(): HasMany
     {
         return $this->hasMany(VillageGallery::class)->latest();
@@ -120,11 +150,35 @@ class Village extends Model
     }
 
     /**
+     * Get the information requests of this village.
+     */
+    public function informationRequests(): HasMany
+    {
+        return $this->hasMany(VillageInformationRequest::class)->latest();
+    }
+
+    /**
      * Get the location points (titik lokasi) of this village.
      */
     public function titikLokasis(): HasMany
     {
         return $this->hasMany(TitikLokasi::class);
+    }
+
+    /**
+     * Get the products (UMKM) of this village.
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(VillageProduct::class)->latest();
+    }
+
+    /**
+     * Get the agenda events of this village.
+     */
+    public function agendas(): HasMany
+    {
+        return $this->hasMany(VillageAgenda::class)->orderBy('event_date');
     }
 
     /**

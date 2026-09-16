@@ -28,7 +28,12 @@ class PengajuanController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('layanan.pengajuan.index', compact('services', 'pengajuan'));
+        // Tampilkan riwayat permohonan PPID user ini
+        $ppidRequests = \App\Models\VillageInformationRequest::where('user_id', $user->id)
+            ->latest()
+            ->paginate(10);
+
+        return view('layanan.pengajuan.index', compact('services', 'pengajuan', 'ppidRequests'));
     }
 
     public function create(VillageService $layanan)

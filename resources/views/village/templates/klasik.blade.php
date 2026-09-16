@@ -65,115 +65,7 @@
 <body class="antialiased min-h-screen flex flex-col">
 
 <div class="min-h-screen bg-background text-foreground flex flex-col">
-    {{-- Header --}}
-    <header class="bg-surface relative z-40 border-b border-border sticky top-0 shadow-sm" x-data="{ mobileMenuOpen: false }">
-        <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
-            <a href="#beranda" class="flex items-center gap-3">
-                @if($village->logo_path)
-                    <img src="{{ Storage::url($village->logo_path) }}" alt="Logo {{ $village->name }}" class="w-10 h-10 object-contain drop-shadow-sm rounded">
-                @else
-                    <span class="rounded-sm border border-primary/30 bg-primary/10 text-primary grid size-10 place-items-center font-serif text-sm font-bold uppercase">
-                        {{ substr($village->name, 0, 2) }}
-                    </span>
-                @endif
-                <span>
-                    <span class="block font-serif text-[15px] font-bold leading-none">{{ $village->name }}</span>
-                    <span class="mt-1 block text-[10px] uppercase tracking-[0.14em] text-muted-foreground">Kecamatan {{ $village->kecamatan }}</span>
-                </span>
-            </a>
-
-            {{-- Desktop Navigation --}}
-            <nav class="hidden items-center gap-7 text-sm text-muted-foreground lg:flex">
-                <a href="#profil" class="transition-colors hover:text-accent">Profil</a>
-                <a href="#layanan" class="transition-colors hover:text-accent">Layanan</a>
-                <a href="#berita" class="transition-colors hover:text-accent">Berita</a>
-                @if($village->galleries->count() > 0)
-                <a href="#galeri" class="transition-colors hover:text-accent">Galeri</a>
-                @endif
-                @if($village->latitude && $village->longitude)
-                <a href="#lokasi" class="transition-colors hover:text-accent">Lokasi</a>
-                @endif
-                <a href="{{ route('village.apbdes', $village->slug) }}" class="transition-colors hover:text-accent">APBDes</a>
-                <a href="#kontak" class="transition-colors hover:text-accent">Kontak</a>
-            </nav>
-
-
-            <div class="flex items-center gap-2">
-                {{-- Desktop action buttons --}}
-                <div class="hidden items-center gap-2 lg:flex">
-                    <a href="/login" class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md font-medium transition-colors text-muted-foreground hover:bg-muted hover:text-foreground h-9 px-3 text-xs">Login Admin</a>
-                    <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md font-medium transition-colors bg-accent text-accent-foreground hover:bg-accent-hover h-9 px-3 text-xs">Hubungi Kami</a>
-                </div>
-
-                {{-- Mobile hamburger button --}}
-                <button 
-                    @click="mobileMenuOpen = !mobileMenuOpen" 
-                    class="lg:hidden inline-flex items-center justify-center size-10 rounded border border-border text-foreground hover:bg-muted transition-colors"
-                    :aria-expanded="mobileMenuOpen"
-                    aria-label="Buka menu navigasi"
-                >
-                    <svg x-show="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
-                    <svg x-show="mobileMenuOpen" x-cloak xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                </button>
-            </div>
-        </div>
-
-        {{-- Mobile Menu Panel --}}
-        <div 
-            x-show="mobileMenuOpen" 
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 -translate-y-2"
-            x-transition:enter-end="opacity-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 translate-y-0"
-            x-transition:leave-end="opacity-0 -translate-y-2"
-            x-cloak
-            class="lg:hidden border-t border-border bg-surface"
-        >
-            <nav class="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-                <div class="flex flex-col gap-1">
-                    <a @click="mobileMenuOpen = false" href="#profil" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        Profil
-                    </a>
-                    <a @click="mobileMenuOpen = false" href="#layanan" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2z"></path><path d="M14 2v6h6"></path></svg>
-                        Layanan
-                    </a>
-                    <a @click="mobileMenuOpen = false" href="#berita" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2m0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8z"></path></svg>
-                        Berita
-                    </a>
-                    @if($village->galleries->count() > 0)
-                    <a @click="mobileMenuOpen = false" href="#galeri" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
-                        Galeri
-                    </a>
-                    @endif
-                    @if($village->latitude && $village->longitude)
-                    <a @click="mobileMenuOpen = false" href="#lokasi" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        Lokasi
-                    </a>
-                    @endif
-                    <a href="{{ route('village.apbdes', $village->slug) }}" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                        APBDes
-                    </a>
-                    <a @click="mobileMenuOpen = false" href="#kontak" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
-                        Kontak
-                    </a>
-                </div>
-
-                {{-- Mobile action buttons --}}
-                <div class="mt-3 pt-3 border-t border-border flex flex-col gap-2">
-                    <a href="/login" class="inline-flex min-h-10 items-center justify-center gap-2 font-medium transition-colors text-muted-foreground hover:bg-muted hover:text-foreground h-9 px-3 text-xs border border-border">Login Admin</a>
-                    <a @click="mobileMenuOpen = false" href="{{ route('desa.request-akses.create', $village->slug) }}" class="inline-flex min-h-10 items-center justify-center gap-2 font-medium transition-colors bg-accent text-accent-foreground hover:bg-accent-hover h-10 px-3 text-sm">Hubungi Kami</a>
-                </div>
-            </nav>
-        </div>
-    </header>
+    @include('village.templates.klasik.header')
 
     <main class="flex-grow">
         {{-- Hero --}}
@@ -243,37 +135,27 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 items-start">
-                    @foreach($village->services as $service)
-                        <article class="group flex flex-col border border-border bg-card p-5 transition-colors hover:border-primary/45 sm:p-6 h-auto">
+                    @foreach($village->services->take(6) as $service)
+                        <a href="{{ $service->slug ? route('village.service.show', [$village->slug, $service->slug]) : route('village.services', $village->slug) }}" class="group flex flex-col border border-border bg-card p-5 transition-all hover:border-primary/45 hover:shadow-md sm:p-6 h-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="size-6 text-accent mb-4"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-                            <h3 class="font-serif text-lg font-bold">{{ $service->name }}</h3>
+                            <h3 class="font-serif text-lg font-bold group-hover:text-accent transition-colors">{{ $service->name }}</h3>
                             @if($service->description)
-                                <p class="mt-2 text-sm leading-6 text-muted-foreground">{{ $service->description }}</p>
+                                <p class="mt-2 text-sm leading-6 text-muted-foreground line-clamp-2">{{ $service->description }}</p>
                             @endif
-                            
-                            @if($service->requirements)
-                            <div class="mt-5 pt-4 border-t border-border mt-auto">
-                                <details class="group/details">
-                                    <summary class="cursor-pointer font-semibold inline-flex items-center justify-between w-full py-1 text-xs uppercase tracking-wider text-primary select-none">
-                                        <span>Syarat & Ketentuan</span>
-                                        <svg class="w-4 h-4 transition-transform duration-300 group-open/details:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                                    </summary>
-                                    <div class="mt-4 p-4 border border-border bg-secondary space-y-2 text-[13px] leading-relaxed text-foreground">
-                                        @foreach(explode("\n", $service->requirements) as $reqLine)
-                                            @if(trim($reqLine))
-                                                <div class="flex items-start gap-2.5">
-                                                    <span class="inline-block w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-accent"></span>
-                                                    <span>{{ preg_replace('/^\d+\.\s*/', '', trim($reqLine)) }}</span>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </details>
+                            <div class="mt-auto pt-4 border-t border-border">
+                                <span class="text-xs font-semibold text-accent group-hover:underline">Lihat Detail →</span>
                             </div>
-                            @endif
-                        </article>
+                        </a>
                     @endforeach
                 </div>
+                @if($village->services->count() > 6)
+                <div class="mt-6 text-center">
+                    <a href="{{ route('village.services', $village->slug) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline">
+                        Lihat Semua Layanan ({{ $village->services->count() }})
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+                @endif
             </div>
         </section>
         @endif
@@ -291,7 +173,7 @@
                     </div>
                     <div class="grid gap-4 sm:grid-cols-2">
                         @foreach($village->news->take(4) as $news)
-                            <article class="group border border-border bg-card overflow-hidden">
+                            <a href="{{ route('village.news.show', [$village->slug, $news->slug]) }}" class="group border border-border bg-card overflow-hidden block transition-colors hover:border-primary/45">
                                 @if($news->cover_image_path)
                                     <img src="{{ Storage::url($news->cover_image_path) }}" alt="{{ $news->title }}" class="aspect-[16/10] w-full object-cover"/>
                                 @else
@@ -301,12 +183,20 @@
                                 @endif
                                 <div class="p-5">
                                     <p class="text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">{{ $news->published_at ? $news->published_at->format('d F Y') : $news->created_at->format('d F Y') }}</p>
-                                    <h3 class="mt-2 font-serif text-lg font-bold leading-7 text-primary">{{ $news->title }}</h3>
+                                    <h3 class="mt-2 font-serif text-lg font-bold leading-7 text-primary group-hover:text-accent transition-colors">{{ $news->title }}</h3>
                                     <p class="mt-2 text-sm text-muted-foreground line-clamp-2">{{ Str::limit(strip_tags($news->content), 100) }}</p>
                                 </div>
-                            </article>
+                            </a>
                         @endforeach
                     </div>
+                    @if($village->news->count() > 4)
+                    <div class="mt-6 text-center">
+                        <a href="{{ route('village.news', $village->slug) }}" class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors border border-border bg-surface text-foreground hover:bg-muted h-10 px-5">
+                            Lihat Semua Berita
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                    @endif
                 </div>
                 
                 {{-- Aparatur & Statistik (Dummy data for template purposes) --}}
@@ -339,13 +229,171 @@
                         </div>
                     </div>
                     @endif
+                    {{-- Statistik Demografi --}}
+                    @php
+                        $demographics = $village->demographics()->get()->groupBy('type');
+                    @endphp
+                    @if($demographics->count() > 0)
+                        <div class="border border-border bg-card p-5 mt-6">
+                            <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent mb-4">Statistik Penduduk</p>
+                            <div class="space-y-6">
+                                @foreach($demographics as $type => $items)
+                                    <div>
+                                        <h4 class="font-serif text-sm font-bold text-primary mb-3 border-b border-border pb-1 capitalize">{{ $type == 'gender' ? 'Jenis Kelamin' : ($type == 'age' ? 'Kelompok Usia' : ($type == 'religion' ? 'Agama' : $type)) }}</h4>
+                                        <div class="space-y-3">
+                                            @php
+                                                $total = $items->sum('count');
+                                            @endphp
+                                            @foreach($items as $item)
+                                                @php
+                                                    $percentage = $total > 0 ? round(($item->count / $total) * 100) : 0;
+                                                @endphp
+                                                <div>
+                                                    <div class="flex justify-between text-xs mb-1">
+                                                        <span class="font-medium text-text-dark">{{ $item->label }}</span>
+                                                        <span class="text-muted-foreground">{{ number_format($item->count, 0, ',', '.') }} ({{ $percentage }}%)</span>
+                                                    </div>
+                                                    <div class="w-full bg-secondary h-2.5 rounded-full overflow-hidden">
+                                                        <div class="bg-accent h-2.5 rounded-full" style="width: {{ $percentage }}%"></div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </section>
         @endif
+
+        {{-- Agenda / Kalender --}}
+        <section id="agenda" class="border-y border-border bg-secondary py-14 md:py-20 scroll-mt-20">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6">
+                <div class="mb-7 flex items-end justify-between gap-4">
+                    <div>
+                        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent"><span class="h-px w-7 bg-accent"></span>Kalender Kegiatan</p>
+                        <h2 class="mt-3 font-serif text-2xl font-bold sm:text-3xl">Agenda Desa</h2>
+                    </div>
+                    <a href="{{ route('village.agenda', $village->slug) }}" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline">
+                        Lihat Semua
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                    {{-- Mini Calendar --}}
+                    <div class="lg:col-span-3 border border-border bg-card rounded-lg overflow-hidden">
+                        @php
+                            $calYear = now()->year;
+                            $calMonth = now()->month;
+                            $daysInMonth = now()->daysInMonth;
+                            $firstDayOfWeek = now()->startOfMonth()->dayOfWeek; // 0=Sun
+                            $monthAgendas = $village->agendas->filter(fn($a) => $a->event_date->year == $calYear && $a->event_date->month == $calMonth);
+                            $agendaDays = $monthAgendas->groupBy(fn($a) => $a->event_date->day);
+                            $monthNames = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+                        @endphp
+                        <div class="flex items-center justify-between px-5 py-3 border-b border-border bg-card">
+                            <h3 class="font-serif text-base font-bold">{{ $monthNames[$calMonth] }} {{ $calYear }}</h3>
+                            <a href="{{ route('village.agenda', $village->slug) }}" class="text-xs text-accent hover:underline">Buka Kalender →</a>
+                        </div>
+                        <div class="grid grid-cols-7 border-b border-border">
+                            @foreach(['Min','Sen','Sel','Rab','Kam','Jum','Sab'] as $dayName)
+                                <div class="py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{{ $dayName }}</div>
+                            @endforeach
+                        </div>
+                        <div class="grid grid-cols-7">
+                            {{-- Empty cells for days before 1st --}}
+                            @for($i = 0; $i < $firstDayOfWeek; $i++)
+                                <div class="min-h-[48px] border-b border-r border-border bg-secondary/50"></div>
+                            @endfor
+                            {{-- Days --}}
+                            @for($d = 1; $d <= $daysInMonth; $d++)
+                                @php $isToday = ($d == now()->day && $calMonth == now()->month && $calYear == now()->year); @endphp
+                                <div class="min-h-[48px] border-b border-r border-border p-1 {{ $isToday ? 'bg-accent/5' : 'bg-card' }}">
+                                    <span class="text-xs font-medium {{ $isToday ? 'bg-accent text-white rounded-full w-6 h-6 inline-flex items-center justify-center' : '' }}">{{ $d }}</span>
+                                    @if(isset($agendaDays[$d]))
+                                        <div class="flex flex-wrap gap-0.5 mt-0.5">
+                                            @foreach($agendaDays[$d]->take(3) as $dayAgenda)
+                                                <span class="w-2 h-2 rounded-full" style="background-color: {{ $dayAgenda->category_color }}" title="{{ $dayAgenda->title }}"></span>
+                                            @endforeach
+                                            @if($agendaDays[$d]->count() > 3)
+                                                <span class="text-[9px] text-muted-foreground">+{{ $agendaDays[$d]->count() - 3 }}</span>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+                            @endfor
+                            {{-- Fill remaining cells --}}
+                            @php $totalCells = $firstDayOfWeek + $daysInMonth; $remaining = (7 - ($totalCells % 7)) % 7; @endphp
+                            @for($i = 0; $i < $remaining; $i++)
+                                <div class="min-h-[48px] border-b border-r border-border bg-secondary/50"></div>
+                            @endfor
+                        </div>
+                    </div>
+
+                    {{-- Upcoming Agenda List --}}
+                    <div class="lg:col-span-2 border border-border bg-card rounded-lg overflow-hidden h-fit">
+                        <div class="px-5 py-3 border-b border-border">
+                            <h3 class="font-serif text-base font-bold">Agenda Mendatang</h3>
+                        </div>
+                        @php $upcomingAgendas = $village->agendas->where('event_date', '>=', now()->startOfDay())->sortBy('event_date')->take(3); @endphp
+                        @if($upcomingAgendas->count() > 0)
+                            <div class="divide-y divide-border">
+                                @foreach($upcomingAgendas as $ua)
+                                    <div class="px-5 py-4">
+                                        <div class="flex items-start gap-3">
+                                            <div class="text-center shrink-0 w-12">
+                                                <div class="text-2xl font-bold leading-none">{{ $ua->event_date->format('d') }}</div>
+                                                <div class="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">{{ $ua->event_date->translatedFormat('M') }}</div>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <h4 class="font-bold text-sm truncate">{{ $ua->title }}</h4>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium" style="background-color: {{ $ua->category_color }}18; color: {{ $ua->category_color }}">
+                                                        <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ $ua->category_color }}"></span>
+                                                        {{ $ua->category_label }}
+                                                    </span>
+                                                    @if($ua->start_time)
+                                                        <span class="text-[11px] text-muted-foreground">{{ substr($ua->start_time, 0, 5) }}</span>
+                                                    @endif
+                                                </div>
+                                                @if($ua->location)
+                                                    <p class="text-[11px] text-muted-foreground mt-1 flex items-center gap-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                                                        {{ $ua->location }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="px-5 py-8 text-center text-sm text-muted-foreground">
+                                Belum ada agenda mendatang.
+                            </div>
+                        @endif
+                        <div class="p-4 border-t border-border text-center">
+                            <a href="{{ route('village.agenda', $village->slug) }}" class="text-xs font-semibold text-accent hover:underline">Lihat Semua Agenda →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 sm:hidden text-center">
+                    <a href="{{ route('village.agenda', $village->slug) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline">
+                        Lihat Semua Agenda
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         {{-- Galeri --}}
         @if($village->galleries->count() > 0)
-        <section id="galeri" class="border-y border-border bg-secondary py-14 md:py-20 scroll-mt-20">
+        <section id="galeri" class="border-y border-border bg-background py-14 md:py-20 scroll-mt-20">
             <div class="mx-auto max-w-7xl px-4 sm:px-6">
                 <div class="mb-7 flex items-end justify-between">
                     <div>
@@ -369,9 +417,82 @@
         </section>
         @endif
 
+        {{-- Produk UMKM Desa --}}
+        @php $activeProducts = $village->products->where('is_active', true); @endphp
+        @if($activeProducts->count() > 0)
+        <section id="produk" class="border-y border-border bg-secondary py-14 md:py-20 scroll-mt-20">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6">
+                <div class="mb-7 flex items-end justify-between gap-4">
+                    <div>
+                        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent"><span class="h-px w-7 bg-accent"></span>Beli Dari Desa</p>
+                        <h2 class="mt-3 font-serif text-2xl font-bold sm:text-3xl">Produk unggulan UMKM desa</h2>
+                        <p class="mt-2 text-sm text-muted-foreground max-w-xl">Layanan yang disediakan untuk promosi produk UMKM desa sehingga mampu meningkatkan perekonomian masyarakat desa.</p>
+                    </div>
+                    @if($activeProducts->count() > 6)
+                    <a href="{{ route('village.products', $village->slug) }}" class="hidden sm:inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors border border-border bg-surface text-foreground hover:bg-muted h-10 px-4">
+                        Lihat Semua
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                    @endif
+                </div>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    @foreach($activeProducts->take(6) as $product)
+                        <a href="{{ route('village.product.show', [$village->slug, $product->slug]) }}" class="group border border-border bg-card overflow-hidden block transition-colors hover:border-primary/45">
+                            @if($product->image_path)
+                                <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}" class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                            @else
+                                <div class="aspect-[4/3] w-full bg-muted flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground/40"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                </div>
+                            @endif
+                            <div class="p-5">
+                                <h3 class="font-serif text-lg font-bold text-primary group-hover:text-accent transition-colors">{{ $product->name }}</h3>
+                                @if($product->category)
+                                    <p class="mt-1 text-xs text-muted-foreground">{{ $product->category }}</p>
+                                @endif
+                                @if($product->price)
+                                    <p class="mt-3 font-bold text-accent text-lg">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
+                                @endif
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+                @if($activeProducts->count() > 6)
+                <div class="mt-6 text-center sm:hidden">
+                    <a href="{{ route('village.products', $village->slug) }}" class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors border border-border bg-surface text-foreground hover:bg-muted h-10 px-5">
+                        Lihat Semua Produk
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                </div>
+                @endif
+            </div>
+        </section>
+        @endif
+
+        {{-- Lapor Desa Banner --}}
+        <section class="border-b border-border bg-card py-10">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6">
+                <div class="bg-primary rounded-2xl overflow-hidden flex flex-col md:flex-row items-center justify-between p-8 md:p-12 relative">
+                    <div class="absolute top-0 right-0 -mt-16 -mr-16 opacity-10">
+                        <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="relative z-10 md:max-w-2xl text-center md:text-left mb-6 md:mb-0">
+                        <h2 class="font-serif text-2xl md:text-3xl font-bold text-white mb-2">Layanan Pengaduan & Aspirasi Warga</h2>
+                        <p class="text-white/80 text-sm md:text-base">Laporkan masalah infrastruktur, layanan, atau sampaikan aspirasi Anda langsung kepada perangkat Desa {{ $village->name }}.</p>
+                    </div>
+                    <div class="relative z-10 shrink-0">
+                        <a href="{{ route('village.complaint.create', $village->slug) }}" class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg shadow-accent/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                            Buat Laporan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         {{-- Lokasi / Peta Desa --}}
         @if($village->latitude && $village->longitude)
-        <section id="lokasi" class="bg-background py-14 md:py-20 scroll-mt-20">
+        <section id="lokasi" class="bg-secondary py-14 md:py-20 scroll-mt-20">
             <div class="mx-auto max-w-7xl px-4 sm:px-6">
                 <div class="mb-7 flex items-end justify-between">
                     <div>
@@ -457,8 +578,45 @@
             });
         </script>
         @endif
-    </main>
 
+        {{-- FAQ / Tanya Jawab --}}
+        @if($village->faqs->count() > 0)
+        <section id="faq" class="border-y border-border bg-background py-14 md:py-20 scroll-mt-20">
+            <div class="mx-auto max-w-3xl px-4 sm:px-6">
+                <div class="text-center mb-10">
+                    <p class="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent"><span class="h-px w-7 bg-accent"></span>FAQ</p>
+                    <h2 class="mt-3 font-serif text-2xl font-bold sm:text-3xl">Tanya Jawab Seputar Desa</h2>
+                    <p class="mt-3 text-sm text-muted-foreground">Pertanyaan umum yang sering diajukan warga</p>
+                </div>
+                
+                <div class="space-y-4" x-data="{ active: null }">
+                    @foreach($village->faqs as $index => $faq)
+                        <div class="border border-border bg-card rounded-lg overflow-hidden transition-colors hover:border-accent/40">
+                            <button 
+                                @click="active === {{ $index }} ? active = null : active = {{ $index }}"
+                                class="flex items-center justify-between w-full px-5 py-4 text-left font-semibold focus:outline-none"
+                                :class="active === {{ $index }} ? 'text-accent' : 'text-foreground'"
+                            >
+                                <span>{{ $faq->question }}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-200" :class="active === {{ $index }} ? 'rotate-180 text-accent' : 'text-muted-foreground'"><path d="m6 9 6 6 6-6"/></svg>
+                            </button>
+                            <div 
+                                x-show="active === {{ $index }}" 
+                                x-collapse
+                                x-cloak
+                                class="px-5 pb-5 pt-0 text-sm leading-relaxed text-muted-foreground border-t border-border/50"
+                            >
+                                <div class="pt-3">
+                                    {!! nl2br(e($faq->answer)) !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        @endif
+    </main>
     {{-- Footer --}}
     <footer id="kontak" class="bg-deep text-primary-foreground">
         <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3">

@@ -249,7 +249,7 @@
 
                     <div class="h-5 w-px" style="background-color: var(--border);"></div>
 
-                    <a href="{{ route('login') }}" class="text-[13px] font-medium px-4 py-1.5 rounded-lg border no-underline transition-colors" style="color: var(--muted-fg); border-color: var(--border);" onmouseover="this.style.borderColor='var(--fg)';this.style.color='var(--fg)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-fg)'">Login Admin</a>
+                    <a href="{{ route('login') }}" class="text-[13px] font-medium px-4 py-1.5 rounded-lg border no-underline transition-colors" style="color: var(--muted-fg); border-color: var(--border);" onmouseover="this.style.borderColor='var(--fg)';this.style.color='var(--fg)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-fg)'">Login</a>
                     <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="btn-primary text-[13px] !py-2 !px-5 !rounded-full no-underline">Hubungi kami</a>
                 </nav>
 

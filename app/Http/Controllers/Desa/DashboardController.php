@@ -35,6 +35,7 @@ class DashboardController extends Controller
 
         $validated = $request->validate([
             'description' => 'nullable|string|max:5000',
+            'history' => 'nullable|string|max:10000',
             'contact_phone' => 'nullable|string|max:20',
             'contact_email' => 'nullable|email|max:255',
             'office_hours' => 'nullable|string|max:255',
@@ -46,6 +47,10 @@ class DashboardController extends Controller
             'hero_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'remove_logo' => 'nullable|boolean',
             'remove_hero' => 'nullable|boolean',
+            'visi' => 'nullable|string|max:1000',
+            'misi' => 'nullable|string|max:5000',
+            'bagan_struktur' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'remove_bagan' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('logo')) {
@@ -68,10 +73,22 @@ class DashboardController extends Controller
             $validated['hero_image_path'] = null;
         }
 
+        if ($request->hasFile('bagan_struktur')) {
+            if ($village->bagan_struktur_path) {
+                Storage::disk('public')->delete($village->bagan_struktur_path);
+            }
+            $validated['bagan_struktur_path'] = $request->file('bagan_struktur')->store('villages/bagan', 'public');
+        } elseif ($request->boolean('remove_bagan') && $village->bagan_struktur_path) {
+            Storage::disk('public')->delete($village->bagan_struktur_path);
+            $validated['bagan_struktur_path'] = null;
+        }
+
         unset($validated['logo']);
         unset($validated['hero_image']);
+        unset($validated['bagan_struktur']);
         unset($validated['remove_logo']);
         unset($validated['remove_hero']);
+        unset($validated['remove_bagan']);
 
         $village->update($validated);
 
@@ -339,13 +356,22 @@ class DashboardController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
             'requirements' => 'nullable|string|max:2000',
+            'process_steps' => 'nullable|string|max:3000',
+            'estimated_time' => 'nullable|string|max:100',
+            'cost' => 'nullable|string|max:255',
+            'is_active' => 'boolean',
         ]);
 
         VillageService::create([
             'village_id' => $village->id,
             'name' => $validated['name'],
+            'slug' => VillageService::generateSlug($validated['name'], $village->id),
             'description' => $validated['description'] ?? null,
             'requirements' => $validated['requirements'] ?? null,
+            'process_steps' => $validated['process_steps'] ?? null,
+            'estimated_time' => $validated['estimated_time'] ?? null,
+            'cost' => $validated['cost'] ?? null,
+            'is_active' => $validated['is_active'] ?? true,
         ]);
 
         return redirect()->route('desa.services.index')->with('success', 'Layanan berhasil ditambahkan.');
@@ -374,7 +400,16 @@ class DashboardController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
             'requirements' => 'nullable|string|max:2000',
+            'process_steps' => 'nullable|string|max:3000',
+            'estimated_time' => 'nullable|string|max:100',
+            'cost' => 'nullable|string|max:255',
+            'is_active' => 'boolean',
         ]);
+
+        // Regenerate slug if name changed
+        if ($service->name !== $validated['name'] || !$service->slug) {
+            $validated['slug'] = VillageService::generateSlug($validated['name'], $village->id, $service->id);
+        }
 
         $service->update($validated);
 

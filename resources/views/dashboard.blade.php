@@ -132,6 +132,32 @@
                                 </div>
                             </div>
                         </a>
+                        <a href="{{ route('desa.products.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Produk UMKM</h4>
+                                    <p class="text-xs text-ash-text">Kelola produk desa</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.agenda.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Agenda</h4>
+                                    <p class="text-xs text-ash-text">Kelola kalender desa</p>
+                                </div>
+                            </div>
+                        </a>
                         <a href="{{ route('desa.titik-lokasi.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
@@ -143,6 +169,32 @@
                                 <div>
                                     <h4 class="font-semibold text-ivory-text">Titik Lokasi</h4>
                                     <p class="text-xs text-ash-text">Kelola peta fasilitas desa</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.documents.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">PPID</h4>
+                                    <p class="text-xs text-ash-text">Kelola dokumen publik</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.faqs.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">FAQ</h4>
+                                    <p class="text-xs text-ash-text">Tanya jawab warga</p>
                                 </div>
                             </div>
                         </a>
@@ -159,7 +211,17 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="{{ route('desa.pengajuan-masuk.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                        @php
+                            $pendingComplaints = $village->complaints()->where('status', 'pending')->count();
+                            $pendingInformationRequests = $village->informationRequests()->where('status', 'pending')->count();
+                            $pendingPengajuan = \App\Models\PengajuanLayanan::where('desa_id', $village->id)->where('status', 'diajukan')->count();
+                        @endphp
+                        <a href="{{ route('desa.pengajuan-masuk.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group relative">
+                            @if($pendingPengajuan > 0)
+                                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full border-2 border-graphite-card shadow-lg z-10 animate-pulse">
+                                    {{ $pendingPengajuan }} Baru
+                                </span>
+                            @endif
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
                                     <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,6 +244,53 @@
                                 <div>
                                     <h4 class="font-semibold text-ivory-text">Anggaran</h4>
                                     <p class="text-xs text-ash-text">Kelola APBDes</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.demographics.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Statistik</h4>
+                                    <p class="text-xs text-ash-text">Kelola demografi desa</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.complaints.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group relative">
+                            @if($pendingComplaints > 0)
+                                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full border-2 border-graphite-card shadow-lg z-10 animate-pulse">
+                                    {{ $pendingComplaints }} Baru
+                                </span>
+                            @endif
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Pengaduan</h4>
+                                    <p class="text-xs text-ash-text">Kelola laporan warga</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('desa.information-requests.index') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group relative">
+                            @if($pendingInformationRequests > 0)
+                                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full border-2 border-graphite-card shadow-lg z-10 animate-pulse">
+                                    {{ $pendingInformationRequests }} Baru
+                                </span>
+                            @endif
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Permohonan Info</h4>
+                                    <p class="text-xs text-ash-text">Kelola permohonan PPID</p>
                                 </div>
                             </div>
                         </a>
