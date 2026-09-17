@@ -17,7 +17,8 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     @endif
     
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @viteReactRefresh
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/carousel-mount.tsx', 'resources/js/faq-mount.tsx'])
     
     <style>
         @php
@@ -187,105 +188,20 @@
 
         /* Floating Navbar Pill */
         .navbar-pill {
-            background-color: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             max-width: 1120px;
             margin: 0 auto;
             padding: 0 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-    {{-- ═══════════════════════════════════════
-         NAVIGATION — Solid, above hero
-         ═══════════════════════════════════════ --}}
-    <div style="position: sticky; top: 0.75rem; z-index: 50; padding: 0 0.75rem; margin-bottom: 1.5rem;" class="sm:mb-8">
-        <style>
-            @media (min-width: 640px) {
-                .navbar-sticky-wrap { top: 1.5rem !important; padding: 0 1rem !important; }
-            }
-        </style>
-        <header class="navbar-pill" x-data="{ mobileOpen: false }" :style="mobileOpen ? 'border-radius: 1.5rem;' : 'border-radius: 9999px;'" style="border-radius: 9999px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; height: 4.5rem;">
-
-                {{-- Logo & Village Name --}}
-                <a href="#" class="flex items-center gap-3 no-underline">
-                    @if($village->logo_path)
-                        <img src="{{ Storage::url($village->logo_path) }}" alt="Logo {{ $village->name }}" class="w-10 h-10 object-contain rounded-full" style="border: 1px solid var(--border);">
-                    @else
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-base" style="background-color: var(--primary); color: var(--primary-fg); font-family: Outfit, sans-serif;">
-                            {{ strtoupper(mb_substr($village->name, 0, 1)) }}
-                        </div>
-                    @endif
-                    <div class="hidden sm:flex flex-col leading-tight">
-                        <span class="font-bold text-[15px]" style="color: var(--fg); font-family: Outfit, sans-serif;">Desa {{ $village->name }}</span>
-                        <span class="text-[11px] font-medium" style="color: var(--muted-fg);">Portal resmi desa</span>
-                    </div>
-                </a>
-
-                {{-- Desktop Navigation --}}
-                <nav class="hidden lg:flex items-center gap-7">
-                    <a href="#profil" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Profil</a>
-                    @if($village->services->count() > 0)
-                        <a href="#layanan" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Layanan</a>
-                    @endif
-                    @if($village->news->count() > 0)
-                        <a href="#berita" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Berita</a>
-                    @endif
-                    @if($village->officials->count() > 0)
-                        <a href="#perangkat" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Perangkat</a>
-                    @endif
-                    @if($village->galleries->count() > 0)
-                        <a href="#galeri" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Galeri</a>
-                    @endif
-                    @if($village->latitude && $village->longitude)
-                        <a href="#lokasi" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Lokasi</a>
-                    @endif
-                    <a href="{{ route('village.apbdes', $village->slug) }}" class="text-[13.5px] font-medium transition-colors no-underline" style="color: var(--muted-fg);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">APBDes</a>
-
-                    <div class="h-5 w-px" style="background-color: var(--border);"></div>
-
-                    <a href="{{ route('login') }}" class="text-[13px] font-medium px-4 py-1.5 rounded-lg border no-underline transition-colors" style="color: var(--muted-fg); border-color: var(--border);" onmouseover="this.style.borderColor='var(--fg)';this.style.color='var(--fg)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted-fg)'">Login</a>
-                    <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="btn-primary text-[13px] !py-2 !px-5 !rounded-full no-underline">Hubungi kami</a>
-                </nav>
-
-                {{-- Mobile Hamburger --}}
-                <button aria-label="Toggle menu" class="lg:hidden p-2 rounded-lg" style="color: var(--fg);" @click="mobileOpen = !mobileOpen">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                </button>
-            </div>
-
-            {{-- Mobile Menu --}}
-            <div x-show="mobileOpen" x-collapse x-cloak class="lg:hidden border-t py-4" style="border-color: var(--border);">
-                <div class="flex flex-col gap-1">
-                    <a href="#profil" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Profil</a>
-                    @if($village->services->count() > 0)
-                        <a href="#layanan" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Layanan</a>
-                    @endif
-                    @if($village->news->count() > 0)
-                        <a href="#berita" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Berita</a>
-                    @endif
-                    @if($village->officials->count() > 0)
-                        <a href="#perangkat" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Perangkat</a>
-                    @endif
-                    @if($village->galleries->count() > 0)
-                        <a href="#galeri" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Galeri</a>
-                    @endif
-                    @if($village->latitude && $village->longitude)
-                        <a href="#lokasi" @click="mobileOpen=false" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">Lokasi</a>
-                    @endif
-                    <a href="{{ route('village.apbdes', $village->slug) }}" class="px-3 py-2 text-sm font-medium rounded-lg no-underline" style="color: var(--fg);">APBDes</a>
-                    <div class="h-px my-2" style="background-color: var(--border);"></div>
-                    <a href="{{ route('login') }}" class="px-3 py-2 text-sm font-medium rounded-lg border no-underline" style="color: var(--fg); border-color: var(--border);">Login Admin</a>
-                    <a href="{{ route('desa.request-akses.create', $village->slug) }}" class="btn-primary text-sm text-center mt-1 no-underline">Hubungi kami</a>
-                </div>
-            </div>
-        </header>
-    </div>
+    @include('village.templates.modern.header')
 
     {{-- ═══════════════════════════════════════
          HERO — Rounded image, glass panel
@@ -464,15 +380,91 @@
     </section>
 
     {{-- ═══════════════════════════════════════
+         STATISTIK DEMOGRAFI
+         ═══════════════════════════════════════ --}}
+    @php
+        $demographics = $village->demographics()->get()->groupBy('type');
+    @endphp
+    @if($demographics->count() > 0)
+        <section id="statistik" class="scroll-mt-20" style="padding-bottom: 4rem;">
+            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
+                    <div>
+                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Data Kependudukan</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Statistik Penduduk Desa</h2>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($demographics as $type => $items)
+                        <div class="card" style="padding: 1.75rem; border-color: var(--border);">
+                            <h3 style="font-family: Outfit, sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--fg); padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);">
+                                {{ $type == 'gender' ? 'Jenis Kelamin' : ($type == 'age' ? 'Kelompok Usia' : ($type == 'religion' ? 'Agama' : ucfirst($type))) }}
+                            </h3>
+                            @php $total = $items->sum('count'); @endphp
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                @foreach($items as $item)
+                                    @php $pct = $total > 0 ? round(($item->count / $total) * 100) : 0; @endphp
+                                    <div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.375rem; font-size: 13.5px;">
+                                            <span style="font-weight: 600; color: var(--fg);">{{ $item->label }}</span>
+                                            <span style="font-weight: 500; color: var(--muted-fg);">{{ number_format($item->count, 0, ',', '.') }} <span style="opacity: 0.7;">({{ $pct }}%)</span></span>
+                                        </div>
+                                        <div style="width: 100%; height: 8px; background-color: var(--muted); border-radius: 9999px; overflow: hidden;">
+                                            <div style="height: 100%; width: {{ $pct }}%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 9999px; transition: width 0.6s ease;"></div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border); text-align: right;">
+                                <span style="font-size: 12px; font-weight: 600; color: var(--muted-fg);">Total: {{ number_format($total, 0, ',', '.') }} jiwa</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ═══════════════════════════════════════
+         LAPOR DESA (Pengaduan)
+         ═══════════════════════════════════════ --}}
+    <section id="lapor-desa" style="padding-bottom: 4rem;">
+        <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+            <div style="background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 90%, black), var(--primary)); border-radius: 1.25rem; overflow: hidden; position: relative; padding: 2.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; color: var(--primary-fg); box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                {{-- Decorative circles --}}
+                <div style="position: absolute; top: -50%; left: -10%; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px);"></div>
+                <div style="position: absolute; bottom: -50%; right: -10%; width: 300px; height: 300px; background: rgba(255,255,255,0.15); border-radius: 50%; filter: blur(40px);"></div>
+                
+                <div style="position: relative; z-index: 10;">
+                    <div class="eyebrow" style="margin-bottom: 1rem; color: rgba(255,255,255,0.8); text-shadow: none;">Layanan Aspirasi</div>
+                    <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem; color: #ffffff;">Suara Anda Membangun Desa</h2>
+                    <p style="font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto 2rem;">Sampaikan pengaduan, kritik, saran, atau permohonan informasi kepada perangkat desa secara langsung dan transparan.</p>
+                    <a href="{{ route('village.complaint.create', $village->slug) }}" class="btn-ghost" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: rgba(255,255,255,0.3); color: #fff;">
+                        Buat Pengaduan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ═══════════════════════════════════════
          LAYANAN (Services)
          ═══════════════════════════════════════ --}}
     @if($village->services->count() > 0)
         <section id="layanan" class="scroll-mt-20" style="padding-bottom: 4rem;">
             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
-                <div class="eyebrow" style="margin-bottom: 0.75rem;">Layanan warga</div>
-                <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; margin-bottom: 2rem; color: var(--fg);">Administrasi satu pintu</h2>
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
+                    <div>
+                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Layanan warga</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Administrasi satu pintu</h2>
+                    </div>
+                    <a href="{{ route('village.services', $village->slug) }}" class="text-[13.5px] font-bold no-underline transition-colors flex items-center gap-1" style="color: var(--primary);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--primary)'">
+                        Lihat Semua
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style="align-items: start;">
-                    @foreach($village->services as $service)
+                    @foreach($village->services->take(6) as $service)
                         <div class="card transition-all duration-300 group flex flex-col" style="padding: 1.5rem; align-self: start; border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
                             <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shrink-0" style="background-color: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary);">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -514,8 +506,16 @@
     @if($village->news->count() > 0)
         <section id="berita" class="scroll-mt-20" style="padding-bottom: 4rem;">
             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
-                <div class="eyebrow" style="margin-bottom: 0.75rem;">Kabar desa</div>
-                <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; margin-bottom: 2rem; color: var(--fg);">Berita & pengumuman</h2>
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
+                    <div>
+                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Kabar desa</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Berita & pengumuman</h2>
+                    </div>
+                    <a href="{{ route('village.news', $village->slug) }}" class="text-[13.5px] font-bold no-underline transition-colors flex items-center gap-1" style="color: var(--primary);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--primary)'">
+                        Lihat Semua
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
                 <div id="berita-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
                     @foreach($village->news->take(4) as $news)
                         <article class="group flex flex-col">
@@ -541,6 +541,142 @@
     @endif
 
     {{-- ═══════════════════════════════════════
+         AGENDA (Events) & MINI KALENDER
+         ═══════════════════════════════════════ --}}
+    @php
+        $upcomingAgendas = $village->agendas->where('event_date', '>=', now()->toDateString())->sortBy('event_date')->take(3);
+        
+        // Mini Calendar Logic (Current Month)
+        $today = now();
+        $startOfMonth = $today->copy()->startOfMonth();
+        $endOfMonth = $today->copy()->endOfMonth();
+        $startDayOfWeek = $startOfMonth->dayOfWeekIso; // 1 (Mon) - 7 (Sun)
+        $daysInMonth = $endOfMonth->daysInMonth;
+        
+        // Get events for current month to show dots
+        $monthEvents = $village->agendas->whereBetween('event_date', [$startOfMonth->toDateString(), $endOfMonth->toDateString()])->groupBy(function($event) {
+            return \Carbon\Carbon::parse($event->event_date)->format('Y-m-d');
+        });
+    @endphp
+    @if($upcomingAgendas->count() > 0 || $monthEvents->count() > 0)
+        <section id="agenda" class="scroll-mt-20" style="padding-bottom: 4rem;">
+            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
+                    <div>
+                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Kegiatan</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Agenda Desa Terdekat</h2>
+                    </div>
+                    <a href="{{ route('village.agenda', $village->slug) }}" class="text-[13.5px] font-bold no-underline transition-colors flex items-center gap-1" style="color: var(--primary);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--primary)'">
+                        Lihat Semua
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+                    
+                    {{-- Left Column: Mini Calendar --}}
+                    <div class="lg:col-span-5 xl:col-span-4 card" style="padding: 1.75rem; border-color: var(--border);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                            <h3 style="font-family: Outfit, sans-serif; font-size: 1.125rem; font-weight: 700; color: var(--fg);">{{ $today->translatedFormat('F Y') }}</h3>
+                            <a href="{{ route('village.agenda', $village->slug) }}" class="p-2 rounded-full hover:bg-muted text-muted-foreground transition-colors" title="Buka Kalender Penuh">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+                            </a>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; text-align: center; margin-bottom: 0.75rem;">
+                            @foreach(['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'] as $day)
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--muted-fg); text-transform: uppercase;">{{ $day }}</div>
+                            @endforeach
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem;">
+                            {{-- Empty slots for start of month --}}
+                            @for ($i = 1; $i < $startDayOfWeek; $i++)
+                                <div style="aspect-ratio: 1; padding: 0.25rem;"></div>
+                            @endfor
+                            
+                            {{-- Days --}}
+                            @for ($day = 1; $day <= $daysInMonth; $day++)
+                                @php
+                                    $dateStr = $today->format('Y-m-') . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                    $isToday = $day === $today->day;
+                                    $dayEvents = $monthEvents->get($dateStr, collect());
+                                    $hasEvents = $dayEvents->count() > 0;
+                                @endphp
+                                <div style="aspect-ratio: 1; padding: 0.25rem; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; border-radius: 0.5rem; {{ $isToday ? 'background-color: var(--primary); color: var(--primary-fg); box-shadow: 0 4px 10px rgba(0,0,0,0.1);' : 'background-color: transparent; color: var(--fg);' }}">
+                                    <span style="font-size: 0.875rem; font-weight: {{ $isToday ? '700' : '500' }};">{{ $day }}</span>
+                                    
+                                    {{-- Event Dots --}}
+                                    @if($hasEvents && !$isToday)
+                                        <div style="display: flex; gap: 2px; position: absolute; bottom: 4px;">
+                                            @foreach($dayEvents->take(3) as $evt)
+                                                <div style="width: 4px; height: 4px; border-radius: 50%; background-color: {{ $evt->category_color }};"></div>
+                                            @endforeach
+                                        </div>
+                                    @elseif($hasEvents && $isToday)
+                                        <div style="display: flex; gap: 2px; position: absolute; bottom: 4px;">
+                                            @foreach($dayEvents->take(3) as $evt)
+                                                <div style="width: 4px; height: 4px; border-radius: 50%; background-color: var(--primary-fg); opacity: 0.8;"></div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            @endfor
+                        </div>
+                    </div>
+
+                    {{-- Right Column: Upcoming Agenda List --}}
+                    <div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-4">
+                        @if($upcomingAgendas->count() > 0)
+                            @foreach($upcomingAgendas as $agenda)
+                                <div class="card p-4 sm:p-5 flex items-start gap-4 transition-all duration-300" style="border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateX(0)'">
+                                    <div class="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex flex-col items-center justify-center overflow-hidden border" style="background: rgba(255,255,255,0.5); border-color: var(--border); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+                                        <div class="w-full text-center text-[9px] sm:text-[10px] font-bold uppercase py-0.5" style="background-color: {{ $agenda->category_color }}; color: #fff;">
+                                            {{ $agenda->event_date->translatedFormat('M') }}
+                                        </div>
+                                        <div class="flex-grow flex items-center justify-center font-bold text-lg sm:text-xl" style="font-family: Outfit, sans-serif; color: var(--fg);">
+                                            {{ $agenda->event_date->format('d') }}
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="inline-block w-2 h-2 rounded-full" style="background-color: {{ $agenda->category_color }};"></span>
+                                            <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider" style="color: var(--muted-fg);">{{ $agenda->category_label }}</span>
+                                        </div>
+                                        <h3 class="font-bold text-[14px] sm:text-[15px] leading-snug mb-2 line-clamp-1" style="font-family: Outfit, sans-serif; color: var(--fg);">{{ $agenda->title }}</h3>
+                                        <div class="flex flex-col gap-1 text-[12px] sm:text-[13px]" style="color: var(--muted-fg);">
+                                            @if($agenda->start_time)
+                                                <div class="flex items-center gap-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                                    {{ \Carbon\Carbon::parse($agenda->start_time)->format('H:i') }} {{ $agenda->end_time ? '- ' . \Carbon\Carbon::parse($agenda->end_time)->format('H:i') : 'WIB' }}
+                                                </div>
+                                            @endif
+                                            @if($agenda->location)
+                                                <div class="flex items-center gap-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                                                    <span class="line-clamp-1">{{ $agenda->location }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="card p-8 flex flex-col items-center justify-center text-center border-dashed" style="border-color: var(--border); height: 100%;">
+                                <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--muted); display: flex; items-center; justify-content: center; margin-bottom: 1rem; color: var(--muted-fg);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                </div>
+                                <h3 style="font-family: Outfit, sans-serif; font-size: 1.125rem; font-weight: 700; color: var(--fg); margin-bottom: 0.5rem;">Tidak Ada Agenda Mendatang</h3>
+                                <p style="font-size: 0.875rem; color: var(--muted-fg);">Belum ada jadwal kegiatan dalam waktu dekat.</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ═══════════════════════════════════════
          GALERI — Grid 3×2 with caption pills
          ═══════════════════════════════════════ --}}
     @if($village->galleries->count() > 0)
@@ -554,14 +690,62 @@
                     <div style="font-size: 13px; font-weight: 500; color: var(--muted-fg);">{{ $village->galleries->count() }} dokumentasi</div>
                 </div>
 
-                <div id="galeri-grid" style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
-                    @foreach($village->galleries->take(6) as $gallery)
-                        <div style="position: relative; border-radius: 0.75rem; overflow: hidden; aspect-ratio: 4/3; background-color: var(--muted); cursor: pointer;" class="group">
-                            <img src="{{ Storage::url($gallery->image_path) }}" alt="{{ $gallery->caption ?? 'Galeri' }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            @if($gallery->caption)
-                                <div class="gallery-caption">{{ $gallery->caption }}</div>
+                {{-- 3D Carousel Container (React) --}}
+                <div 
+                    id="react-gallery-root" 
+                    data-cards="{{ json_encode($village->galleries->take(12)->map(function($g) {
+                        return [
+                            'image_path' => Storage::url($g->image_path),
+                            'caption' => $g->caption
+                        ];
+                    })->toArray()) }}"
+                ></div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ═══════════════════════════════════════
+         PRODUK UMKM
+         ═══════════════════════════════════════ --}}
+    @if($village->products->where('is_active', true)->count() > 0)
+        <section id="produk" class="scroll-mt-20" style="padding-bottom: 4rem;">
+            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
+                    <div>
+                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Potensi Desa</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Produk Unggulan UMKM</h2>
+                    </div>
+                    <a href="{{ route('village.products', $village->slug) }}" class="text-[13.5px] font-bold no-underline transition-colors flex items-center gap-1" style="color: var(--primary);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--primary)'">
+                        Lihat Semua
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
+                    @foreach($village->products->where('is_active', true)->take(6) as $product)
+                        <a href="{{ route('village.product.show', [$village->slug, $product->slug]) }}" 
+                           class="group relative block overflow-hidden rounded-[24px] h-64 sm:h-72 lg:h-80 {{ ($loop->iteration == 1 || $loop->iteration == 6) ? 'md:col-span-2' : 'md:col-span-1' }}">
+                            
+                            @if($product->image_path)
+                                <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            @else
+                                <div class="absolute inset-0 w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
+                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+                                </div>
                             @endif
-                        </div>
+                            
+                            {{-- Liquid Glass Pill --}}
+                            <div class="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4">
+                                <div class="rounded-[16px] px-6 py-4 bg-white/70 backdrop-blur-md border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-between gap-4 transition-colors duration-300 group-hover:bg-white/85">
+                                    <div class="truncate">
+                                        <h3 class="font-normal text-gray-900 text-[14.5px] sm:text-[15px] truncate" style="font-family: Outfit, sans-serif;">{{ $product->name }}</h3>
+                                    </div>
+                                    <div class="shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold" style="color: var(--primary);">
+                                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     @endforeach
                 </div>
             </div>
@@ -616,32 +800,22 @@
     @endif
 
     {{-- ═══════════════════════════════════════
-         FOOTER
+         FAQ / TANYA JAWAB
          ═══════════════════════════════════════ --}}
-    <footer style="margin-top: auto; padding: 2rem 0; border-top: 1px solid var(--border); background-color: var(--bg);">
-        <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
-            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem;">
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    @if($village->logo_path)
-                        <img src="{{ Storage::url($village->logo_path) }}" alt="Logo" style="width: 36px; height: 36px; border-radius: 50%; object-fit: contain; border: 1px solid var(--border);">
-                    @else
-                        <div style="width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; background-color: var(--primary); color: var(--primary-fg); font-family: Outfit, sans-serif;">
-                            {{ strtoupper(mb_substr($village->name, 0, 1)) }}
-                        </div>
-                    @endif
-                    <div>
-                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; color: var(--fg);">Desa {{ $village->name }}</div>
-                        <div style="font-size: 11.5px; color: var(--muted-fg);">&copy; {{ date('Y') }} Pemerintah Desa {{ $village->name }}</div>
-                    </div>
+    @if($village->faqs->count() > 0)
+        <section id="faq" class="scroll-mt-20" style="padding-bottom: 4rem;">
+            <div style="max-width: 800px; margin: 0 auto; padding: 0 1rem;">
+                <div style="text-align: center; margin-bottom: 2.5rem;">
+                    <div class="eyebrow" style="margin-bottom: 0.75rem;">FAQ</div>
+                    <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Tanya Jawab Seputar Desa</h2>
+                    <p style="color: var(--muted-fg); margin-top: 0.5rem; font-size: 15px;">Pertanyaan umum yang sering diajukan warga</p>
                 </div>
-                <div style="display: flex; gap: 1.5rem; font-size: 12.5px; font-weight: 500;">
-                    <a href="#profil" style="color: var(--muted-fg); text-decoration: none;">Profil</a>
-                    <a href="#galeri" style="color: var(--muted-fg); text-decoration: none;">Galeri</a>
-                    <a href="#lokasi" style="color: var(--muted-fg); text-decoration: none;">Lokasi</a>
-                </div>
+                <div id="faq-react-root" data-faqs="{{ json_encode($village->faqs) }}"></div>
             </div>
-        </div>
-    </footer>
+        </section>
+    @endif
+
+    @include('village.templates.modern.footer')
 
     {{-- ═══════════════════════════════════════
          LEAFLET MAP SCRIPT
@@ -696,6 +870,32 @@
             });
         </script>
     @endif
+
+    {{-- ═══════════════════════════════════════
+         BACK TO TOP — Floating glass pill
+         ═══════════════════════════════════════ --}}
+    <div
+        x-data="{ showTop: false }"
+        x-init="window.addEventListener('scroll', () => { showTop = window.scrollY > 400 })"
+    >
+        <button
+            x-show="showTop"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            x-cloak
+            @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            style="position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 4px 20px rgba(0,0,0,0.08); color: var(--fg); cursor: pointer; transition: all 0.2s;"
+            onmouseover="this.style.backgroundColor='var(--primary)'; this.style.color='var(--primary-fg)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.12)'"
+            onmouseout="this.style.backgroundColor='rgba(255,255,255,0.8)'; this.style.color='var(--fg)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'"
+            aria-label="Kembali ke atas"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+        </button>
+    </div>
 
 </body>
 </html>

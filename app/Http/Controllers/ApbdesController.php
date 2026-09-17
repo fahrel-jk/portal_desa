@@ -66,7 +66,14 @@ class ApbdesController extends Controller
 
         $selisih = $totals['pendapatan']['realisasi'] - $totals['belanja']['realisasi'];
 
-        return view('village.apbdes', compact(
+        $templateSlug = $village->template->slug;
+        $viewName = "village.templates.{$templateSlug}.apbdes";
+
+        if (! view()->exists($viewName)) {
+            $viewName = 'village.apbdes'; // Fallback to old shared view
+        }
+
+        return view($viewName, compact(
             'village', 'years', 'selectedYear', 'anggarans', 'totals', 'selisih', 'chartData'
         ));
     }
