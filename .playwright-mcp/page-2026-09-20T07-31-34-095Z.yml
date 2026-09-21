@@ -1,0 +1,249 @@
+- generic [active] [ref=f8e1]:
+  - banner [ref=f8e3]:
+    - generic [ref=f8e4]:
+      - link "Logo sumberan Desa sumberan Portal resmi desa" [ref=f8e5] [cursor=pointer]:
+        - /url: http://localhost:8000/desa/sumberan
+        - img "Logo sumberan" [ref=f8e6]
+        - generic [ref=f8e7]:
+          - generic [ref=f8e8]: Desa sumberan
+          - generic [ref=f8e9]: Portal resmi desa
+      - navigation [ref=f8e10]:
+        - link "Beranda" [ref=f8e11] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan
+        - link "Profil" [ref=f8e12] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/profil
+        - link "Layanan" [ref=f8e13] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/layanan
+        - link "Berita" [ref=f8e14] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan#berita
+        - link "Agenda" [ref=f8e15] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/agenda
+        - link "APBDes" [ref=f8e16] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/apbdes
+        - button "Lainnya" [ref=f8e18] [cursor=pointer]
+        - link "Login" [ref=f8e23] [cursor=pointer]:
+          - /url: http://localhost:8000/login
+        - link "Hubungi kami" [ref=f8e24] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/request-akses
+  - main [ref=f8e25]:
+    - generic [ref=f8e27]:
+      - generic [ref=f8e30]:
+        - generic [ref=f8e31]: Profil & Sejarah Desa
+        - heading "Desa Sumberan" [level=1] [ref=f8e32]
+        - paragraph [ref=f8e33]: Mengenal lebih dekat visi, misi, sejarah perkembangan, serta tata kelola pemerintahan Desa Sumberan.
+        - generic [ref=f8e34]:
+          - generic [ref=f8e35]: Kec. WIYUNG
+          - generic [ref=f8e40]: Kab. Surabaya
+      - generic [ref=f8e44]:
+        - generic [ref=f8e45]:
+          - generic [ref=f8e46]: Visi Desa
+          - heading "Menuju Masa Depan" [level=2] [ref=f8e47]
+          - blockquote [ref=f8e48]: "\"Mewujudkan Desa Sumberan yang mandiri, berdaya saing, dan berbudaya melalui tata kelola pemerintahan yang transparan serta pemberdayaan potensi lokal.\""
+        - generic [ref=f8e49]:
+          - generic [ref=f8e50]: Misi Desa
+          - heading "Arah Pembangunan" [level=2] [ref=f8e51]
+          - list [ref=f8e52]:
+            - listitem [ref=f8e53]:
+              - generic [ref=f8e54]: "1"
+              - paragraph [ref=f8e55]: Meningkatkan kualitas pelayanan publik yang mudah diakses oleh seluruh warga desa
+            - listitem [ref=f8e56]:
+              - generic [ref=f8e57]: "2"
+              - paragraph [ref=f8e58]: Mengembangkan potensi pertanian organik dan ekonomi kreatif berbasis kearifan lokal
+            - listitem [ref=f8e59]:
+              - generic [ref=f8e60]: "3"
+              - paragraph [ref=f8e61]: Membangun infrastruktur desa yang mendukung konektivitas dan kesejahteraan warga
+            - listitem [ref=f8e62]:
+              - generic [ref=f8e63]: "4"
+              - paragraph [ref=f8e64]: Melestarikan budaya dan tradisi gotong royong sebagai identitas desa
+            - listitem [ref=f8e65]:
+              - generic [ref=f8e66]: "5"
+              - paragraph [ref=f8e67]: Mendorong partisipasi pemuda dalam pembangunan desa melalui inovasi digital
+      - generic [ref=f8e68]:
+        - generic [ref=f8e69]:
+          - generic [ref=f8e70]:
+            - generic [ref=f8e71]:
+              - heading "Tentang & Sejarah" [level=2] [ref=f8e72]
+              - paragraph [ref=f8e73]: Kilas balik dan gambaran umum desa
+            - generic [ref=f8e74]:
+              - heading "Gambaran Umum" [level=3] [ref=f8e75]
+              - paragraph [ref=f8e76]: Kampung ini dikenal dengan konsep Wisata Batas Kampung (WBK) yang menawarkan suasana pedesaan asri, rindang, dan sejuk di tengah kota. Kampung Sumberan memiliki tradisi budaya lokal yang khas seperti kegiatan Bersih Desa atau Ruwah Desa.
+              - separator [ref=f8e77]
+              - heading "Sejarah Perkembangan" [level=3] [ref=f8e78]
+              - paragraph [ref=f8e79]: Desa Sumberan berdiri sejak masa pemerintahan kolonial Belanda pada awal abad ke-20. Nama "Sumberan" berasal dari kata "sumber" yang merujuk pada mata air alami yang menjadi pusat kehidupan penduduk awal di wilayah ini. Pada tahun 1945, warga Desa Sumberan turut aktif dalam perjuangan kemerdekaan sebagai bagian dari gerakan pertahanan rakyat di wilayah Jawa Timur. Setelah kemerdekaan, desa ini berkembang pesat sebagai sentra pertanian padi dan palawija. Memasuki era reformasi, Desa Sumberan bertransformasi menjadi desa yang mengedepankan transparansi pemerintahan. Pada tahun 2018, desa ini meraih penghargaan sebagai Desa Terbaik tingkat kecamatan dalam bidang tata kelola keuangan desa. Saat ini, Desa Sumberan terus berinovasi dengan memanfaatkan teknologi digital untuk pelayanan warga, termasuk melalui portal desa ini sebagai wujud komitmen keterbukaan informasi publik.
+          - generic [ref=f8e80]:
+            - generic [ref=f8e81]:
+              - heading "Perangkat Desa" [level=2] [ref=f8e82]
+              - paragraph [ref=f8e83]: Struktur tata kelola pemerintahan
+            - generic [ref=f8e84]:
+              - generic [ref=f8e85]:
+                - img "fahrel ilham" [ref=f8e87]
+                - heading "Fahrel Ilham" [level=4] [ref=f8e88]
+                - paragraph [ref=f8e89]: kopdes
+              - generic [ref=f8e90]:
+                - generic [ref=f8e91]: H
+                - heading "Hj. Siti Aminah, S.Pd." [level=4] [ref=f8e93]
+                - paragraph [ref=f8e94]: Sekretaris Desa
+              - generic [ref=f8e95]:
+                - generic [ref=f8e96]: A
+                - heading "Ahmad Fauzi" [level=4] [ref=f8e98]
+                - paragraph [ref=f8e99]: Kepala Urusan Keuangan
+              - generic [ref=f8e100]:
+                - generic [ref=f8e101]: D
+                - heading "Dwi Lestari, A.Md." [level=4] [ref=f8e103]
+                - paragraph [ref=f8e104]: Kepala Urusan Perencanaan
+              - generic [ref=f8e105]:
+                - generic [ref=f8e106]: B
+                - heading "Bambang Sutrisno" [level=4] [ref=f8e108]
+                - paragraph [ref=f8e109]: Kepala Seksi Pelayanan
+              - generic [ref=f8e110]:
+                - generic [ref=f8e111]: R
+                - heading "Ratna Dewi" [level=4] [ref=f8e113]
+                - paragraph [ref=f8e114]: Kepala Seksi Kesejahteraan
+              - generic [ref=f8e115]:
+                - generic [ref=f8e116]: S
+                - heading "Sutedjo" [level=4] [ref=f8e118]
+                - paragraph [ref=f8e119]: wakil warga
+          - generic [ref=f8e120]:
+            - generic [ref=f8e121]:
+              - heading "Demografi" [level=2] [ref=f8e122]
+              - paragraph [ref=f8e123]: Statistik kependudukan desa
+            - generic [ref=f8e124]:
+              - generic [ref=f8e125]:
+                - heading "Jenis Kelamin" [level=4] [ref=f8e126]
+                - generic [ref=f8e127]:
+                  - generic [ref=f8e129]:
+                    - generic [ref=f8e130]: Laki-laki
+                    - generic [ref=f8e131]: 1.847 (49%)
+                  - generic [ref=f8e135]:
+                    - generic [ref=f8e136]: Perempuan
+                    - generic [ref=f8e137]: 1.923 (51%)
+              - generic [ref=f8e140]:
+                - heading "Kelompok Usia" [level=4] [ref=f8e141]
+                - generic [ref=f8e142]:
+                  - generic [ref=f8e144]:
+                    - generic [ref=f8e145]: 0-14 tahun
+                    - generic [ref=f8e146]: 782 (21%)
+                  - generic [ref=f8e150]:
+                    - generic [ref=f8e151]: 15-24 tahun
+                    - generic [ref=f8e152]: 645 (17%)
+                  - generic [ref=f8e156]:
+                    - generic [ref=f8e157]: 25-44 tahun
+                    - generic [ref=f8e158]: 1.104 (29%)
+                  - generic [ref=f8e162]:
+                    - generic [ref=f8e163]: 45-64 tahun
+                    - generic [ref=f8e164]: 876 (23%)
+                  - generic [ref=f8e168]:
+                    - generic [ref=f8e169]: 65+ tahun
+                    - generic [ref=f8e170]: 363 (10%)
+              - generic [ref=f8e173]:
+                - heading "Agama" [level=4] [ref=f8e174]
+                - generic [ref=f8e175]:
+                  - generic [ref=f8e177]:
+                    - generic [ref=f8e178]: Islam
+                    - generic [ref=f8e179]: 3.502 (93%)
+                  - generic [ref=f8e183]:
+                    - generic [ref=f8e184]: Kristen
+                    - generic [ref=f8e185]: 148 (4%)
+                  - generic [ref=f8e189]:
+                    - generic [ref=f8e190]: Katolik
+                    - generic [ref=f8e191]: 87 (2%)
+                  - generic [ref=f8e195]:
+                    - generic [ref=f8e196]: Hindu
+                    - generic [ref=f8e197]: 33 (1%)
+        - generic [ref=f8e200]:
+          - generic [ref=f8e201]:
+            - heading "Informasi & Kontak" [level=3] [ref=f8e202]
+            - list [ref=f8e203]:
+              - listitem [ref=f8e204]:
+                - generic [ref=f8e205]: Kecamatan
+                - text: WIYUNG
+              - listitem [ref=f8e206]:
+                - generic [ref=f8e207]: Kabupaten / Kota
+                - text: Surabaya
+              - listitem [ref=f8e208]:
+                - generic [ref=f8e209]: Alamat Kantor
+                - text: jalan sumberan
+              - listitem [ref=f8e210]:
+                - generic [ref=f8e211]: Jam Operasional
+                - text: Senin - Jumat, 08:00 - 15:00 WIB
+              - listitem [ref=f8e212]:
+                - generic [ref=f8e213]: Email Resmi
+                - link "fahrel24ilham@gmail.com" [ref=f8e214] [cursor=pointer]:
+                  - /url: mailto:fahrel24ilham@gmail.com
+              - listitem [ref=f8e215]:
+                - generic [ref=f8e216]: Telepon / WA
+                - link "12122324234" [ref=f8e217] [cursor=pointer]:
+                  - /url: tel:12122324234
+          - generic [ref=f8e218]:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - img:
+                      - generic [ref=f8e219] [cursor=pointer]
+                - generic:
+                  - generic:
+                    - generic [ref=f8e220]:
+                      - button "Zoom in" [ref=f8e221] [cursor=pointer]: +
+                      - button "Zoom out" [ref=f8e222] [cursor=pointer]: −
+                    - generic [ref=f8e223]:
+                      - link "Leaflet" [ref=f8e224] [cursor=pointer]:
+                        - /url: https://leafletjs.com
+                      - text: "| © OpenStreetMap"
+  - contentinfo [ref=f8e229]:
+    - generic [ref=f8e230]:
+      - generic [ref=f8e231]:
+        - generic [ref=f8e232]:
+          - generic [ref=f8e233]:
+            - img "Logo sumberan" [ref=f8e234]
+            - generic [ref=f8e235]: Desa sumberan
+          - paragraph [ref=f8e236]: Portal informasi resmi Pemerintah Desa sumberan. Melayani dengan integritas untuk mewujudkan desa yang mandiri dan sejahtera.
+        - generic [ref=f8e237]:
+          - generic [ref=f8e238]: LAYANAN PUBLIK
+          - list [ref=f8e239]:
+            - listitem [ref=f8e240]:
+              - link "Administrasi Kependudukan" [ref=f8e241] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/layanan
+            - listitem [ref=f8e242]:
+              - link "Pengajuan Surat Pengantar" [ref=f8e243] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/layanan
+            - listitem [ref=f8e244]:
+              - link "Informasi Bantuan Sosial" [ref=f8e245] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/berita
+            - listitem [ref=f8e246]:
+              - link "Pusat Pengaduan" [ref=f8e247] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/request-akses
+        - generic [ref=f8e248]:
+          - generic [ref=f8e249]: INFORMASI DESA
+          - list [ref=f8e250]:
+            - listitem [ref=f8e251]:
+              - link "Profil & Sejarah" [ref=f8e252] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/profil
+            - listitem [ref=f8e253]:
+              - link "Potensi Ekonomi" [ref=f8e254] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/produk
+            - listitem [ref=f8e255]:
+              - link "Transparansi Dana Desa" [ref=f8e256] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/apbdes
+            - listitem [ref=f8e257]:
+              - link "Agenda Kegiatan" [ref=f8e258] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/agenda
+        - generic [ref=f8e259]:
+          - generic [ref=f8e260]: HUBUNGI KAMI
+          - list [ref=f8e261]:
+            - listitem [ref=f8e262]:
+              - generic [ref=f8e266]: jalan sumberan
+            - listitem [ref=f8e267]:
+              - generic [ref=f8e270]: fahrel24ilham@gmail.com
+            - listitem [ref=f8e271]:
+              - generic [ref=f8e274]: Senin–Jumat, 08.00–15.00 WIB
+          - generic [ref=f8e275]:
+            - link "Instagram" [ref=f8e276] [cursor=pointer]:
+              - /url: "#"
+            - link "Facebook" [ref=f8e279] [cursor=pointer]:
+              - /url: "#"
+            - link "Youtube" [ref=f8e282] [cursor=pointer]:
+              - /url: "#"
+      - generic [ref=f8e285]:
+        - paragraph [ref=f8e286]: Membangun Desa, Menjaga Tradisi.
+        - paragraph [ref=f8e287]: © 2026 Pemerintah Desa sumberan. Seluruh hak cipta dilindungi.

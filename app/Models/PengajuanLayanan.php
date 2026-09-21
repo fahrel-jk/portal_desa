@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class PengajuanLayanan extends Model
 {
@@ -31,7 +32,7 @@ class PengajuanLayanan extends Model
 
         static::creating(function ($model) {
             if (empty($model->kode_tracking)) {
-                $model->kode_tracking = 'PL-' . date('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(6));
+                $model->kode_tracking = 'PL-'.date('Ymd').'-'.strtoupper(Str::random(6));
             }
         });
     }

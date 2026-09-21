@@ -18,7 +18,7 @@
     @endif
     
     @viteReactRefresh
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/carousel-mount.tsx', 'resources/js/faq-mount.tsx'])
+    @vite(['resources/css/app.css', 'resources/css/faq.css', 'resources/js/app.js', 'resources/js/carousel-mount.tsx', 'resources/js/faq-mount.tsx', 'resources/js/calendar-mount.tsx'])
     
     <style>
         @php
@@ -186,16 +186,16 @@
             background-color: var(--border);
         }
 
-        /* Floating Navbar Pill */
+        /* Floating Navbar Pill (Rich Liquid Glass) */
         .navbar-pill {
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.85);
             max-width: 1120px;
             margin: 0 auto;
             padding: 0 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 16px 40px -12px rgba(24, 33, 27, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95);
         }
     </style>
 </head>
@@ -217,14 +217,14 @@
                     <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.25rem;">
 
                         {{-- Glass Panel --}}
-                        <div style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 1rem; padding: 1.25rem; max-width: 500px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);" class="sm:!p-8 sm:!rounded-[1.25rem]">
-                            <div class="eyebrow" style="margin-bottom: 0.75rem; color: rgba(255, 255, 255, 0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Desa di {{ $village->kabupaten }}</div>
-                            <h1 style="font-family: Outfit, sans-serif; font-size: clamp(1.75rem, 6vw, 4.5rem); font-weight: 800; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.4); line-height: 1.05; margin-bottom: 0.75rem; letter-spacing: -0.04em;">
+                        <div style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 1rem; padding: 1.25rem; max-width: 420px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);" class="sm:!p-6 sm:!rounded-[1.25rem]">
+                            <div class="eyebrow" style="margin-bottom: 0.5rem; font-size: 10px; color: rgba(255, 255, 255, 0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Desa di {{ $village->kabupaten }}</div>
+                            <h1 style="font-family: Outfit, sans-serif; font-size: clamp(1.75rem, 5vw, 3.5rem); font-weight: 800; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.4); line-height: 1.05; margin-bottom: 0.5rem; letter-spacing: -0.04em;">
                                 {{ ucwords(strtolower($village->name)) }}
                             </h1>
-                            <p style="font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.5rem; font-weight: 500;">
+                            <p style="font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-bottom: 1.25rem; font-weight: 500;">
                                 @if($village->description && Str::length($village->description) > 10)
-                                    {{ Str::limit(strip_tags($village->description), 120) }}
+                                    {{ Str::limit(strip_tags($village->description), 118) }}
                                 @else
                                     Ruang hidup yang tumbuh di antara kampung, persawahan, dan semangat gotong royong warganya.
                                 @endif
@@ -307,20 +307,64 @@
         <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
             <div id="profil-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
 
-                {{-- Left Column: Profile Text --}}
-                <div class="card" style="padding: 2rem 2.5rem;">
-                    <div class="eyebrow" style="margin-bottom: 1rem;">Profil desa</div>
-                    <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.25rem; color: var(--fg);">
-                        Sebuah kampung yang tumbuh bersama warganya.
-                    </h2>
-                    <div style="font-size: 15px; line-height: 1.75; color: var(--muted-fg);">
-                        @if($village->description && Str::length($village->description) > 80)
-                            {!! nl2br(e($village->description)) !!}
-                        @else
-                            <p>Desa {{ $village->name }} terdiri dari empat dusun dengan kehidupan warga yang bertumpu pada pertanian, usaha rumahan, dan ruang-ruang komunal. Portal ini menjadi pintu informasi yang sederhana dan dekat bagi seluruh warga.</p>
-                            <p style="font-size: 13px; font-style: italic; opacity: 0.7; margin-top: 1rem;">Data pada contoh template ini dapat disesuaikan oleh setiap desa.</p>
-                        @endif
+                {{-- Left Column: Profile Text + Statistik --}}
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="card" style="padding: 2rem 2.5rem;">
+                        <div class="eyebrow" style="margin-bottom: 1rem;">Profil desa</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.25rem; color: var(--fg);">
+                            Sebuah kampung yang tumbuh bersama warganya.
+                        </h2>
+                        <div style="font-size: 15px; line-height: 1.75; color: var(--muted-fg);">
+                            @if($village->description && Str::length($village->description) > 80)
+                                {!! nl2br(e($village->description)) !!}
+                            @else
+                                <p>Desa {{ $village->name }} terdiri dari empat dusun dengan kehidupan warga yang bertumpu pada pertanian, usaha rumahan, dan ruang-ruang komunal. Portal ini menjadi pintu informasi yang sederhana dan dekat bagi seluruh warga.</p>
+                                <p style="font-size: 13px; font-style: italic; opacity: 0.7; margin-top: 1rem;">Data pada contoh template ini dapat disesuaikan oleh setiap desa.</p>
+                            @endif
+                        </div>
                     </div>
+
+                    {{-- Statistik Penduduk (Moved here from below) --}}
+                    @php
+                        $demographics = $village->demographics()->get()->groupBy('type');
+                    @endphp
+                    @if($demographics->count() > 0)
+                        <div id="statistik" class="scroll-mt-20" style="margin-top: 1rem;">
+                            <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 1.25rem;">
+                                <div>
+                                    <div class="eyebrow" style="margin-bottom: 0.5rem;">Data Kependudukan</div>
+                                    <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.5rem); font-weight: 700; color: var(--fg);">Statistik Penduduk Desa</h2>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                @foreach($demographics as $type => $items)
+                                    <div class="card" style="padding: 1.5rem; border-color: var(--border);">
+                                        <h3 style="font-family: Outfit, sans-serif; font-size: 0.9375rem; font-weight: 700; margin-bottom: 1rem; color: var(--fg); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);">
+                                            {{ $type == 'gender' ? 'Jenis Kelamin' : ($type == 'age' ? 'Kelompok Usia' : ($type == 'religion' ? 'Agama' : ucfirst($type))) }}
+                                        </h3>
+                                        @php $total = $items->sum('count'); @endphp
+                                        <div style="display: flex; flex-direction: column; gap: 0.875rem;">
+                                            @foreach($items as $item)
+                                                @php $pct = $total > 0 ? round(($item->count / $total) * 100) : 0; @endphp
+                                                <div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem; font-size: 12px;">
+                                                        <span style="font-weight: 600; color: var(--fg);">{{ $item->label }}</span>
+                                                        <span style="font-weight: 500; color: var(--muted-fg);">{{ number_format($item->count, 0, ',', '.') }} <span style="opacity: 0.7;">({{ $pct }}%)</span></span>
+                                                    </div>
+                                                    <div style="width: 100%; height: 6px; background-color: var(--muted); border-radius: 9999px; overflow: hidden;">
+                                                        <div style="height: 100%; width: {{ $pct }}%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 9999px; transition: width 0.6s ease;"></div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border); text-align: right;">
+                                            <span style="font-size: 11px; font-weight: 600; color: var(--muted-fg);">Total: {{ number_format($total, 0, ',', '.') }} jiwa</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
 
                 {{-- Right Column: Contact + Officials (5 cols) --}}
@@ -379,51 +423,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════
-         STATISTIK DEMOGRAFI
-         ═══════════════════════════════════════ --}}
-    @php
-        $demographics = $village->demographics()->get()->groupBy('type');
-    @endphp
-    @if($demographics->count() > 0)
-        <section id="statistik" class="scroll-mt-20" style="padding-bottom: 4rem;">
-            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
-                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
-                    <div>
-                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Data Kependudukan</div>
-                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Statistik Penduduk Desa</h2>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($demographics as $type => $items)
-                        <div class="card" style="padding: 1.75rem; border-color: var(--border);">
-                            <h3 style="font-family: Outfit, sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--fg); padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);">
-                                {{ $type == 'gender' ? 'Jenis Kelamin' : ($type == 'age' ? 'Kelompok Usia' : ($type == 'religion' ? 'Agama' : ucfirst($type))) }}
-                            </h3>
-                            @php $total = $items->sum('count'); @endphp
-                            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                @foreach($items as $item)
-                                    @php $pct = $total > 0 ? round(($item->count / $total) * 100) : 0; @endphp
-                                    <div>
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.375rem; font-size: 13.5px;">
-                                            <span style="font-weight: 600; color: var(--fg);">{{ $item->label }}</span>
-                                            <span style="font-weight: 500; color: var(--muted-fg);">{{ number_format($item->count, 0, ',', '.') }} <span style="opacity: 0.7;">({{ $pct }}%)</span></span>
-                                        </div>
-                                        <div style="width: 100%; height: 8px; background-color: var(--muted); border-radius: 9999px; overflow: hidden;">
-                                            <div style="height: 100%; width: {{ $pct }}%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 9999px; transition: width 0.6s ease;"></div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border); text-align: right;">
-                                <span style="font-size: 12px; font-weight: 600; color: var(--muted-fg);">Total: {{ number_format($total, 0, ',', '.') }} jiwa</span>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
+
 
     {{-- ═══════════════════════════════════════
          LAPOR DESA (Pengaduan)
@@ -463,36 +463,24 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </a>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style="align-items: start;">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style="align-items: stretch;">
                     @foreach($village->services->take(6) as $service)
-                        <div class="card transition-all duration-300 group flex flex-col" style="padding: 1.5rem; align-self: start; border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
-                            <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shrink-0" style="background-color: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary);">
+                        <div class="card transition-all duration-300 group flex flex-col h-full" style="padding: 1.5rem; border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+                            <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-10 shrink-0" style="background-color: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary);">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </div>
-                            <h3 class="font-bold text-lg mb-3" style="font-family: Outfit, sans-serif;">{{ $service->name }}</h3>
-                            @if($service->description)
-                                <p class="text-[14px] leading-relaxed mb-6" style="color: var(--muted-fg);">{{ $service->description }}</p>
-                            @endif
-                            @if($service->requirements)
-                                <div class="mt-auto pt-4 border-t" style="border-color: var(--border);">
-                                    <details class="group/details">
-                                        <summary class="cursor-pointer font-semibold inline-flex items-center justify-between w-full py-1 text-xs uppercase tracking-wider transition-colors select-none" style="color: var(--primary);">
-                                            <span>Syarat & Ketentuan</span>
-                                            <svg class="w-4 h-4 transition-transform duration-300 group-open/details:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                                        </summary>
-                                        <div class="mt-4 p-4 rounded-xl border space-y-2 text-[13px] leading-relaxed" style="background-color: color-mix(in srgb, var(--bg) 70%, transparent); border-color: var(--border); color: var(--fg);">
-                                            @foreach(explode("\n", $service->requirements) as $reqLine)
-                                                @if(trim($reqLine))
-                                                    <div class="flex items-start gap-2.5">
-                                                        <span class="inline-block w-1.5 h-1.5 rounded-full mt-2 shrink-0" style="background-color: var(--primary);"></span>
-                                                        <span>{{ preg_replace('/^\d+\.\s*/', '', trim($reqLine)) }}</span>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </details>
-                                </div>
-                            @endif
+                            <div class="flex-1 flex flex-col">
+                                <h3 class="font-bold text-lg mb-3" style="font-family: Outfit, sans-serif;">{{ $service->name }}</h3>
+                                @if($service->description)
+                                    <p class="text-[14px] leading-relaxed mb-6 line-clamp-3" style="color: var(--muted-fg);">{{ $service->description }}</p>
+                                @endif
+                            </div>
+                            <div class="mt-auto pt-4 border-t" style="border-color: var(--border);">
+                                <a href="{{ $service->slug ? route('village.service.show', [$village->slug, $service->slug]) : '#' }}" class="inline-flex items-center font-bold text-[13px] uppercase tracking-wider transition-colors" style="color: var(--primary);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--primary)'">
+                                    Lihat Detail
+                                    <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                </a>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -506,36 +494,44 @@
     @if($village->news->count() > 0)
         <section id="berita" class="scroll-mt-20" style="padding-bottom: 4rem;">
             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
-                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem;">
                     <div>
-                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Kabar desa</div>
-                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Berita & pengumuman</h2>
+                        <div class="eyebrow" style="margin-bottom: 0.5rem; letter-spacing: 0.15em;">KABAR DESA</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.625rem, 3vw, 2.25rem); font-weight: 700; color: var(--fg); margin-bottom: 0.35rem;">Berita & pengumuman</h2>
+                        <p style="font-size: 0.9375rem; color: var(--muted-fg);">Informasi terbaru dari kegiatan, layanan, dan pembangunan Desa {{ $village->name }}.</p>
                     </div>
-                    <a href="{{ route('village.news', $village->slug) }}" class="text-[13.5px] font-bold no-underline transition-colors flex items-center gap-1" style="color: var(--primary);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--primary)'">
-                        Lihat Semua
+                    <a href="{{ route('village.news', $village->slug) }}" class="btn-ghost" style="padding: 0.5rem 1.25rem; font-size: 0.875rem; border-radius: 9999px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.375rem; font-weight: 600;">
+                        Lihat semua
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </a>
                 </div>
-                <div id="berita-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
-                    @foreach($village->news->take(4) as $news)
-                        <article class="group flex flex-col">
-                            @if($news->cover_image_path)
-                                <div class="overflow-hidden rounded-xl mb-3 aspect-[4/3]" style="background-color: var(--muted);">
-                                    <img src="{{ Storage::url($news->cover_image_path) }}" alt="{{ $news->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                </div>
-                            @endif
-                            <div class="text-[11px] font-bold uppercase tracking-wider mb-1.5" style="color: var(--muted-fg);">
-                                {{ $news->published_at->translatedFormat('d M Y') }}
-                            </div>
-                            <h3 class="font-bold text-[15px] leading-snug mb-1.5 line-clamp-2 transition-colors" style="font-family: Outfit, sans-serif;">
-                                {{ $news->title }}
-                            </h3>
-                            <p class="text-[13px] line-clamp-2 mt-auto" style="color: var(--muted-fg);">
-                                {{ Str::limit(strip_tags($news->content), 80) }}
-                            </p>
-                        </article>
-                    @endforeach
-                </div>
+                @php
+                    $newsData = $village->news->take(4)->map(function($news) use ($village) {
+                        $cat = 'KABAR DESA';
+                        $slug = strtolower($news->slug . ' ' . $news->title);
+                        if (Str::contains($slug, ['wisata', 'prestasi', 'terbaik', 'juara', 'nominasi'])) {
+                            $cat = 'PRESTASI';
+                        } elseif (Str::contains($slug, ['pohon', 'bibit', 'lingkungan', 'hijau', 'alam', 'kerja-bakti'])) {
+                            $cat = 'LINGKUNGAN';
+                        } elseif (Str::contains($slug, ['umkm', 'marketing', 'pelatihan', 'usaha', 'ekonomi'])) {
+                            $cat = 'UMKM';
+                        } elseif (Str::contains($slug, ['bantuan', 'pangan', 'blt', 'sosial', 'sembako', 'kpm'])) {
+                            $cat = 'SOSIAL';
+                        }
+
+                        return [
+                            'id' => $news->id,
+                            'title' => $news->title,
+                            'category' => $cat,
+                            'overview' => Str::limit(strip_tags($news->content), 90),
+                            'published_date' => $news->published_at ? $news->published_at->translatedFormat('d M Y') : now()->translatedFormat('d M Y'),
+                            'image_url' => $news->cover_image_path ? Storage::url($news->cover_image_path) : null,
+                            'url' => route('village.news.show', [$village->slug, $news->slug])
+                        ];
+                    })->toJson();
+                @endphp
+                <div id="news-react-root" data-news="{{ $newsData }}"></div>
+                @vite('resources/js/news-mount.tsx')
             </div>
         </section>
     @endif
@@ -544,27 +540,51 @@
          AGENDA (Events) & MINI KALENDER
          ═══════════════════════════════════════ --}}
     @php
-        $upcomingAgendas = $village->agendas->where('event_date', '>=', now()->toDateString())->sortBy('event_date')->take(3);
+        $upcomingAgendas = $village->agendas->where('event_date', '>=', now()->toDateString())->sortBy('event_date')->take(5);
+        if ($upcomingAgendas->count() < 5) {
+            $upcomingAgendas = $village->agendas->sortBy('event_date')->take(5);
+        }
         
-        // Mini Calendar Logic (Current Month)
-        $today = now();
-        $startOfMonth = $today->copy()->startOfMonth();
-        $endOfMonth = $today->copy()->endOfMonth();
-        $startDayOfWeek = $startOfMonth->dayOfWeekIso; // 1 (Mon) - 7 (Sun)
-        $daysInMonth = $endOfMonth->daysInMonth;
-        
-        // Get events for current month to show dots
-        $monthEvents = $village->agendas->whereBetween('event_date', [$startOfMonth->toDateString(), $endOfMonth->toDateString()])->groupBy(function($event) {
-            return \Carbon\Carbon::parse($event->event_date)->format('Y-m-d');
-        });
+        $calendarEventsData = $village->agendas->map(function($agenda) {
+            return [
+                'id' => $agenda->id,
+                'title' => $agenda->title,
+                'event_date' => \Carbon\Carbon::parse($agenda->event_date)->format('Y-m-d'),
+                'start_time' => $agenda->start_time,
+                'end_time' => $agenda->end_time,
+                'location' => $agenda->location,
+                'category_label' => $agenda->category_label,
+                'category_color' => $agenda->category_color,
+            ];
+        })->values()->toJson();
+
+        $upcomingAgendasData = $upcomingAgendas->map(function($agenda) {
+            return [
+                'id' => $agenda->id,
+                'title' => $agenda->title,
+                'event_date' => \Carbon\Carbon::parse($agenda->event_date)->format('Y-m-d'),
+                'month_name' => $agenda->event_date->translatedFormat('M'),
+                'day_number' => $agenda->event_date->format('d'),
+                'start_time' => $agenda->start_time ? \Carbon\Carbon::parse($agenda->start_time)->format('H:i') : null,
+                'end_time' => $agenda->end_time ? \Carbon\Carbon::parse($agenda->end_time)->format('H:i') : null,
+                'location' => $agenda->location,
+                'description' => $agenda->description,
+                'category_label' => $agenda->category_label ?: ($agenda->category ?: 'KEGIATAN'),
+                'category_color' => $agenda->category_color ?: '#3b82f6',
+            ];
+        })->values()->toJson();
+        $today = \Carbon\Carbon::today();
     @endphp
-    @if($upcomingAgendas->count() > 0 || $monthEvents->count() > 0)
+    @if($village->agendas->count() > 0)
         <section id="agenda" class="scroll-mt-20" style="padding-bottom: 4rem;">
             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
                 <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
                     <div>
-                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Kegiatan</div>
-                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Agenda Desa Terdekat</h2>
+                        <div class="eyebrow" style="margin-bottom: 0.75rem; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.15em; color: var(--primary);">Kegiatan</div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg); margin: 0;">Daftar Agenda Mendatang</h2>
+                            <span style="display: inline-flex; align-items: center; justify-content: center; background-color: rgba(196, 101, 74, 0.1); color: var(--primary); border-radius: 9999px; padding: 0.125rem 0.625rem; font-size: 0.875rem; font-weight: 700;">{{ $upcomingAgendas->count() }}</span>
+                        </div>
                     </div>
                     <a href="{{ route('village.agenda', $village->slug) }}" class="text-[13.5px] font-bold no-underline transition-colors flex items-center gap-1" style="color: var(--primary);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--primary)'">
                         Lihat Semua
@@ -574,102 +594,106 @@
                 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
                     
-                    {{-- Left Column: Mini Calendar --}}
-                    <div class="lg:col-span-5 xl:col-span-4 card" style="padding: 1.75rem; border-color: var(--border);">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-                            <h3 style="font-family: Outfit, sans-serif; font-size: 1.125rem; font-weight: 700; color: var(--fg);">{{ $today->translatedFormat('F Y') }}</h3>
-                            <a href="{{ route('village.agenda', $village->slug) }}" class="p-2 rounded-full hover:bg-muted text-muted-foreground transition-colors" title="Buka Kalender Penuh">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
-                            </a>
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; text-align: center; margin-bottom: 0.75rem;">
-                            @foreach(['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'] as $day)
-                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--muted-fg); text-transform: uppercase;">{{ $day }}</div>
-                            @endforeach
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem;">
-                            {{-- Empty slots for start of month --}}
-                            @for ($i = 1; $i < $startDayOfWeek; $i++)
-                                <div style="aspect-ratio: 1; padding: 0.25rem;"></div>
-                            @endfor
-                            
-                            {{-- Days --}}
-                            @for ($day = 1; $day <= $daysInMonth; $day++)
-                                @php
-                                    $dateStr = $today->format('Y-m-') . str_pad($day, 2, '0', STR_PAD_LEFT);
-                                    $isToday = $day === $today->day;
-                                    $dayEvents = $monthEvents->get($dateStr, collect());
-                                    $hasEvents = $dayEvents->count() > 0;
-                                @endphp
-                                <div style="aspect-ratio: 1; padding: 0.25rem; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; border-radius: 0.5rem; {{ $isToday ? 'background-color: var(--primary); color: var(--primary-fg); box-shadow: 0 4px 10px rgba(0,0,0,0.1);' : 'background-color: transparent; color: var(--fg);' }}">
-                                    <span style="font-size: 0.875rem; font-weight: {{ $isToday ? '700' : '500' }};">{{ $day }}</span>
-                                    
-                                    {{-- Event Dots --}}
-                                    @if($hasEvents && !$isToday)
-                                        <div style="display: flex; gap: 2px; position: absolute; bottom: 4px;">
-                                            @foreach($dayEvents->take(3) as $evt)
-                                                <div style="width: 4px; height: 4px; border-radius: 50%; background-color: {{ $evt->category_color }};"></div>
-                                            @endforeach
-                                        </div>
-                                    @elseif($hasEvents && $isToday)
-                                        <div style="display: flex; gap: 2px; position: absolute; bottom: 4px;">
-                                            @foreach($dayEvents->take(3) as $evt)
-                                                <div style="width: 4px; height: 4px; border-radius: 50%; background-color: var(--primary-fg); opacity: 0.8;"></div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
-                            @endfor
-                        </div>
+                    {{-- Left Column: React Glass Calendar (Enlarged) --}}
+                    <div class="lg:col-span-6 xl:col-span-6">
+                        <div id="glass-calendar-root" data-events="{{ $calendarEventsData }}" data-agenda-url="{{ route('village.agenda', $village->slug) }}"></div>
                     </div>
 
-                    {{-- Right Column: Upcoming Agenda List --}}
-                    <div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-4">
-                        @if($upcomingAgendas->count() > 0)
-                            @foreach($upcomingAgendas as $agenda)
-                                <div class="card p-4 sm:p-5 flex items-start gap-4 transition-all duration-300" style="border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateX(0)'">
-                                    <div class="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex flex-col items-center justify-center overflow-hidden border" style="background: rgba(255,255,255,0.5); border-color: var(--border); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
-                                        <div class="w-full text-center text-[9px] sm:text-[10px] font-bold uppercase py-0.5" style="background-color: {{ $agenda->category_color }}; color: #fff;">
-                                            {{ $agenda->event_date->translatedFormat('M') }}
-                                        </div>
-                                        <div class="flex-grow flex items-center justify-center font-bold text-lg sm:text-xl" style="font-family: Outfit, sans-serif; color: var(--fg);">
-                                            {{ $agenda->event_date->format('d') }}
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow">
-                                        <div class="flex items-center gap-2 mb-1">
-                                            <span class="inline-block w-2 h-2 rounded-full" style="background-color: {{ $agenda->category_color }};"></span>
-                                            <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider" style="color: var(--muted-fg);">{{ $agenda->category_label }}</span>
-                                        </div>
-                                        <h3 class="font-bold text-[14px] sm:text-[15px] leading-snug mb-2 line-clamp-1" style="font-family: Outfit, sans-serif; color: var(--fg);">{{ $agenda->title }}</h3>
-                                        <div class="flex flex-col gap-1 text-[12px] sm:text-[13px]" style="color: var(--muted-fg);">
-                                            @if($agenda->start_time)
-                                                <div class="flex items-center gap-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                                    {{ \Carbon\Carbon::parse($agenda->start_time)->format('H:i') }} {{ $agenda->end_time ? '- ' . \Carbon\Carbon::parse($agenda->end_time)->format('H:i') : 'WIB' }}
+                    {{-- Right Column: Upcoming Agenda List (Timeline Design) --}}
+                    <div class="lg:col-span-6 xl:col-span-6">
+                        <style>
+                            /* Timeline CSS */
+                            .ag-panel { padding: .25rem 1.25rem; border: 1px solid var(--border); border-radius: 1.5rem; background: var(--card); }
+                            @media (min-width: 640px) { .ag-panel { padding: .25rem 1.75rem; } }
+                            .ag-timeline { margin: 0; padding: 0; list-style: none; }
+                            .ag-item { --dw: 3.25rem; --rail: 1.75rem; --c: #3b82f6; position: relative; display: grid; grid-template-columns: var(--dw) var(--rail) minmax(0, 1fr); column-gap: .5rem; padding: 1.25rem 0; }
+                            @media (min-width: 640px) { .ag-item { --dw: 4rem; } }
+                            .ag-item::before { content: ""; position: absolute; left: calc(var(--dw) + .5rem + var(--rail) / 2 - 1px); top: 0; bottom: 0; width: 2px; background: var(--border); }
+                            .ag-item:first-child::before { top: 2rem; }
+                            .ag-item:last-child::before  { bottom: auto; height: 2rem; }
+                            .ag-item:only-child::before  { display: none; }
+                            .ag-node { position: absolute; z-index: 1; left: calc(var(--dw) + .5rem + var(--rail) / 2 - .4375rem); top: 1.55rem; width: .875rem; height: .875rem; box-sizing: border-box; border: 3px solid var(--c); border-radius: 50%; background: var(--card); }
+                            .ag-item.is-today .ag-node { background: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent); }
+                            .ag-date { display: flex; flex-direction: column; align-items: center; text-align: center; }
+                            .ag-dow, .ag-mon { font-size: .75rem; font-weight: 600; line-height: 1.2; color: var(--muted-fg); }
+                            .ag-day { margin: .125rem 0; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.75rem; line-height: 1.05; letter-spacing: -0.02em; color: var(--fg); }
+                            .ag-item.is-today .ag-day { color: var(--primary); }
+                            .ag-body { min-width: 0; }
+                            .ag-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+                            .ag-title { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.0625rem; line-height: 1.35; letter-spacing: -0.01em; color: var(--fg); transition: color .18s ease; }
+                            .ag-item:hover .ag-title { color: var(--primary); }
+                            .ag-pill { flex: none; max-width: 45%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: .1875rem .625rem; border-radius: 9999px; font-size: .75rem; font-weight: 600; line-height: 1.4; color: color-mix(in srgb, var(--c) 72%, #000); background: color-mix(in srgb, var(--c) 12%, white); }
+                            .ag-desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: .375rem 0 0; font-size: .875rem; line-height: 1.55; color: var(--muted-fg); }
+                            .ag-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .375rem 1.25rem; margin-top: .625rem; font-size: .8125rem; line-height: 1.4; color: var(--muted-fg); }
+                            .ag-meta-item { display: inline-flex; align-items: center; gap: .375rem; min-width: 0; }
+                            .ag-meta-item svg { width: 1rem; height: 1rem; flex: none; color: var(--c); }
+                            .ag-meta-item span { overflow-wrap: anywhere; }
+                            .ag-when { margin-left: auto; font-weight: 600; color: var(--fg); }
+                            .ag-item.is-today .ag-when { color: var(--primary); }
+                            @media (max-width: 480px) { .ag-title-row { flex-direction: column-reverse; align-items: flex-start; gap: .375rem; } .ag-pill { max-width: 100%; } .ag-when { margin-left: 0; } }
+                            .ag-empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 2.5rem 1.5rem; }
+                            .ag-empty-ico { display: flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; margin-bottom: 1rem; border-radius: 50%; background: var(--muted); color: var(--muted-fg); }
+                            .ag-empty h3 { margin: 0 0 .5rem; font-family: 'Outfit', sans-serif; font-size: 1.125rem; font-weight: 700; color: var(--fg); }
+                            .ag-empty p { margin: 0; font-size: .875rem; color: var(--muted-fg); }
+                        </style>
+
+                        <div class="ag-panel">
+                            @if($upcomingAgendas->count() > 0)
+                                <ol class="ag-timeline">
+                                    @foreach($upcomingAgendas as $ua)
+                                        @php
+                                            $d = \Carbon\Carbon::parse($ua->event_date)->locale('id');
+                                            $c = $ua->category_color ?: '#3b82f6';
+                                            $c = preg_match('/^#[0-9a-fA-F]{3,8}$/', $c) ? $c : '#3b82f6';
+                                            $label = $ua->category_label ?: ($ua->category ?: 'Kegiatan');
+                                            $label = mb_convert_case(mb_strtolower($label, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
+                                            $diff = (int) $today->diffInDays($d->copy()->startOfDay(), false);
+                                            $isToday = $diff === 0;
+                                            $when = $diff < 0 ? null : ($diff === 0 ? 'Hari ini' : ($diff === 1 ? 'Besok' : $diff . ' hari lagi'));
+                                            $start = $ua->start_time ? \Carbon\Carbon::parse($ua->start_time)->format('H:i') : null;
+                                            $end   = $ua->end_time ? \Carbon\Carbon::parse($ua->end_time)->format('H:i') : null;
+                                            $time  = $start ? ($end ? $start . ' – ' . $end . ' WIB' : $start . ' WIB') : null;
+                                        @endphp
+
+                                        <li class="ag-item {{ $isToday ? 'is-today' : '' }}" style="--c: {{ $c }};">
+                                            <span class="ag-node" aria-hidden="true"></span>
+                                            <div class="ag-date">
+                                                <span class="ag-dow">{{ $d->translatedFormat('D') }}</span>
+                                                <span class="ag-day">{{ $d->format('d') }}</span>
+                                                <span class="ag-mon">{{ $d->translatedFormat('M') }}</span>
+                                            </div>
+                                            <div></div>
+                                            <div class="ag-body">
+                                                <div class="ag-title-row">
+                                                    <h4 class="ag-title" title="{{ $ua->title }}">{{ $ua->title }}</h4>
+                                                    <span class="ag-pill">{{ $label }}</span>
                                                 </div>
-                                            @endif
-                                            @if($agenda->location)
-                                                <div class="flex items-center gap-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
-                                                    <span class="line-clamp-1">{{ $agenda->location }}</span>
+                                                @if($ua->description)
+                                                    <p class="ag-desc">{{ $ua->description }}</p>
+                                                @endif
+                                                <div class="ag-meta">
+                                                    @if($time)
+                                                        <span class="ag-meta-item">
+                                                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                                            <span>{{ $time }}</span>
+                                                        </span>
+                                                    @endif
+                                                    @if($ua->location)
+                                                        <span class="ag-meta-item">
+                                                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                                                            <span>{{ $ua->location }}</span>
+                                                        </span>
+                                                    @endif
+                                                    @if($when)
+                                                        <span class="ag-when">{{ $when }}</span>
+                                                    @endif
                                                 </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="card p-8 flex flex-col items-center justify-center text-center border-dashed" style="border-color: var(--border); height: 100%;">
-                                <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--muted); display: flex; items-center; justify-content: center; margin-bottom: 1rem; color: var(--muted-fg);">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                                </div>
-                                <h3 style="font-family: Outfit, sans-serif; font-size: 1.125rem; font-weight: 700; color: var(--fg); margin-bottom: 0.5rem;">Tidak Ada Agenda Mendatang</h3>
-                                <p style="font-size: 0.875rem; color: var(--muted-fg);">Belum ada jadwal kegiatan dalam waktu dekat.</p>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </div>
-                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -710,38 +734,48 @@
     @if($village->products->where('is_active', true)->count() > 0)
         <section id="produk" class="scroll-mt-20" style="padding-bottom: 4rem;">
             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
-                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 2rem;">
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem;">
                     <div>
-                        <div class="eyebrow" style="margin-bottom: 0.75rem;">Potensi Desa</div>
-                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Produk Unggulan UMKM</h2>
+                        <div class="eyebrow" style="margin-bottom: 0.5rem; letter-spacing: 0.15em;">POTENSI DESA</div>
+                        <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.625rem, 3vw, 2.25rem); font-weight: 700; color: var(--fg); margin-bottom: 0.35rem;">Produk Unggulan UMKM</h2>
+                        <p style="font-size: 0.9375rem; color: var(--muted-fg);">Jelajahi berbagai komoditas dan hasil karya wirausaha warga Desa {{ $village->name }}.</p>
                     </div>
-                    <a href="{{ route('village.products', $village->slug) }}" class="text-[13.5px] font-bold no-underline transition-colors flex items-center gap-1" style="color: var(--primary);" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--primary)'">
-                        Lihat Semua
+                    <a href="{{ route('village.products', $village->slug) }}" class="btn-ghost" style="padding: 0.5rem 1.25rem; font-size: 0.875rem; border-radius: 9999px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.375rem; font-weight: 600;">
+                        Lihat semua
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </a>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
-                    @foreach($village->products->where('is_active', true)->take(6) as $product)
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    @foreach($village->products->where('is_active', true)->take(8) as $product)
                         <a href="{{ route('village.product.show', [$village->slug, $product->slug]) }}" 
-                           class="group relative block overflow-hidden rounded-[24px] h-64 sm:h-72 lg:h-80 {{ ($loop->iteration == 1 || $loop->iteration == 6) ? 'md:col-span-2' : 'md:col-span-1' }}">
-                            
-                            @if($product->image_path)
-                                <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                            @else
-                                <div class="absolute inset-0 w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
-                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+                           class="group block no-underline">
+                            <div class="card h-full flex flex-col overflow-hidden rounded-[20px] transition-all duration-300 border border-[var(--border)] bg-white shadow-sm hover:shadow-xl hover:-translate-y-1">
+                                <div class="aspect-[4/3] w-full relative overflow-hidden bg-slate-100">
+                                    @if($product->image_path)
+                                        <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-100">
+                                            <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+                                        </div>
+                                    @endif
                                 </div>
-                            @endif
-                            
-                            {{-- Liquid Glass Pill --}}
-                            <div class="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4">
-                                <div class="rounded-[16px] px-6 py-4 bg-white/70 backdrop-blur-md border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-between gap-4 transition-colors duration-300 group-hover:bg-white/85">
-                                    <div class="truncate">
-                                        <h3 class="font-normal text-gray-900 text-[14.5px] sm:text-[15px] truncate" style="font-family: Outfit, sans-serif;">{{ $product->name }}</h3>
+                                <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+                                    <div>
+                                        <div class="text-[11px] font-bold uppercase tracking-wider mb-1 line-clamp-1" style="color: var(--primary);">
+                                            {{ $product->category ?: 'PRODUK DESA' }}
+                                        </div>
+                                        <h3 class="font-bold text-base sm:text-lg leading-snug line-clamp-2 text-gray-900 group-hover:text-[var(--primary)] transition-colors" style="font-family: Outfit, sans-serif; margin-bottom: 0.5rem;">
+                                            {{ $product->name }}
+                                        </h3>
                                     </div>
-                                    <div class="shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold" style="color: var(--primary);">
-                                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                                    <div style="margin-top: 0.75rem; display: flex; items-center; justify-content: space-between;">
+                                        <span class="text-sm font-bold" style="color: var(--primary);">
+                                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                                        </span>
+                                        <span class="text-xs font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform" style="color: var(--fg);">
+                                            Detail →
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -803,11 +837,30 @@
          FAQ / TANYA JAWAB
          ═══════════════════════════════════════ --}}
     @if($village->faqs->count() > 0)
+        <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@type": "FAQPage",
+          "mainEntity": [
+            @foreach($village->faqs as $faq)
+            {
+              "@@type": "Question",
+              "name": {{ json_encode($faq->question) }},
+              "acceptedAnswer": {
+                "@@type": "Answer",
+                "text": {{ json_encode($faq->answer) }}
+              }
+            }@if(!$loop->last),@endif
+            @endforeach
+          ]
+        }
+        </script>
+
         <section id="faq" class="scroll-mt-20" style="padding-bottom: 4rem;">
-            <div style="max-width: 800px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
                 <div style="text-align: center; margin-bottom: 2.5rem;">
-                    <div class="eyebrow" style="margin-bottom: 0.75rem;">FAQ</div>
-                    <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 700; color: var(--fg);">Tanya Jawab Seputar Desa</h2>
+                    <div class="eyebrow" style="margin-bottom: 0.5rem; letter-spacing: 0.15em;">FAQ</div>
+                    <h2 style="font-family: Outfit, sans-serif; font-size: clamp(1.625rem, 3vw, 2.25rem); font-weight: 700; color: var(--fg); margin-bottom: 0.35rem;">Tanya Jawab Seputar Desa</h2>
                     <p style="color: var(--muted-fg); margin-top: 0.5rem; font-size: 15px;">Pertanyaan umum yang sering diajukan warga</p>
                 </div>
                 <div id="faq-react-root" data-faqs="{{ json_encode($village->faqs) }}"></div>

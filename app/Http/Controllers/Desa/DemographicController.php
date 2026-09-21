@@ -16,7 +16,7 @@ class DemographicController extends Controller
         abort_unless($village && $village->isPublished(), 403);
 
         $demographics = $village->demographics;
-        
+
         $groupedDemographics = $demographics->groupBy('type');
 
         return view('desa.demographics.index', compact('village', 'groupedDemographics'));

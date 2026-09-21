@@ -2,31 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Village;
-use App\Models\AccessRequest;
 use App\Http\Requests\StoreAccessRequestRequest;
-use Illuminate\Http\Request;
+use App\Models\AccessRequest;
+use App\Models\Village;
 
 class AccessRequestController extends Controller
 {
     public function create($slug)
     {
         $village = Village::where('slug', $slug)->firstOrFail();
-        
+
         // If user is already logged in as warga for this village, go straight to dashboard
         if (auth()->check() && auth()->user()->isWargaLayanan() && auth()->user()->village_id == $village->id) {
             return redirect()->route('layanan.dashboard');
         }
-        
+
         return view('desa.request-akses', compact('village'));
     }
 
     public function store(StoreAccessRequestRequest $request, $slug)
     {
         $village = Village::where('slug', $slug)->firstOrFail();
-        
+
         $validated = $request->validated();
-        
+
         if ($request->hasFile('dokumen_pendukung')) {
             $path = $request->file('dokumen_pendukung')->store('access-requests', 'public');
             $validated['dokumen_pendukung'] = $path;

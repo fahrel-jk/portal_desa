@@ -29,7 +29,7 @@ class PengajuanMasukController extends Controller
     public function show($id)
     {
         $villageId = auth()->user()->village_id;
-        
+
         $pengajuan = PengajuanLayanan::where('id', $id)
             ->where('desa_id', $villageId)
             ->with(['user', 'layanan', 'dokumen'])
@@ -41,7 +41,7 @@ class PengajuanMasukController extends Controller
     public function update(Request $request, $id, SuratGeneratorService $suratGenerator)
     {
         $villageId = auth()->user()->village_id;
-        
+
         $pengajuan = PengajuanLayanan::where('id', $id)
             ->where('desa_id', $villageId)
             ->firstOrFail();
@@ -54,7 +54,7 @@ class PengajuanMasukController extends Controller
 
         $pengajuan->status = $request->status;
         $pengajuan->catatan_operator = $request->catatan_operator;
-        
+
         if ($request->status === 'ditolak') {
             $pengajuan->alasan_ditolak = $request->alasan_ditolak;
         } else {
@@ -67,7 +67,7 @@ class PengajuanMasukController extends Controller
                 $path = $suratGenerator->generate($pengajuan);
                 $pengajuan->file_surat_hasil = $path;
             } catch (\Exception $e) {
-                return back()->with('error', 'Gagal men-generate PDF: ' . $e->getMessage());
+                return back()->with('error', 'Gagal men-generate PDF: '.$e->getMessage());
             }
         }
 

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Village;
+use App\Observers\VillageObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        \App\Models\Village::observe(\App\Observers\VillageObserver::class);
+        Village::observe(VillageObserver::class);
     }
 }

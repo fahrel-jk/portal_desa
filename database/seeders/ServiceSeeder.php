@@ -21,6 +21,7 @@ class ServiceSeeder extends Seeder
 
         if (! $village) {
             $this->command->warn('No published village found. Skipping service seeder.');
+
             return;
         }
 

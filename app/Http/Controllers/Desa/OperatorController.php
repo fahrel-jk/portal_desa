@@ -69,7 +69,7 @@ class OperatorController extends Controller
     {
         $user = $request->user();
         $village = $user->village;
-        
+
         abort_unless($village && $village->isPublished(), 403);
         abort_unless($operator->village_id === $village->id, 403);
 

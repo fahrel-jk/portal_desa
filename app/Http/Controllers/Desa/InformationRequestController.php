@@ -40,7 +40,7 @@ class InformationRequestController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if (!$user->village_id) {
+        if (! $user->village_id) {
             abort(403);
         }
 
@@ -57,7 +57,7 @@ class InformationRequestController extends Controller
     public function update(Request $request, VillageInformationRequest $informationRequest)
     {
         $user = Auth::user();
-        
+
         // Ensure user belongs to the same village as the request
         if ($user->village_id !== $informationRequest->village_id) {
             abort(403, 'Unauthorized action.');

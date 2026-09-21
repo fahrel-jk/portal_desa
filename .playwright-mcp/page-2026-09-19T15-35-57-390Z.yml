@@ -1,0 +1,199 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "Logo sumberan Desa sumberan Portal resmi desa" [ref=e5] [cursor=pointer]:
+        - /url: http://localhost:8000/desa/sumberan
+        - img "Logo sumberan" [ref=e6]
+        - generic [ref=e7]:
+          - generic [ref=e8]: Desa sumberan
+          - generic [ref=e9]: Portal resmi desa
+      - navigation [ref=e10]:
+        - link "Beranda" [ref=e11] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan
+        - link "Profil" [ref=e12] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/profil
+        - link "Layanan" [ref=e13] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/layanan
+        - link "Berita" [ref=e14] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan#berita
+        - link "Agenda" [ref=e15] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/agenda
+        - link "APBDes" [ref=e16] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/apbdes
+        - button "Lainnya" [ref=e18] [cursor=pointer]
+        - link "Login" [ref=e23] [cursor=pointer]:
+          - /url: http://localhost:8000/login
+        - link "Hubungi kami" [ref=e24] [cursor=pointer]:
+          - /url: http://localhost:8000/desa/sumberan/request-akses
+  - main [ref=e25]:
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e28]: Profil & Sejarah
+        - heading "Profil Desa sumberan" [level=1] [ref=e29]
+        - paragraph [ref=e30]: Mengenal lebih dekat sejarah, visi misi, dan struktur pemerintahan desa.
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: Visi Desa
+          - heading "Visi" [level=2] [ref=e34]
+          - blockquote [ref=e35]:
+            - generic [ref=e36]: "\""
+            - text: Mewujudkan Desa Sumberan yang mandiri, berdaya saing, dan berbudaya melalui tata kelola pemerintahan yang transparan serta pemberdayaan potensi lokal. "
+        - generic [ref=e37]:
+          - heading "Misi" [level=2] [ref=e38]
+          - generic [ref=e39]:
+            - generic [ref=e40]:
+              - generic [ref=e41]: "1"
+              - paragraph [ref=e42]: Meningkatkan kualitas pelayanan publik yang mudah diakses oleh seluruh warga desa
+            - generic [ref=e43]:
+              - generic [ref=e44]: "2"
+              - paragraph [ref=e45]: Mengembangkan potensi pertanian organik dan ekonomi kreatif berbasis kearifan lokal
+            - generic [ref=e46]:
+              - generic [ref=e47]: "3"
+              - paragraph [ref=e48]: Membangun infrastruktur desa yang mendukung konektivitas dan kesejahteraan warga
+            - generic [ref=e49]:
+              - generic [ref=e50]: "4"
+              - paragraph [ref=e51]: Melestarikan budaya dan tradisi gotong royong sebagai identitas desa
+            - generic [ref=e52]:
+              - generic [ref=e53]: "5"
+              - paragraph [ref=e54]: Mendorong partisipasi pemuda dalam pembangunan desa melalui inovasi digital
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]:
+            - heading "Tentang Desa" [level=2] [ref=e58]
+            - generic [ref=e61]: Kampung ini dikenal dengan konsep Wisata Batas Kampung (WBK) yang menawarkan suasana pedesaan asri, rindang, dan sejuk di tengah kota. Kampung Sumberan memiliki tradisi budaya lokal yang khas seperti kegiatan Bersih Desa atau Ruwah Desa.
+          - generic [ref=e62]:
+            - heading "Struktur Perangkat Desa" [level=2] [ref=e63]
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - img "fahrel ilham" [ref=e69]
+                - heading "fahrel ilham" [level=4] [ref=e70]
+                - paragraph [ref=e71]: kopdes
+              - generic [ref=e72]:
+                - heading "Hj. Siti Aminah, S.Pd." [level=4] [ref=e76]
+                - paragraph [ref=e77]: Sekretaris Desa
+              - generic [ref=e78]:
+                - heading "Ahmad Fauzi" [level=4] [ref=e82]
+                - paragraph [ref=e83]: Kepala Urusan Keuangan
+              - generic [ref=e84]:
+                - heading "Dwi Lestari, A.Md." [level=4] [ref=e88]
+                - paragraph [ref=e89]: Kepala Urusan Perencanaan
+              - generic [ref=e90]:
+                - heading "Bambang Sutrisno" [level=4] [ref=e94]
+                - paragraph [ref=e95]: Kepala Seksi Pelayanan
+              - generic [ref=e96]:
+                - heading "Ratna Dewi" [level=4] [ref=e100]
+                - paragraph [ref=e101]: Kepala Seksi Kesejahteraan
+              - generic [ref=e102]:
+                - heading "sutedjo" [level=4] [ref=e106]
+                - paragraph [ref=e107]: wakil warga
+        - generic [ref=e109]:
+          - heading "Informasi Wilayah" [level=3] [ref=e110]
+          - generic [ref=e111]:
+            - generic [ref=e112]:
+              - generic [ref=e113]: Kecamatan
+              - generic [ref=e114]: WIYUNG
+            - generic [ref=e115]:
+              - generic [ref=e116]: Kabupaten/Kota
+              - generic [ref=e117]: surabaya
+            - generic [ref=e118]:
+              - generic [ref=e119]: Alamat Kantor
+              - generic [ref=e120]: jalan sumberan
+            - generic [ref=e121]:
+              - generic [ref=e122]: Jam Operasional
+              - generic [ref=e123]: "-"
+          - heading "Kontak Desa" [level=3] [ref=e124]
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - generic [ref=e127]: Email
+              - generic [ref=e128]: fahrel24ilham@gmail.com
+            - generic [ref=e129]:
+              - generic [ref=e130]: Telepon / WA
+              - generic [ref=e131]: "12122324234"
+      - generic [ref=e133]:
+        - heading "Sejarah Desa sumberan" [level=2] [ref=e134]
+        - generic [ref=e137]: Desa Sumberan berdiri sejak masa pemerintahan kolonial Belanda pada awal abad ke-20. Nama "Sumberan" berasal dari kata "sumber" yang merujuk pada mata air alami yang menjadi pusat kehidupan penduduk awal di wilayah ini. Pada tahun 1945, warga Desa Sumberan turut aktif dalam perjuangan kemerdekaan sebagai bagian dari gerakan pertahanan rakyat di wilayah Jawa Timur. Setelah kemerdekaan, desa ini berkembang pesat sebagai sentra pertanian padi dan palawija. Memasuki era reformasi, Desa Sumberan bertransformasi menjadi desa yang mengedepankan transparansi pemerintahan. Pada tahun 2018, desa ini meraih penghargaan sebagai Desa Terbaik tingkat kecamatan dalam bidang tata kelola keuangan desa. Saat ini, Desa Sumberan terus berinovasi dengan memanfaatkan teknologi digital untuk pelayanan warga, termasuk melalui portal desa ini sebagai wujud komitmen keterbukaan informasi publik.
+      - generic [ref=e140]:
+        - generic [ref=e142]:
+          - generic:
+            - generic:
+              - img:
+                - generic [ref=e143] [cursor=pointer]
+          - generic:
+            - generic:
+              - generic [ref=e144]:
+                - button "Zoom in" [ref=e145] [cursor=pointer]: +
+                - button "Zoom out" [ref=e146] [cursor=pointer]: −
+              - generic [ref=e147]:
+                - link "Leaflet" [ref=e148] [cursor=pointer]:
+                  - /url: https://leafletjs.com
+                - text: "| © OpenStreetMap contributors © CARTO"
+        - generic [ref=e153]:
+          - generic [ref=e154]: Lokasi
+          - heading "Temukan Kami" [level=2] [ref=e155]
+          - generic [ref=e156]: jalan sumberan
+          - generic [ref=e161]:
+            - generic [ref=e162]:
+              - generic [ref=e163]: Kecamatan
+              - generic [ref=e164]: WIYUNG
+            - generic [ref=e165]:
+              - generic [ref=e166]: Kabupaten
+              - generic [ref=e167]: surabaya
+          - link "Buka petunjuk arah" [ref=e168] [cursor=pointer]:
+            - /url: https://maps.google.com/?q=-7.3329273,112.6767871
+  - contentinfo [ref=e169]:
+    - generic [ref=e170]:
+      - generic [ref=e171]:
+        - generic [ref=e172]:
+          - generic [ref=e173]:
+            - img "Logo sumberan" [ref=e174]
+            - generic [ref=e175]: Desa sumberan
+          - paragraph [ref=e176]: Portal informasi resmi Pemerintah Desa sumberan. Melayani dengan integritas untuk mewujudkan desa yang mandiri dan sejahtera.
+        - generic [ref=e177]:
+          - generic [ref=e178]: LAYANAN PUBLIK
+          - list [ref=e179]:
+            - listitem [ref=e180]:
+              - link "Administrasi Kependudukan" [ref=e181] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/layanan
+            - listitem [ref=e182]:
+              - link "Pengajuan Surat Pengantar" [ref=e183] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/layanan
+            - listitem [ref=e184]:
+              - link "Informasi Bantuan Sosial" [ref=e185] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/berita
+            - listitem [ref=e186]:
+              - link "Pusat Pengaduan" [ref=e187] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/request-akses
+        - generic [ref=e188]:
+          - generic [ref=e189]: INFORMASI DESA
+          - list [ref=e190]:
+            - listitem [ref=e191]:
+              - link "Profil & Sejarah" [ref=e192] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/profil
+            - listitem [ref=e193]:
+              - link "Potensi Ekonomi" [ref=e194] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/produk
+            - listitem [ref=e195]:
+              - link "Transparansi Dana Desa" [ref=e196] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/apbdes
+            - listitem [ref=e197]:
+              - link "Agenda Kegiatan" [ref=e198] [cursor=pointer]:
+                - /url: http://localhost:8000/desa/sumberan/agenda
+        - generic [ref=e199]:
+          - generic [ref=e200]: HUBUNGI KAMI
+          - list [ref=e201]:
+            - listitem [ref=e202]:
+              - generic [ref=e206]: jalan sumberan
+            - listitem [ref=e207]:
+              - generic [ref=e210]: fahrel24ilham@gmail.com
+            - listitem [ref=e211]:
+              - generic [ref=e214]: Senin–Jumat, 08.00–15.00 WIB
+          - generic [ref=e215]:
+            - link "Instagram" [ref=e216] [cursor=pointer]:
+              - /url: "#"
+            - link "Facebook" [ref=e219] [cursor=pointer]:
+              - /url: "#"
+            - link "Youtube" [ref=e222] [cursor=pointer]:
+              - /url: "#"
+      - generic [ref=e225]:
+        - paragraph [ref=e226]: Membangun Desa, Menjaga Tradisi.
+        - paragraph [ref=e227]: © 2026 Pemerintah Desa sumberan. Seluruh hak cipta dilindungi.

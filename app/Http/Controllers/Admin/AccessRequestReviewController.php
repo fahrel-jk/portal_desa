@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AccessRequest;
 use App\Models\User;
+use App\Models\Village;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AccessRequestReviewController extends Controller
 {
@@ -25,7 +26,7 @@ class AccessRequestReviewController extends Controller
         }
 
         $requests = $query->paginate(15);
-        $villages = \App\Models\Village::orderBy('name')->get();
+        $villages = Village::orderBy('name')->get();
 
         return view('admin.access-requests.index', compact('requests', 'villages'));
     }
@@ -33,6 +34,7 @@ class AccessRequestReviewController extends Controller
     public function show(AccessRequest $accessRequest)
     {
         $accessRequest->load(['village', 'reviewer']);
+
         return view('admin.access-requests.show', compact('accessRequest'));
     }
 
@@ -46,7 +48,7 @@ class AccessRequestReviewController extends Controller
         try {
             // Generate password
             $password = Str::random(10);
-            
+
             // Create User
             $user = User::create([
                 'name' => $accessRequest->nama_lengkap,
@@ -71,7 +73,8 @@ class AccessRequestReviewController extends Controller
                 ->with('generated_email', $user->email);
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Terjadi kesalahan saat menyetujui request: ' . $e->getMessage());
+
+            return back()->with('error', 'Terjadi kesalahan saat menyetujui request: '.$e->getMessage());
         }
     }
 

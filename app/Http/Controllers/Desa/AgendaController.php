@@ -56,7 +56,7 @@ class AgendaController extends Controller
             'start_time' => 'nullable|date_format:H:i',
             'end_time' => 'nullable|date_format:H:i',
             'location' => 'nullable|string|max:255',
-            'category' => 'required|in:' . implode(',', array_keys(VillageAgenda::CATEGORY_OPTIONS)),
+            'category' => 'required|in:'.implode(',', array_keys(VillageAgenda::CATEGORY_OPTIONS)),
             'is_important' => 'boolean',
         ]);
 
@@ -103,7 +103,7 @@ class AgendaController extends Controller
             'start_time' => 'nullable|date_format:H:i',
             'end_time' => 'nullable|date_format:H:i',
             'location' => 'nullable|string|max:255',
-            'category' => 'required|in:' . implode(',', array_keys(VillageAgenda::CATEGORY_OPTIONS)),
+            'category' => 'required|in:'.implode(',', array_keys(VillageAgenda::CATEGORY_OPTIONS)),
             'is_important' => 'boolean',
         ]);
 

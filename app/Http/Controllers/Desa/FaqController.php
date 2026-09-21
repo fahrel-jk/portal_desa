@@ -15,6 +15,7 @@ class FaqController extends Controller
     {
         $village = auth()->user()->village;
         $faqs = $village->faqs()->orderBy('order')->paginate(10);
+
         return view('desa.faqs.index', compact('faqs'));
     }
 

@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Layanan;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Models\VillageService;
 use App\Models\ServiceRequest as AppServiceRequest;
+use App\Models\VillageService;
+use Illuminate\Http\Request;
 
 class ServiceRequestController extends Controller
 {
     public function create(VillageService $service)
     {
         $user = auth()->user();
-        
+
         // Pastikan service milik desa dari warga tersebut
         if ($service->village_id !== $user->village_id) {
             abort(403, 'Unauthorized action.');
@@ -25,7 +24,7 @@ class ServiceRequestController extends Controller
     public function store(Request $request, VillageService $service)
     {
         $user = auth()->user();
-        
+
         if ($service->village_id !== $user->village_id) {
             abort(403, 'Unauthorized action.');
         }

@@ -8,26 +8,35 @@
 </div>
 
 @if($products->count() > 0)
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.75rem; margin-bottom: 4rem;">
         @foreach($products as $product)
-            <a href="{{ route('village.product.show', [$village->slug, $product->slug]) }}" class="group block no-underline">
-                <div class="card h-full flex flex-col overflow-hidden transition-all duration-300" style="padding: 0; border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'">
-                    <div class="aspect-square w-full relative overflow-hidden" style="background-color: var(--muted);">
+            <a href="{{ route('village.product.show', [$village->slug, $product->slug]) }}" class="group block no-underline" style="height: 100%;">
+                <div class="card flex flex-col overflow-hidden transition-all duration-300" style="padding: 0; border-radius: 1.25rem; border: 1px solid var(--border); background-color: #ffffff; height: 100%; box-shadow: 0 2px 10px rgba(0,0,0,0.03);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.08)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 10px rgba(0,0,0,0.03)'">
+                    <div style="aspect-ratio: 4/3; width: 100%; position: relative; overflow: hidden; background-color: #f1f5f9;">
                         @if($product->image_path)
-                            <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                            <img src="{{ Storage::url($product->image_path) }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" class="group-hover:scale-105">
                         @else
-                            <div class="w-full h-full flex items-center justify-center text-gray-400">
+                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
                                 <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
                             </div>
                         @endif
-                        <div class="absolute top-3 right-3 rounded-xl px-3 py-1.5 text-[13px] font-bold shadow-sm" style="background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); color: var(--fg); border: 1px solid rgba(255,255,255,0.5);">
-                            Rp {{ number_format($product->price, 0, ',', '.') }}
-                        </div>
                     </div>
-                    <div class="p-5 flex-grow flex flex-col justify-between">
+                    <div style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
                         <div>
-                            <div class="text-[11px] font-bold uppercase tracking-wider mb-1.5 line-clamp-1" style="color: var(--primary);">{{ $product->category }}</div>
-                            <h3 class="font-bold text-[16px] leading-snug mb-2 line-clamp-2" style="font-family: Outfit, sans-serif; color: var(--fg);">{{ $product->name }}</h3>
+                            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); margin-bottom: 0.5rem;">
+                                {{ $product->category ?: 'PRODUK DESA' }}
+                            </div>
+                            <h3 style="font-family: Outfit, sans-serif; font-size: 1.0625rem; font-weight: 700; line-height: 1.35; color: var(--fg); margin-bottom: 0.75rem;" class="line-clamp-2 group-hover:text-[var(--primary)] transition-colors">
+                                {{ $product->name }}
+                            </h3>
+                        </div>
+                        <div style="margin-top: 0.875rem; display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-size: 0.9375rem; font-weight: 700; color: var(--primary);">
+                                Rp {{ number_format($product->price, 0, ',', '.') }}
+                            </span>
+                            <span style="font-size: 0.8125rem; font-weight: 600; color: var(--fg);" class="group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                                Detail →
+                            </span>
                         </div>
                     </div>
                 </div>

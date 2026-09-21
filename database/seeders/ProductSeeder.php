@@ -23,6 +23,7 @@ class ProductSeeder extends Seeder
 
         if (! $village) {
             $this->command->warn('No published village found. Skipping product seeder.');
+
             return;
         }
 

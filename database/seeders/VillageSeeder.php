@@ -264,7 +264,7 @@ class VillageSeeder extends Seeder
 
         foreach ($requiredFiles as $destination => $sourceFile) {
             if (! Storage::disk('public')->exists($destination)) {
-                $sourcePath = database_path('seeders/demo-images/' . $sourceFile);
+                $sourcePath = database_path('seeders/demo-images/'.$sourceFile);
                 if (file_exists($sourcePath)) {
                     $dir = dirname($destination);
                     Storage::disk('public')->makeDirectory($dir);

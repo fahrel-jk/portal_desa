@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/carousel-mount.tsx', 'resources/js/faq-mount.tsx'],
+            input: ['resources/css/app.css', 'resources/css/faq.css', 'resources/js/app.js', 'resources/js/carousel-mount.tsx', 'resources/js/faq-mount.tsx', 'resources/js/news-mount.tsx', 'resources/js/calendar-mount.tsx'],
             refresh: true,
         }),
         tailwindcss(),

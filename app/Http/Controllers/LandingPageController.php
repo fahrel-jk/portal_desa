@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Village;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class LandingPageController extends Controller
 {
@@ -36,10 +36,10 @@ class LandingPageController extends Controller
             $query = Village::with('template')->where('status', 'published');
 
             if ($q) {
-                $query->where(function($query) use ($q) {
+                $query->where(function ($query) use ($q) {
                     $query->where('name', 'like', "%{$q}%")
-                          ->orWhere('kecamatan', 'like', "%{$q}%")
-                          ->orWhere('kabupaten', 'like', "%{$q}%");
+                        ->orWhere('kecamatan', 'like', "%{$q}%")
+                        ->orWhere('kabupaten', 'like', "%{$q}%");
                 });
             }
 

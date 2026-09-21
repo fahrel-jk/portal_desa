@@ -1,0 +1,233 @@
+- generic [active] [ref=f34e1]:
+  - banner [ref=f34e3]:
+    - generic [ref=f34e4]:
+      - link "Logo sumberan Desa sumberan Portal resmi desa" [ref=f34e5] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan
+        - img "Logo sumberan" [ref=f34e6]
+        - generic [ref=f34e7]:
+          - generic [ref=f34e8]: Desa sumberan
+          - generic [ref=f34e9]: Portal resmi desa
+      - navigation [ref=f34e10]:
+        - link "Beranda" [ref=f34e11] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan
+        - link "Profil" [ref=f34e12] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/profil
+        - link "Layanan" [ref=f34e13] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/layanan
+        - link "Berita" [ref=f34e14] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan#berita
+        - link "Agenda" [ref=f34e15] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/agenda
+        - link "APBDes" [ref=f34e16] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/apbdes
+        - button "Lainnya" [ref=f34e18] [cursor=pointer]
+        - link "Login Admin" [ref=f34e22] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/login
+        - link "Hubungi kami" [ref=f34e23] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/request-akses
+  - main [ref=f34e24]:
+    - generic [ref=f34e25]:
+      - generic [ref=f34e26]:
+        - generic [ref=f34e27]: AGENDA WARGA
+        - heading "Kalender Agenda" [level=1] [ref=f34e28]
+        - paragraph [ref=f34e29]: Pantau kegiatan sosial, pembangunan, dan budaya di lingkungan Desa sumberan.
+      - generic [ref=f34e31]:
+        - generic [ref=f34e34]:
+          - generic [ref=f34e35]:
+            - heading "September 2026" [level=3] [ref=f34e36]
+            - generic [ref=f34e37]:
+              - button "Bulan sebelumnya" [ref=f34e38] [cursor=pointer]
+              - button "Bulan berikutnya" [ref=f34e41] [cursor=pointer]
+          - generic [ref=f34e44]:
+            - generic [ref=f34e45]: SEN
+            - generic [ref=f34e46]: SEL
+            - generic [ref=f34e47]: RAB
+            - generic [ref=f34e48]: KAM
+            - generic [ref=f34e49]: JUM
+            - generic [ref=f34e50]: SAB
+            - generic [ref=f34e51]: MIN
+          - generic [ref=f34e52]:
+            - button "1 September" [ref=f34e54] [cursor=pointer]:
+              - generic [ref=f34e55]: "1"
+            - button "2 September" [ref=f34e56] [cursor=pointer]:
+              - generic [ref=f34e57]: "2"
+            - button "3 September" [ref=f34e58] [cursor=pointer]:
+              - generic [ref=f34e59]: "3"
+            - button "4 September" [ref=f34e60] [cursor=pointer]:
+              - generic [ref=f34e61]: "4"
+            - button "5 September" [ref=f34e62] [cursor=pointer]:
+              - generic [ref=f34e63]: "5"
+            - button "6 September" [ref=f34e64] [cursor=pointer]:
+              - generic [ref=f34e65]: "6"
+            - button "7 September" [ref=f34e66] [cursor=pointer]:
+              - generic [ref=f34e67]: "7"
+            - button "8 September" [ref=f34e68] [cursor=pointer]:
+              - generic [ref=f34e69]: "8"
+            - button "9 September" [ref=f34e70] [cursor=pointer]:
+              - generic [ref=f34e71]: "9"
+            - button "10 September" [ref=f34e72] [cursor=pointer]:
+              - generic [ref=f34e73]: "10"
+            - button "11 September" [ref=f34e74] [cursor=pointer]:
+              - generic [ref=f34e75]: "11"
+            - button "12 September" [ref=f34e76] [cursor=pointer]:
+              - generic [ref=f34e77]: "12"
+            - button "13 September" [ref=f34e78] [cursor=pointer]:
+              - generic [ref=f34e79]: "13"
+            - button "14 September" [ref=f34e80] [cursor=pointer]:
+              - generic [ref=f34e81]: "14"
+            - button "15 September" [ref=f34e82] [cursor=pointer]:
+              - generic [ref=f34e83]: "15"
+            - button "16 September" [ref=f34e84] [cursor=pointer]:
+              - generic [ref=f34e85]: "16"
+            - button "17 September, Musyawarah Perencanaan Pembangunan Desa" [pressed] [ref=f34e86] [cursor=pointer]:
+              - generic [ref=f34e87]: "17"
+            - button "18 September, Kerja Bakti Rutin Warga" [ref=f34e90] [cursor=pointer]:
+              - generic [ref=f34e91]: "18"
+            - button "19 September" [ref=f34e94] [cursor=pointer]:
+              - generic [ref=f34e95]: "19"
+            - button "20 September, Festival Budaya Sumberan" [ref=f34e96] [cursor=pointer]:
+              - generic [ref=f34e97]: "20"
+            - button "21 September" [ref=f34e100] [cursor=pointer]:
+              - generic [ref=f34e101]: "21"
+            - button "22 September, Penyuluhan Pertanian Organik" [ref=f34e102] [cursor=pointer]:
+              - generic [ref=f34e103]: "22"
+            - button "23 September" [ref=f34e106] [cursor=pointer]:
+              - generic [ref=f34e107]: "23"
+            - button "24 September, Lomba Poskamling" [ref=f34e108] [cursor=pointer]:
+              - generic [ref=f34e109]: "24"
+            - button "25 September, Kegiatan Warga 6" [ref=f34e112] [cursor=pointer]:
+              - generic [ref=f34e113]: "25"
+            - button "26 September" [ref=f34e116] [cursor=pointer]:
+              - generic [ref=f34e117]: "26"
+            - button "27 September, Kegiatan Warga 7" [ref=f34e118] [cursor=pointer]:
+              - generic [ref=f34e119]: "27"
+            - button "28 September" [ref=f34e122] [cursor=pointer]:
+              - generic [ref=f34e123]: "28"
+            - button "29 September, Kegiatan Warga 8" [ref=f34e124] [cursor=pointer]:
+              - generic [ref=f34e125]: "29"
+            - button "30 September" [ref=f34e128] [cursor=pointer]:
+              - generic [ref=f34e129]: "30"
+          - generic [ref=f34e130]:
+            - generic [ref=f34e131]: Kamis, 17 September 2026
+            - generic [ref=f34e135]:
+              - paragraph [ref=f34e138]: Musyawarah Perencanaan Pembangunan Desa
+              - generic [ref=f34e139]:
+                - generic [ref=f34e140]: 09:00 - 12:00
+                - generic [ref=f34e144]: Balai Desa Sumberan
+        - generic [ref=f34e149]:
+          - generic [ref=f34e150]:
+            - heading "Daftar Agenda Mendatang" [level=3] [ref=f34e153]
+            - generic [ref=f34e154]: 5 Kegiatan
+          - generic [ref=f34e155]:
+            - generic [ref=f34e156]:
+              - generic [ref=f34e158]:
+                - generic [ref=f34e159]: Sep
+                - generic [ref=f34e160]: "17"
+              - generic [ref=f34e161]:
+                - generic [ref=f34e162]: Musyawarah
+                - heading "Musyawarah Perencanaan Pembangunan Desa" [level=4] [ref=f34e165]
+                - generic [ref=f34e166]:
+                  - generic [ref=f34e167]: 09:00 - 12:00
+                  - generic [ref=f34e171]: Balai Desa Sumberan
+                - paragraph [ref=f34e176]: Musyawarah rutin desa membahas rencana pembangunan jalan dusun 3 dan prioritas anggaran semester berikutnya.
+            - generic [ref=f34e177]:
+              - generic [ref=f34e179]:
+                - generic [ref=f34e180]: Sep
+                - generic [ref=f34e181]: "18"
+              - generic [ref=f34e182]:
+                - generic [ref=f34e183]: Umum
+                - heading "Kerja Bakti Rutin Warga" [level=4] [ref=f34e186]
+                - generic [ref=f34e187]:
+                  - generic [ref=f34e188]: 14:00 - 16:00
+                  - generic [ref=f34e192]: Lingkungan RT/RW
+                - paragraph [ref=f34e197]: Rapat koordinasi bulanan PKK desa membahas program kerja dan pembagian tugas.
+            - generic [ref=f34e198]:
+              - generic [ref=f34e200]:
+                - generic [ref=f34e201]: Sep
+                - generic [ref=f34e202]: "20"
+              - generic [ref=f34e203]:
+                - generic [ref=f34e204]: Kesehatan
+                - heading "Festival Budaya Sumberan" [level=4] [ref=f34e207]
+                - generic [ref=f34e208]:
+                  - generic [ref=f34e209]: 08:00 - 11:00
+                  - generic [ref=f34e213]: Lapangan Desa
+                - paragraph [ref=f34e218]: Kegiatan posyandu rutin bulanan untuk pemeriksaan kesehatan balita (timbang badan, imunisasi) dan lansia (cek tekanan darah).
+            - generic [ref=f34e219]:
+              - generic [ref=f34e221]:
+                - generic [ref=f34e222]: Sep
+                - generic [ref=f34e223]: "22"
+              - generic [ref=f34e224]:
+                - generic [ref=f34e225]: Gotong Royong
+                - heading "Penyuluhan Pertanian Organik" [level=4] [ref=f34e228]
+                - generic [ref=f34e229]:
+                  - generic [ref=f34e230]: 07:00 - 10:00
+                  - generic [ref=f34e234]: Balai Pertemuan
+                - paragraph [ref=f34e239]: Gotong royong membersihkan saluran irigasi dan lingkungan sekitar dusun 1 dan 2.
+            - generic [ref=f34e240]:
+              - generic [ref=f34e242]:
+                - generic [ref=f34e243]: Sep
+                - generic [ref=f34e244]: "24"
+              - generic [ref=f34e245]:
+                - generic [ref=f34e246]: Sosial & Budaya
+                - heading "Lomba Poskamling" [level=4] [ref=f34e249]
+                - generic [ref=f34e250]:
+                  - generic [ref=f34e251]: 18:00 - 00:00
+                  - generic [ref=f34e255]: Seluruh Dusun
+                - paragraph [ref=f34e260]: Ulang tahun istri kepala desa yang wajib dihadiri seluruh masyarakat kabupaten malang
+  - contentinfo [ref=f34e261]:
+    - generic [ref=f34e262]:
+      - generic [ref=f34e263]:
+        - generic [ref=f34e264]:
+          - generic [ref=f34e265]:
+            - img "Logo sumberan" [ref=f34e266]
+            - generic [ref=f34e267]: Desa sumberan
+          - paragraph [ref=f34e268]: Portal informasi resmi Pemerintah Desa sumberan. Melayani dengan integritas untuk mewujudkan desa yang mandiri dan sejahtera.
+        - generic [ref=f34e269]:
+          - generic [ref=f34e270]: LAYANAN PUBLIK
+          - list [ref=f34e271]:
+            - listitem [ref=f34e272]:
+              - link "Administrasi Kependudukan" [ref=f34e273] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/layanan
+            - listitem [ref=f34e274]:
+              - link "Pengajuan Surat Pengantar" [ref=f34e275] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/layanan
+            - listitem [ref=f34e276]:
+              - link "Informasi Bantuan Sosial" [ref=f34e277] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/berita
+            - listitem [ref=f34e278]:
+              - link "Pusat Pengaduan" [ref=f34e279] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/request-akses
+        - generic [ref=f34e280]:
+          - generic [ref=f34e281]: INFORMASI DESA
+          - list [ref=f34e282]:
+            - listitem [ref=f34e283]:
+              - link "Profil & Sejarah" [ref=f34e284] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/profil
+            - listitem [ref=f34e285]:
+              - link "Potensi Ekonomi" [ref=f34e286] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/produk
+            - listitem [ref=f34e287]:
+              - link "Transparansi Dana Desa" [ref=f34e288] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/apbdes
+            - listitem [ref=f34e289]:
+              - link "Agenda Kegiatan" [ref=f34e290] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/agenda
+        - generic [ref=f34e291]:
+          - generic [ref=f34e292]: HUBUNGI KAMI
+          - list [ref=f34e293]:
+            - listitem [ref=f34e294]:
+              - generic [ref=f34e298]: jalan sumberan
+            - listitem [ref=f34e299]:
+              - generic [ref=f34e302]: fahrel24ilham@gmail.com
+            - listitem [ref=f34e303]:
+              - generic [ref=f34e306]: Senin–Jumat, 08.00–15.00 WIB
+          - generic [ref=f34e307]:
+            - link "Instagram" [ref=f34e308] [cursor=pointer]:
+              - /url: "#"
+            - link "Facebook" [ref=f34e311] [cursor=pointer]:
+              - /url: "#"
+            - link "Youtube" [ref=f34e314] [cursor=pointer]:
+              - /url: "#"
+      - generic [ref=f34e317]:
+        - paragraph [ref=f34e318]: Membangun Desa, Menjaga Tradisi.
+        - paragraph [ref=f34e319]: © 2026 Pemerintah Desa sumberan. Seluruh hak cipta dilindungi.

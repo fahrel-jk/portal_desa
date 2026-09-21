@@ -16,6 +16,7 @@ class DocumentController extends Controller
     {
         $village = auth()->user()->village;
         $documents = $village->documents()->paginate(10);
+
         return view('desa.documents.index', compact('documents'));
     }
 
@@ -42,7 +43,7 @@ class DocumentController extends Controller
 
         $village = auth()->user()->village;
 
-        $path = $request->file('file')->store('village_documents/' . $village->id, 'public');
+        $path = $request->file('file')->store('village_documents/'.$village->id, 'public');
 
         $village->documents()->create([
             'title' => $request->title,
@@ -99,9 +100,9 @@ class DocumentController extends Controller
             if ($document->file_path && Storage::disk('public')->exists($document->file_path)) {
                 Storage::disk('public')->delete($document->file_path);
             }
-            
+
             // Store new file
-            $data['file_path'] = $request->file('file')->store('village_documents/' . $document->village_id, 'public');
+            $data['file_path'] = $request->file('file')->store('village_documents/'.$document->village_id, 'public');
         }
 
         $document->update($data);

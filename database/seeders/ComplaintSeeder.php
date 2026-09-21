@@ -21,6 +21,7 @@ class ComplaintSeeder extends Seeder
 
         if (! $village) {
             $this->command->warn('No published village found. Skipping complaint seeder.');
+
             return;
         }
 

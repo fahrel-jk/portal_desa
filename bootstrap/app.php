@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsPerwakilanDesa;
+use App\Http\Middleware\EnsureWargaLayananAccess;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
             'perwakilan_desa' => EnsureUserIsPerwakilanDesa::class,
-            'warga_layanan' => \App\Http\Middleware\EnsureWargaLayananAccess::class,
+            'warga_layanan' => EnsureWargaLayananAccess::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

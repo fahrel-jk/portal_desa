@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Layanan;
 
 use App\Http\Controllers\Controller;
 use App\Models\PengajuanLayanan;
-use App\Models\VillageService;
 use App\Models\PengajuanLayananDokumen;
+use App\Models\VillageInformationRequest;
+use App\Models\VillageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Gate;
 
 class PengajuanController extends Controller
 {
     public function index()
     {
         $user = auth()->user();
-        if (!$user->village) {
+        if (! $user->village) {
             abort(403, 'Akun Warga Layanan Anda belum terhubung ke desa manapun.');
         }
 
@@ -29,7 +29,7 @@ class PengajuanController extends Controller
             ->paginate(10);
 
         // Tampilkan riwayat permohonan PPID user ini
-        $ppidRequests = \App\Models\VillageInformationRequest::where('user_id', $user->id)
+        $ppidRequests = VillageInformationRequest::where('user_id', $user->id)
             ->latest()
             ->paginate(10);
 
@@ -59,7 +59,7 @@ class PengajuanController extends Controller
         ]);
 
         $user = auth()->user();
-        
+
         $pengajuan = PengajuanLayanan::create([
             'user_id' => $user->id,
             'layanan_id' => $request->layanan_id,
@@ -119,7 +119,7 @@ class PengajuanController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        if ($pengajuan->status !== 'selesai' || !$pengajuan->file_surat_hasil) {
+        if ($pengajuan->status !== 'selesai' || ! $pengajuan->file_surat_hasil) {
             abort(404, 'Surat hasil belum tersedia.');
         }
 

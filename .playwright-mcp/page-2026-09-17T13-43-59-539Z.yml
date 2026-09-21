@@ -1,0 +1,551 @@
+- generic [active] [ref=f16e1]:
+  - banner [ref=f16e3]:
+    - generic [ref=f16e4]:
+      - link "Logo sumberan Desa sumberan Portal resmi desa" [ref=f16e5] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan
+        - img "Logo sumberan" [ref=f16e6]
+        - generic [ref=f16e7]:
+          - generic [ref=f16e8]: Desa sumberan
+          - generic [ref=f16e9]: Portal resmi desa
+      - navigation [ref=f16e10]:
+        - link "Beranda" [ref=f16e11] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan
+        - link "Profil" [ref=f16e12] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/profil
+        - link "Layanan" [ref=f16e13] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/layanan
+        - link "Berita" [ref=f16e14] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan#berita
+        - link "Agenda" [ref=f16e15] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/agenda
+        - link "APBDes" [ref=f16e16] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/apbdes
+        - button "Lainnya" [ref=f16e18] [cursor=pointer]
+        - link "Login Admin" [ref=f16e22] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/login
+        - link "Hubungi kami" [ref=f16e23] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/request-akses
+  - generic [ref=f16e30]:
+    - generic [ref=f16e31]: Desa di surabaya
+    - heading "Sumberan" [level=1] [ref=f16e32]
+    - paragraph [ref=f16e33]: Kampung ini dikenal dengan konsep Wisata Batas Kampung (WBK) yang menawarkan suasana pedesaan asri, rindang, dan sejuk d...
+    - generic [ref=f16e34]:
+      - link "Hubungi kami" [ref=f16e35] [cursor=pointer]:
+        - /url: tel:12122324234
+      - link "Kirim email" [ref=f16e36] [cursor=pointer]:
+        - /url: mailto:fahrel24ilham@gmail.com
+  - generic [ref=f16e39]:
+    - generic [ref=f16e40]:
+      - generic [ref=f16e41]: "1.240"
+      - generic [ref=f16e42]: Jiwa penduduk
+    - generic [ref=f16e44]:
+      - generic [ref=f16e45]: "4"
+      - generic [ref=f16e46]: Dusun / RW
+    - generic [ref=f16e48]:
+      - generic [ref=f16e49]: "1928"
+      - generic [ref=f16e50]: Tahun berdiri
+  - generic [ref=f16e53]:
+    - generic [ref=f16e54]:
+      - generic [ref=f16e55]:
+        - generic [ref=f16e56]: Profil desa
+        - heading "Sebuah kampung yang tumbuh bersama warganya." [level=2] [ref=f16e57]
+        - generic [ref=f16e58]: Kampung ini dikenal dengan konsep Wisata Batas Kampung (WBK) yang menawarkan suasana pedesaan asri, rindang, dan sejuk di tengah kota. Kampung Sumberan memiliki tradisi budaya lokal yang khas seperti kegiatan Bersih Desa atau Ruwah Desa.
+      - generic [ref=f16e59]:
+        - generic [ref=f16e61]:
+          - generic [ref=f16e62]: Data Kependudukan
+          - heading "Statistik Penduduk Desa" [level=2] [ref=f16e63]
+        - generic [ref=f16e64]:
+          - generic [ref=f16e65]:
+            - heading "Jenis Kelamin" [level=3] [ref=f16e66]
+            - generic [ref=f16e67]:
+              - generic [ref=f16e69]:
+                - generic [ref=f16e70]: Laki-laki
+                - generic [ref=f16e71]: 1.847 (49%)
+              - generic [ref=f16e75]:
+                - generic [ref=f16e76]: Perempuan
+                - generic [ref=f16e77]: 1.923 (51%)
+            - generic [ref=f16e80]: "Total: 3.770 jiwa"
+          - generic [ref=f16e81]:
+            - heading "Kelompok Usia" [level=3] [ref=f16e82]
+            - generic [ref=f16e83]:
+              - generic [ref=f16e85]:
+                - generic [ref=f16e86]: 0-14 tahun
+                - generic [ref=f16e87]: 782 (21%)
+              - generic [ref=f16e91]:
+                - generic [ref=f16e92]: 15-24 tahun
+                - generic [ref=f16e93]: 645 (17%)
+              - generic [ref=f16e97]:
+                - generic [ref=f16e98]: 25-44 tahun
+                - generic [ref=f16e99]: 1.104 (29%)
+              - generic [ref=f16e103]:
+                - generic [ref=f16e104]: 45-64 tahun
+                - generic [ref=f16e105]: 876 (23%)
+              - generic [ref=f16e109]:
+                - generic [ref=f16e110]: 65+ tahun
+                - generic [ref=f16e111]: 363 (10%)
+            - generic [ref=f16e114]: "Total: 3.770 jiwa"
+          - generic [ref=f16e115]:
+            - heading "Agama" [level=3] [ref=f16e116]
+            - generic [ref=f16e117]:
+              - generic [ref=f16e119]:
+                - generic [ref=f16e120]: Islam
+                - generic [ref=f16e121]: 3.502 (93%)
+              - generic [ref=f16e125]:
+                - generic [ref=f16e126]: Kristen
+                - generic [ref=f16e127]: 148 (4%)
+              - generic [ref=f16e131]:
+                - generic [ref=f16e132]: Katolik
+                - generic [ref=f16e133]: 87 (2%)
+              - generic [ref=f16e137]:
+                - generic [ref=f16e138]: Hindu
+                - generic [ref=f16e139]: 33 (1%)
+            - generic [ref=f16e142]: "Total: 3.770 jiwa"
+    - generic [ref=f16e143]:
+      - generic [ref=f16e144]:
+        - generic [ref=f16e145]: Informasi kontak
+        - generic [ref=f16e146]:
+          - generic [ref=f16e147]:
+            - generic [ref=f16e148]: Alamat
+            - generic [ref=f16e149]: jalan sumberan
+          - generic [ref=f16e150]:
+            - generic [ref=f16e151]: Telepon
+            - generic [ref=f16e152]: "12122324234"
+          - generic [ref=f16e153]:
+            - generic [ref=f16e154]: Email
+            - generic [ref=f16e155]: fahrel24ilham@gmail.com
+      - generic [ref=f16e156]:
+        - generic [ref=f16e157]: Perangkat desa
+        - generic [ref=f16e158]:
+          - generic [ref=f16e159]:
+            - img "fahrel ilham" [ref=f16e160]
+            - generic [ref=f16e161]:
+              - generic [ref=f16e162]: fahrel ilham
+              - generic [ref=f16e163]: kopdes
+          - generic [ref=f16e164]:
+            - generic [ref=f16e165]: H
+            - generic [ref=f16e166]:
+              - generic [ref=f16e167]: Hj. Siti Aminah, S.Pd.
+              - generic [ref=f16e168]: Sekretaris Desa
+          - generic [ref=f16e169]:
+            - generic [ref=f16e170]: A
+            - generic [ref=f16e171]:
+              - generic [ref=f16e172]: Ahmad Fauzi
+              - generic [ref=f16e173]: Kepala Urusan Keuangan
+          - generic [ref=f16e174]:
+            - generic [ref=f16e175]: D
+            - generic [ref=f16e176]:
+              - generic [ref=f16e177]: Dwi Lestari, A.Md.
+              - generic [ref=f16e178]: Kepala Urusan Perencanaan
+          - generic [ref=f16e179]:
+            - generic [ref=f16e180]: B
+            - generic [ref=f16e181]:
+              - generic [ref=f16e182]: Bambang Sutrisno
+              - generic [ref=f16e183]: Kepala Seksi Pelayanan
+          - generic [ref=f16e184]:
+            - generic [ref=f16e185]: R
+            - generic [ref=f16e186]:
+              - generic [ref=f16e187]: Ratna Dewi
+              - generic [ref=f16e188]: Kepala Seksi Kesejahteraan
+          - generic [ref=f16e189]:
+            - generic [ref=f16e190]: S
+            - generic [ref=f16e191]:
+              - generic [ref=f16e192]: sutedjo
+              - generic [ref=f16e193]: wakil warga
+  - generic [ref=f16e199]:
+    - generic [ref=f16e200]: Layanan Aspirasi
+    - heading "Suara Anda Membangun Desa" [level=2] [ref=f16e201]
+    - paragraph [ref=f16e202]: Sampaikan pengaduan, kritik, saran, atau permohonan informasi kepada perangkat desa secara langsung dan transparan.
+    - link "Buat Pengaduan" [ref=f16e203] [cursor=pointer]:
+      - /url: http://127.0.0.1:8000/desa/sumberan/pengaduan
+  - generic [ref=f16e205]:
+    - generic [ref=f16e206]:
+      - generic [ref=f16e207]:
+        - generic [ref=f16e208]: Layanan warga
+        - heading "Administrasi satu pintu" [level=2] [ref=f16e209]
+      - link "Lihat Semua" [ref=f16e210] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/layanan
+    - generic [ref=f16e213]:
+      - generic [ref=f16e214]:
+        - generic [ref=f16e218]:
+          - heading "Surat Keterangan Domisi" [level=3] [ref=f16e219]
+          - paragraph [ref=f16e220]: Surat keterangan yang menerangkan bahwa seseorang benar-benar berdomisili di wilayah desa.
+        - link "Lihat Detail" [ref=f16e222] [cursor=pointer]:
+          - /url: "#"
+      - generic [ref=f16e225]:
+        - generic [ref=f16e229]:
+          - heading "Surat Keterangan Usaha" [level=3] [ref=f16e230]
+          - paragraph [ref=f16e231]: Surat keterangan yang menerangkan bahwa seseorang memiliki usaha di wilayah desa.
+        - link "Lihat Detail" [ref=f16e233] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/layanan/surat-keterangan-usaha
+      - generic [ref=f16e236]:
+        - generic [ref=f16e240]:
+          - heading "Surat Keterangan Domisili" [level=3] [ref=f16e241]
+          - paragraph [ref=f16e242]: Surat keterangan yang menerangkan bahwa seseorang benar-benar berdomisili di wilayah desa.
+        - link "Lihat Detail" [ref=f16e244] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/layanan/-sumberan
+      - generic [ref=f16e247]:
+        - generic [ref=f16e251]:
+          - heading "Surat Keterangan Usaha" [level=3] [ref=f16e252]
+          - paragraph [ref=f16e253]: Surat keterangan yang menerangkan bahwa seseorang memiliki usaha di wilayah desa.
+        - link "Lihat Detail" [ref=f16e255] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/layanan/surat-keterangan-usaha-sumberan
+      - generic [ref=f16e258]:
+        - generic [ref=f16e262]:
+          - heading "Surat Pengantar Nikah" [level=3] [ref=f16e263]
+          - paragraph [ref=f16e264]: Layanan pembuatan surat pengantar nikah (N1-N4) dari desa sebagai syarat utama pendaftaran ke KUA.
+        - link "Lihat Detail" [ref=f16e266] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/layanan/surat-pengantar-nikah-sumberan
+      - generic [ref=f16e269]:
+        - generic [ref=f16e273]:
+          - heading "Surat Keterangan Tidak Mampu (SKTM)" [level=3] [ref=f16e274]
+          - paragraph [ref=f16e275]: Surat Keterangan Tidak Mampu (SKTM) yang digunakan untuk keperluan keringanan biaya pendidikan, kesehatan (BPJS), atau bantuan sosial lainnya.
+        - link "Lihat Detail" [ref=f16e277] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/desa/sumberan/layanan/surat-keterangan-tidak-mampu-sumberan
+  - generic [ref=f16e281]:
+    - generic [ref=f16e282]:
+      - generic [ref=f16e283]:
+        - generic [ref=f16e284]: KABAR DESA
+        - heading "Berita & pengumuman" [level=2] [ref=f16e285]
+        - paragraph [ref=f16e286]: Informasi terbaru dari kegiatan, layanan, dan pembangunan Desa sumberan.
+      - link "Lihat semua" [ref=f16e287] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/berita
+    - generic [ref=f16e291]:
+      - generic [ref=f16e292] [cursor=pointer]:
+        - img "Desa Sumberan Terpilih Sebagai Desa Wisata Terbaik" [ref=f16e293]
+        - generic [ref=f16e295]:
+          - generic [ref=f16e296]: PRESTASI
+          - generic [ref=f16e302]:
+            - heading "Desa Sumberan Terpilih Sebagai Desa Wisata Terbaik" [level=3] [ref=f16e304]
+            - paragraph [ref=f16e305]: Desa Sumberan resmi masuk dalam nominasi desa wisata terbaik tingkat kabupaten tahun 2026....
+            - generic [ref=f16e307]:
+              - generic [ref=f16e308]: 12 Sep 2026
+              - button "Detail" [ref=f16e309]
+      - generic [ref=f16e313] [cursor=pointer]:
+        - img "Pembagian Bibit Pohon untuk Penghijauan Dusun" [ref=f16e314]
+        - generic [ref=f16e316]:
+          - generic [ref=f16e317]: LINGKUNGAN
+          - generic [ref=f16e323]:
+            - heading "Pembagian Bibit Pohon untuk Penghijauan Dusun" [level=3] [ref=f16e325]
+            - paragraph [ref=f16e326]: Ribuan bibit pohon buah dan pelindung dibagikan secara gratis kepada warga di tiap dusun D...
+            - generic [ref=f16e328]:
+              - generic [ref=f16e329]: 08 Sep 2026
+              - button "Detail" [ref=f16e330]
+      - generic [ref=f16e334] [cursor=pointer]:
+        - img "Pelatihan Digital Marketing untuk Pelaku UMKM" [ref=f16e335]
+        - generic [ref=f16e337]:
+          - generic [ref=f16e338]: UMKM
+          - generic [ref=f16e345]:
+            - heading "Pelatihan Digital Marketing untuk Pelaku UMKM" [level=3] [ref=f16e347]
+            - paragraph [ref=f16e348]: Tiga puluh pelaku UMKM Desa Sumberan mengikuti pelatihan pemasaran digital yang diselengga...
+            - generic [ref=f16e350]:
+              - generic [ref=f16e351]: 04 Sep 2026
+              - button "Detail" [ref=f16e352]
+      - generic [ref=f16e356] [cursor=pointer]:
+        - img "Penyaluran Bantuan Pangan Tahap Ketiga" [ref=f16e357]
+        - generic [ref=f16e359]:
+          - generic [ref=f16e360]: SOSIAL
+          - generic [ref=f16e365]:
+            - heading "Penyaluran Bantuan Pangan Tahap Ketiga" [level=3] [ref=f16e367]
+            - paragraph [ref=f16e368]: Penyaluran bantuan beras tahap ketiga bagi Keluarga Penerima Manfaat (KPM) di Desa Sumbera...
+            - generic [ref=f16e370]:
+              - generic [ref=f16e371]: 29 Agt 2026
+              - button "Detail" [ref=f16e372]
+  - generic [ref=f16e377]:
+    - generic [ref=f16e378]:
+      - generic [ref=f16e379]:
+        - generic [ref=f16e380]: Kegiatan
+        - heading "Agenda Desa Terdekat" [level=2] [ref=f16e381]
+      - link "Lihat Semua" [ref=f16e382] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/agenda
+    - generic [ref=f16e386]:
+      - generic [ref=f16e387]:
+        - generic [ref=f16e388]:
+          - generic [ref=f16e389]: Sep
+          - generic [ref=f16e390]: "17"
+        - generic [ref=f16e391]:
+          - generic [ref=f16e392]: Musyawarah
+          - heading "Musyawarah Perencanaan Pembangunan Desa" [level=3] [ref=f16e395]
+          - generic [ref=f16e396]:
+            - generic [ref=f16e397]: 09:00 - 12:00
+            - generic [ref=f16e400]: Balai Desa Sumberan
+      - generic [ref=f16e405]:
+        - generic [ref=f16e406]:
+          - generic [ref=f16e407]: Sep
+          - generic [ref=f16e408]: "18"
+        - generic [ref=f16e409]:
+          - generic [ref=f16e410]: Umum
+          - heading "Kerja Bakti Rutin Warga" [level=3] [ref=f16e413]
+          - generic [ref=f16e414]:
+            - generic [ref=f16e415]: 14:00 - 16:00
+            - generic [ref=f16e418]: Lingkungan RT/RW
+      - generic [ref=f16e423]:
+        - generic [ref=f16e424]:
+          - generic [ref=f16e425]: Sep
+          - generic [ref=f16e426]: "20"
+        - generic [ref=f16e427]:
+          - generic [ref=f16e428]: Kesehatan
+          - heading "Festival Budaya Sumberan" [level=3] [ref=f16e431]
+          - generic [ref=f16e432]:
+            - generic [ref=f16e433]: 08:00 - 11:00
+            - generic [ref=f16e436]: Lapangan Desa
+      - generic [ref=f16e441]:
+        - generic [ref=f16e442]:
+          - generic [ref=f16e443]: Sep
+          - generic [ref=f16e444]: "22"
+        - generic [ref=f16e445]:
+          - generic [ref=f16e446]: Gotong Royong
+          - heading "Penyuluhan Pertanian Organik" [level=3] [ref=f16e449]
+          - generic [ref=f16e450]:
+            - generic [ref=f16e451]: 07:00 - 10:00
+            - generic [ref=f16e454]: Balai Pertemuan
+      - generic [ref=f16e459]:
+        - generic [ref=f16e460]:
+          - generic [ref=f16e461]: Sep
+          - generic [ref=f16e462]: "24"
+        - generic [ref=f16e463]:
+          - generic [ref=f16e464]: Sosial & Budaya
+          - heading "Lomba Poskamling" [level=3] [ref=f16e467]
+          - generic [ref=f16e468]:
+            - generic [ref=f16e469]: 18:00 - 00:00
+            - generic [ref=f16e472]: Seluruh Dusun
+  - generic [ref=f16e478]:
+    - generic [ref=f16e479]:
+      - generic [ref=f16e480]:
+        - generic [ref=f16e481]: Galeri desa
+        - heading "Wajah dan keseharian" [level=2] [ref=f16e482]
+      - generic [ref=f16e483]: 13 dokumentasi
+    - generic [ref=f16e488]:
+      - generic [ref=f16e490] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e492] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e494] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e496] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e498] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e500] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e502] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e504] [cursor=pointer]:
+        - img "tesssss"
+      - generic [ref=f16e506] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e508] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e510] [cursor=pointer]:
+        - img "Galeri"
+      - generic [ref=f16e512] [cursor=pointer]:
+        - img "Galeri"
+  - generic [ref=f16e514]:
+    - generic [ref=f16e515]:
+      - generic [ref=f16e516]:
+        - generic [ref=f16e517]: POTENSI DESA
+        - heading "Produk Unggulan UMKM" [level=2] [ref=f16e518]
+        - paragraph [ref=f16e519]: Jelajahi berbagai komoditas dan hasil karya wirausaha warga Desa sumberan.
+      - link "Lihat semua" [ref=f16e520] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk
+    - generic [ref=f16e523]:
+      - link "Kopi Rempah Sumberan Minuman Kopi Rempah Sumberan Rp 25.000 Detail →" [ref=f16e524] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk/susu-segar-sapi-perah-sumberan
+        - generic [ref=f16e525]:
+          - img "Kopi Rempah Sumberan" [ref=f16e527]
+          - generic [ref=f16e528]:
+            - generic [ref=f16e529]:
+              - generic [ref=f16e530]: Minuman
+              - heading "Kopi Rempah Sumberan" [level=3] [ref=f16e531]
+            - generic [ref=f16e532]:
+              - generic [ref=f16e533]: Rp 25.000
+              - generic [ref=f16e534]: Detail →
+      - link "Kerajinan Bambu Anyam Kriya Kerajinan Bambu Anyam Rp 50.000 Detail →" [ref=f16e535] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk/keripik-apel-malang-sumberan
+        - generic [ref=f16e536]:
+          - img "Kerajinan Bambu Anyam" [ref=f16e538]
+          - generic [ref=f16e539]:
+            - generic [ref=f16e540]:
+              - generic [ref=f16e541]: Kriya
+              - heading "Kerajinan Bambu Anyam" [level=3] [ref=f16e542]
+            - generic [ref=f16e543]:
+              - generic [ref=f16e544]: Rp 50.000
+              - generic [ref=f16e545]: Detail →
+      - link "Kue Lapis Pandan Makanan Kue Lapis Pandan Rp 30.000 Detail →" [ref=f16e546] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk/yoghurt-probiotik-sumberan
+        - generic [ref=f16e547]:
+          - img "Kue Lapis Pandan" [ref=f16e549]
+          - generic [ref=f16e550]:
+            - generic [ref=f16e551]:
+              - generic [ref=f16e552]: Makanan
+              - heading "Kue Lapis Pandan" [level=3] [ref=f16e553]
+            - generic [ref=f16e554]:
+              - generic [ref=f16e555]: Rp 30.000
+              - generic [ref=f16e556]: Detail →
+      - link "Madu Hutan Liar Kesehatan Madu Hutan Liar Rp 75.000 Detail →" [ref=f16e557] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk/keju-mozarella-lokal-sumberan
+        - generic [ref=f16e558]:
+          - img "Madu Hutan Liar" [ref=f16e560]
+          - generic [ref=f16e561]:
+            - generic [ref=f16e562]:
+              - generic [ref=f16e563]: Kesehatan
+              - heading "Madu Hutan Liar" [level=3] [ref=f16e564]
+            - generic [ref=f16e565]:
+              - generic [ref=f16e566]: Rp 75.000
+              - generic [ref=f16e567]: Detail →
+      - link "Sambal Bawang Botolan Makanan Sambal Bawang Botolan Rp 20.000 Detail →" [ref=f16e568] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk/dodol-susu-sumberan
+        - generic [ref=f16e569]:
+          - img "Sambal Bawang Botolan" [ref=f16e571]
+          - generic [ref=f16e572]:
+            - generic [ref=f16e573]:
+              - generic [ref=f16e574]: Makanan
+              - heading "Sambal Bawang Botolan" [level=3] [ref=f16e575]
+            - generic [ref=f16e576]:
+              - generic [ref=f16e577]: Rp 20.000
+              - generic [ref=f16e578]: Detail →
+      - link "Kain Tenun Khas Fashion Kain Tenun Khas Rp 150.000 Detail →" [ref=f16e579] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk/sabun-susu-kambing-sumberan
+        - generic [ref=f16e580]:
+          - img "Kain Tenun Khas" [ref=f16e582]
+          - generic [ref=f16e583]:
+            - generic [ref=f16e584]:
+              - generic [ref=f16e585]: Fashion
+              - heading "Kain Tenun Khas" [level=3] [ref=f16e586]
+            - generic [ref=f16e587]:
+              - generic [ref=f16e588]: Rp 150.000
+              - generic [ref=f16e589]: Detail →
+      - link "Gula Aren Organik Bahan Pokok Gula Aren Organik Rp 15.000 Detail →" [ref=f16e590] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk/kopi-robusta-pujon-sumberan
+        - generic [ref=f16e591]:
+          - img "Gula Aren Organik" [ref=f16e593]
+          - generic [ref=f16e594]:
+            - generic [ref=f16e595]:
+              - generic [ref=f16e596]: Bahan Pokok
+              - heading "Gula Aren Organik" [level=3] [ref=f16e597]
+            - generic [ref=f16e598]:
+              - generic [ref=f16e599]: Rp 15.000
+              - generic [ref=f16e600]: Detail →
+      - link "Teh Herbal Tradisional Minuman Teh Herbal Tradisional Rp 18.000 Detail →" [ref=f16e601] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000/desa/sumberan/produk/madu-hutan-asli-sumberan
+        - generic [ref=f16e602]:
+          - img "Teh Herbal Tradisional" [ref=f16e604]
+          - generic [ref=f16e605]:
+            - generic [ref=f16e606]:
+              - generic [ref=f16e607]: Minuman
+              - heading "Teh Herbal Tradisional" [level=3] [ref=f16e608]
+            - generic [ref=f16e609]:
+              - generic [ref=f16e610]: Rp 18.000
+              - generic [ref=f16e611]: Detail →
+  - generic [ref=f16e615]:
+    - generic [ref=f16e616]:
+      - generic:
+        - generic:
+          - img:
+            - generic:
+              - generic [ref=f16e617] [cursor=pointer]
+              - generic [ref=f16e618] [cursor=pointer]
+              - generic [ref=f16e619] [cursor=pointer]
+      - generic:
+        - generic:
+          - generic [ref=f16e620]:
+            - button "Zoom in" [ref=f16e621] [cursor=pointer]: +
+            - button "Zoom out" [ref=f16e622] [cursor=pointer]: −
+          - generic [ref=f16e623]:
+            - link "Leaflet" [ref=f16e624] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| © OpenStreetMap contributors © CARTO"
+    - generic [ref=f16e629]:
+      - generic [ref=f16e630]: Lokasi
+      - heading "Temukan kami" [level=2] [ref=f16e631]
+      - paragraph [ref=f16e632]: Balai desa berada di jalur utama kampung dan mudah dijangkau dari pusat kecamatan.
+      - generic [ref=f16e633]:
+        - generic [ref=f16e634]: Balai / Kantor Desa
+        - generic [ref=f16e637]: Fasilitas Kesehatan
+        - generic [ref=f16e640]: Pendidikan
+      - link "Buka petunjuk arah" [ref=f16e643] [cursor=pointer]:
+        - /url: https://maps.google.com/?q=-7.3329273,112.6767871
+  - generic [ref=f16e645]:
+    - generic [ref=f16e646]:
+      - generic [ref=f16e647]: FAQ
+      - heading "Tanya Jawab Seputar Desa" [level=2] [ref=f16e648]
+      - paragraph [ref=f16e649]: Pertanyaan umum yang sering diajukan warga
+    - generic [ref=f16e651]:
+      - searchbox "Cari pertanyaan…" [ref=f16e653]
+      - generic [ref=f16e654]:
+        - generic [ref=f16e655]:
+          - button "Bagaimana cara mengurus Surat Keterangan Domisili?" [ref=f16e656] [cursor=pointer]
+          - region "Bagaimana cara mengurus Surat Keterangan Domisili?":
+            - paragraph [ref=f16e661]: Warga dapat datang langsung ke Balai Desa Sumberan dengan membawa KTP, KK, dan surat pengantar dari RT/RW. Proses pengurusan memakan waktu kurang lebih 15-30 menit pada jam kerja. Alternatifnya, warga dapat mengajukan secara online melalui fitur Layanan di portal desa ini.
+        - generic [ref=f16e662]:
+          - button "Kapan jadwal pelayanan administrasi di kantor desa?" [ref=f16e663] [cursor=pointer]
+          - region "Kapan jadwal pelayanan administrasi di kantor desa?":
+            - paragraph [ref=f16e668]: Kantor Desa Sumberan melayani warga setiap hari Senin sampai Jumat, pukul 08.00 – 15.00 WIB. Untuk hari Sabtu, kantor desa buka setengah hari (08.00 – 12.00 WIB) hanya untuk pelayanan darurat.
+        - generic [ref=f16e669]:
+          - button "Apakah desa menyediakan layanan pengaduan warga?" [ref=f16e670] [cursor=pointer]
+          - region "Apakah desa menyediakan layanan pengaduan warga?":
+            - paragraph [ref=f16e675]: Ya, Desa Sumberan menyediakan layanan pengaduan melalui fitur "Lapor Desa" yang tersedia di portal ini. Warga juga bisa menyampaikan aspirasi langsung pada saat Musyawarah Desa (Musdes) yang diadakan secara berkala.
+        - generic [ref=f16e676]:
+          - button "Bagaimana cara mendapatkan informasi bantuan sosial?" [ref=f16e677] [cursor=pointer]
+          - region "Bagaimana cara mendapatkan informasi bantuan sosial?":
+            - paragraph [ref=f16e682]: Informasi mengenai bantuan sosial (BLT, PKH, BPNT) dapat dilihat melalui halaman Berita di portal ini. Warga juga bisa menghubungi Sekretaris Desa untuk konfirmasi data penerima bantuan. Desa Sumberan berkomitmen menyalurkan bantuan secara transparan dan tepat sasaran.
+        - generic [ref=f16e683]:
+          - button "Di mana saya bisa melihat laporan keuangan desa?" [ref=f16e684] [cursor=pointer]
+          - region "Di mana saya bisa melihat laporan keuangan desa?":
+            - paragraph [ref=f16e689]: Laporan keuangan desa (APBDes) dapat diakses secara publik melalui menu "APBDes" di navigasi portal ini. Laporan mencakup rincian pendapatan, belanja, dan pembiayaan desa per tahun anggaran.
+  - contentinfo [ref=f16e690]:
+    - generic [ref=f16e691]:
+      - generic [ref=f16e692]:
+        - generic [ref=f16e693]:
+          - generic [ref=f16e694]:
+            - img "Logo sumberan" [ref=f16e695]
+            - generic [ref=f16e696]: Desa sumberan
+          - paragraph [ref=f16e697]: Portal informasi resmi Pemerintah Desa sumberan. Melayani dengan integritas untuk mewujudkan desa yang mandiri dan sejahtera.
+        - generic [ref=f16e698]:
+          - generic [ref=f16e699]: LAYANAN PUBLIK
+          - list [ref=f16e700]:
+            - listitem [ref=f16e701]:
+              - link "Administrasi Kependudukan" [ref=f16e702] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/layanan
+            - listitem [ref=f16e703]:
+              - link "Pengajuan Surat Pengantar" [ref=f16e704] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/layanan
+            - listitem [ref=f16e705]:
+              - link "Informasi Bantuan Sosial" [ref=f16e706] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/berita
+            - listitem [ref=f16e707]:
+              - link "Pusat Pengaduan" [ref=f16e708] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/request-akses
+        - generic [ref=f16e709]:
+          - generic [ref=f16e710]: INFORMASI DESA
+          - list [ref=f16e711]:
+            - listitem [ref=f16e712]:
+              - link "Profil & Sejarah" [ref=f16e713] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/profil
+            - listitem [ref=f16e714]:
+              - link "Potensi Ekonomi" [ref=f16e715] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/produk
+            - listitem [ref=f16e716]:
+              - link "Transparansi Dana Desa" [ref=f16e717] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/apbdes
+            - listitem [ref=f16e718]:
+              - link "Agenda Kegiatan" [ref=f16e719] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000/desa/sumberan/agenda
+        - generic [ref=f16e720]:
+          - generic [ref=f16e721]: HUBUNGI KAMI
+          - list [ref=f16e722]:
+            - listitem [ref=f16e723]:
+              - generic [ref=f16e727]: jalan sumberan
+            - listitem [ref=f16e728]:
+              - generic [ref=f16e731]: fahrel24ilham@gmail.com
+            - listitem [ref=f16e732]:
+              - generic [ref=f16e735]: Senin–Jumat, 08.00–15.00 WIB
+          - generic [ref=f16e736]:
+            - link "Instagram" [ref=f16e737] [cursor=pointer]:
+              - /url: "#"
+            - link "Facebook" [ref=f16e740] [cursor=pointer]:
+              - /url: "#"
+            - link "Youtube" [ref=f16e743] [cursor=pointer]:
+              - /url: "#"
+      - generic [ref=f16e746]:
+        - paragraph [ref=f16e747]: Membangun Desa, Menjaga Tradisi.
+        - paragraph [ref=f16e748]: © 2026 Pemerintah Desa sumberan. Seluruh hak cipta dilindungi.

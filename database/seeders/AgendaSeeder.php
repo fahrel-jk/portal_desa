@@ -21,6 +21,7 @@ class AgendaSeeder extends Seeder
 
         if (! $village) {
             $this->command->warn('No published village found. Skipping agenda seeder.');
+
             return;
         }
 

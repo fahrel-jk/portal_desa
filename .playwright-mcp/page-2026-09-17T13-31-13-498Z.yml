@@ -1,0 +1,701 @@
+- generic:
+  - generic:
+    - generic [aria-hidden]:
+      - main:
+        - main:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - link:
+                                  - /url: /
+                              - generic:
+                                - button
+                        - generic:
+                          - generic:
+                            - generic:
+                              - button:
+                                - generic: Search
+                              - button: Clear
+                        - generic:
+                          - generic:
+                            - generic:
+                              - textbox [active]:
+                                - /placeholder: Search components
+                                - text: liquid glass
+                              - generic:
+                                - generic:
+                                  - button
+                                  - status [aria-hidden]
+                        - generic:
+                          - generic:
+                            - link:
+                              - /url: /community/components
+                              - generic: Components
+                            - link:
+                              - /url: /community/themes
+                            - link:
+                              - /url: /community/templates
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button [expanded]:
+                                      - generic: Category
+                                  - region:
+                                    - generic:
+                                      - generic:
+                                        - radio [checked]
+                                        - paragraph: All
+                                      - generic:
+                                        - radio
+                                        - paragraph: Marketing Blocks
+                                      - generic:
+                                        - radio
+                                        - paragraph: UI Components
+                                - generic:
+                                  - generic:
+                                    - button [expanded]:
+                                      - generic: Sort
+                                  - region:
+                                    - generic:
+                                      - generic:
+                                        - radio [checked]
+                                        - paragraph: Recommended
+                                      - generic:
+                                        - radio
+                                        - paragraph: Most downloaded
+                                      - generic:
+                                        - radio
+                                        - paragraph: Most bookmarked
+                                      - generic:
+                                        - radio
+                                        - paragraph: Newest
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic: Time
+                                  - generic:
+                                    - generic:
+                                      - radio [checked]
+                                      - paragraph: All time
+                                    - generic:
+                                      - radio
+                                      - paragraph: Last week
+                                    - generic:
+                                      - radio
+                                      - paragraph: Last month
+                                    - generic:
+                                      - radio
+                                      - paragraph: Last 3 months
+                                    - generic:
+                                      - radio
+                                      - paragraph: Last year
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic: Primitive library
+                                  - generic:
+                                    - generic:
+                                      - radio [checked]
+                                      - paragraph: All
+                                    - generic:
+                                      - radio
+                                      - paragraph: Radix UI
+                                    - generic:
+                                      - radio
+                                      - paragraph: Base UI
+                                    - generic:
+                                      - radio
+                                      - paragraph: React Aria
+                                    - generic:
+                                      - radio
+                                      - paragraph: Ariakit
+                                    - generic:
+                                      - radio
+                                      - paragraph: Headless UI
+                                    - generic:
+                                      - radio
+                                      - paragraph: Other primitives
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic: Tailwind version
+                                  - generic:
+                                    - generic:
+                                      - radio [checked]
+                                      - paragraph: All
+                                    - generic:
+                                      - radio
+                                      - paragraph: Tailwind v4
+                                    - generic:
+                                      - radio
+                                      - paragraph: Tailwind v3
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic: License
+                                  - generic:
+                                    - paragraph: No options
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic: Library
+                                  - generic:
+                                    - generic:
+                                      - textbox:
+                                        - /placeholder: Filter libraries…
+                                    - paragraph: No options
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic: Built with
+                                  - generic:
+                                    - generic:
+                                      - textbox:
+                                        - /placeholder: Filter packages…
+                                    - paragraph: No options
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic: Author
+                                  - generic:
+                                    - generic:
+                                      - textbox:
+                                        - /placeholder: Search authors…
+                                    - paragraph: No authors yet
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic: Tags
+                                  - generic:
+                                    - generic:
+                                      - textbox:
+                                        - /placeholder: Filter tags…
+                                    - generic:
+                                      - generic:
+                                        - paragraph: Marketing Blocks
+                                        - generic:
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Announcements
+                                            - paragraph: "71"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Backgrounds
+                                            - paragraph: "365"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Borders
+                                            - paragraph: "111"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Calls to Action
+                                            - paragraph: "501"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Clients
+                                            - paragraph: "17"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Comparisons
+                                            - paragraph: "31"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Docks
+                                            - paragraph: "49"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: FAQs
+                                            - paragraph: "191"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Features
+                                            - paragraph: "318"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Footers
+                                            - paragraph: "65"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Galleries
+                                            - paragraph: "272"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Heroes
+                                            - paragraph: 1.2K
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Hooks
+                                            - paragraph: "51"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Images
+                                            - paragraph: "428"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Maps
+                                            - paragraph: "51"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Marquees
+                                            - paragraph: "113"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Navigation Menus
+                                            - paragraph: "477"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Pricing Sections
+                                            - paragraph: "216"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Scroll Areas
+                                            - paragraph: "293"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Shaders
+                                            - paragraph: "404"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Stats & KPIs
+                                            - paragraph: "153"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Steppers
+                                            - paragraph: "124"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Team Sections
+                                            - paragraph: "119"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Testimonials
+                                            - paragraph: "161"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Texts
+                                            - paragraph: "663"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Timelines
+                                            - paragraph: "74"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Videos
+                                            - paragraph: "162"
+                                      - generic:
+                                        - paragraph: UI Components
+                                        - generic:
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Accordions
+                                            - paragraph: "234"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: AI Chats
+                                            - paragraph: "248"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Alerts
+                                            - paragraph: "240"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Avatars
+                                            - paragraph: "597"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Badges
+                                            - paragraph: "605"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Buttons
+                                            - paragraph: 2K
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Calendars
+                                            - paragraph: "239"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Cards
+                                            - paragraph: 1.8K
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Carousels
+                                            - paragraph: "239"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Charts & Data Viz
+                                            - paragraph: "246"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Checkboxes
+                                            - paragraph: "238"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Cursors
+                                            - paragraph: "152"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Dashboards
+                                            - paragraph: "400"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Date Pickers
+                                            - paragraph: "250"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Dialogs / Modals
+                                            - paragraph: "328"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Dropdowns
+                                            - paragraph: "506"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Empty States
+                                            - paragraph: "77"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: File Trees
+                                            - paragraph: "61"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: File Uploads
+                                            - paragraph: "154"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Forms
+                                            - paragraph: 1.5K
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Globes
+                                            - paragraph: "41"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Grids & Bento
+                                            - paragraph: "620"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Icons
+                                            - paragraph: "851"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Inputs
+                                            - paragraph: "949"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Links
+                                            - paragraph: "354"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Lists
+                                            - paragraph: "349"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Menus
+                                            - paragraph: "287"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Notifications
+                                            - paragraph: "247"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Numbers
+                                            - paragraph: "54"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Onboarding
+                                            - paragraph: "53"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Paginations
+                                            - paragraph: "130"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Popovers
+                                            - paragraph: "179"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Profiles
+                                            - paragraph: "270"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Progress
+                                            - paragraph: "375"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Radio Groups
+                                            - paragraph: "152"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Search Bars
+                                            - paragraph: "218"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Selects
+                                            - paragraph: "316"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Sidebars
+                                            - paragraph: "95"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Sign Ins
+                                            - paragraph: "103"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Sign ups
+                                            - paragraph: "58"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Sliders
+                                            - paragraph: "217"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Spinner Loaders
+                                            - paragraph: "480"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Tables
+                                            - paragraph: "313"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Tabs
+                                            - paragraph: "239"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Tags
+                                            - paragraph: "74"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Text Areas
+                                            - paragraph: "187"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Toasts
+                                            - paragraph: "79"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Toggles
+                                            - paragraph: "532"
+                                          - generic:
+                                            - checkbox
+                                            - paragraph: Tooltips
+                                            - paragraph: "267"
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=1]: Community UI Components for React & Next.js
+                        - generic:
+                          - generic:
+                            - generic: Components
+                            - generic:
+                              - generic:
+                                - button:
+                                  - generic: Search
+                                  - generic: K
+                              - generic:
+                                - link:
+                                  - /url: /pricing
+                                  - generic: Pricing
+                                - button: Sign in
+                        - generic:
+                          - generic:
+                            - generic:
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+                              - listitem
+    - region "Notifications alt+T"
+  - alert
+  - dialog [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - link [ref=e13] [cursor=pointer]:
+          - /url: /@ravikatiyar162
+          - img "Ravi Katiyar" [ref=e15]
+        - generic: Similar to
+        - heading "Glass Calendar" [level=2] [ref=e17]
+        - button "Support" [ref=e18] [cursor=pointer]
+      - generic [ref=e19]:
+        - button "Open component page in new tab" [ref=e20] [cursor=pointer]
+        - button [ref=e21] [cursor=pointer]
+        - button "Toggle theme" [ref=e24] [cursor=pointer]
+        - button "More" [ref=e25] [cursor=pointer]
+        - button "Close" [ref=e26] [cursor=pointer]
+    - generic [ref=e28]:
+      - generic [ref=e30]:
+        - iframe [ref=e39]:
+          - generic [ref=f1e6]:
+            - generic [ref=f1e7]:
+              - generic [ref=f1e8]:
+                - button "Weekly" [ref=f1e9]
+                - button "Monthly" [ref=f1e10]
+              - button [ref=f1e11]
+            - generic [ref=f1e15]:
+              - paragraph [ref=f1e16]: September
+              - generic [ref=f1e17]:
+                - button [ref=f1e18]
+                - button [ref=f1e21]
+            - generic [ref=f1e25]:
+              - generic [ref=f1e26]:
+                - generic [ref=f1e27]: T
+                - button "1" [ref=f1e28]
+              - generic [ref=f1e29]:
+                - generic [ref=f1e30]: W
+                - button "2" [ref=f1e31]
+              - generic [ref=f1e32]:
+                - generic [ref=f1e33]: T
+                - button "3" [ref=f1e34]
+              - generic [ref=f1e35]:
+                - generic [ref=f1e36]: F
+                - button "4" [ref=f1e37]
+              - generic [ref=f1e38]:
+                - generic [ref=f1e39]: S
+                - button "5" [ref=f1e40]
+              - generic [ref=f1e41]:
+                - generic [ref=f1e42]: S
+                - button "6" [ref=f1e43]
+              - generic [ref=f1e44]:
+                - generic [ref=f1e45]: M
+                - button "7" [ref=f1e46]
+              - generic [ref=f1e47]:
+                - generic [ref=f1e48]: T
+                - button "8" [ref=f1e49]
+              - generic [ref=f1e50]:
+                - generic [ref=f1e51]: W
+                - button "9" [ref=f1e52]
+              - generic [ref=f1e53]:
+                - generic [ref=f1e54]: T
+                - button "10" [ref=f1e55]
+              - generic [ref=f1e56]:
+                - generic [ref=f1e57]: F
+                - button "11" [ref=f1e58]
+              - generic [ref=f1e59]:
+                - generic [ref=f1e60]: S
+                - button "12" [ref=f1e61]
+              - generic [ref=f1e62]:
+                - generic [ref=f1e63]: S
+                - button "13" [ref=f1e64]
+              - generic [ref=f1e65]:
+                - generic [ref=f1e66]: M
+                - button "14" [ref=f1e67]
+              - generic [ref=f1e68]:
+                - generic [ref=f1e69]: T
+                - button "15" [ref=f1e70]
+              - generic [ref=f1e71]:
+                - generic [ref=f1e72]: W
+                - button "16" [ref=f1e73]
+              - generic [ref=f1e74]:
+                - generic [ref=f1e75]: T
+                - button "17" [ref=f1e76]
+              - generic [ref=f1e77]:
+                - generic [ref=f1e78]: F
+                - button "18" [ref=f1e79]
+              - generic [ref=f1e80]:
+                - generic [ref=f1e81]: S
+                - button "19" [ref=f1e82]
+              - generic [ref=f1e83]:
+                - generic [ref=f1e84]: S
+                - button "20" [ref=f1e85]
+              - generic [ref=f1e86]:
+                - generic [ref=f1e87]: M
+                - button "21" [ref=f1e88]
+              - generic [ref=f1e89]:
+                - generic [ref=f1e90]: T
+                - button "22" [ref=f1e91]
+              - generic [ref=f1e92]:
+                - generic [ref=f1e93]: W
+                - button "23" [ref=f1e94]
+              - generic [ref=f1e95]:
+                - generic [ref=f1e96]: T
+                - button "24" [ref=f1e97]
+              - generic [ref=f1e98]:
+                - generic [ref=f1e99]: F
+                - button "25" [ref=f1e100]
+              - generic [ref=f1e101]:
+                - generic [ref=f1e102]: S
+                - button "26" [ref=f1e103]
+              - generic [ref=f1e104]:
+                - generic [ref=f1e105]: S
+                - button "27" [ref=f1e106]
+              - generic [ref=f1e107]:
+                - generic [ref=f1e108]: M
+                - button "28" [ref=f1e109]
+              - generic [ref=f1e110]:
+                - generic [ref=f1e111]: T
+                - button "29" [ref=f1e112]
+              - generic [ref=f1e113]:
+                - generic [ref=f1e114]: W
+                - button "30" [ref=f1e115]
+            - generic [ref=f1e117]:
+              - button "Add a note..." [ref=f1e118]
+              - button "New Event" [ref=f1e122]
+        - generic [ref=e42]:
+          - button "Remix" [ref=e43] [cursor=pointer]
+          - button "Save" [ref=e44] [cursor=pointer]
+          - generic [ref=e45]:
+            - button "Copy prompt" [ref=e46] [cursor=pointer]
+            - button "Change copy action" [ref=e49] [cursor=pointer]
+      - list [ref=e52]:
+        - listitem [ref=e53]
+        - listitem [ref=e56]
+        - listitem [ref=e59]
+        - listitem [ref=e62]
+        - listitem [ref=e65]
+        - listitem [ref=e68]
+        - listitem [ref=e71]
+        - listitem [ref=e74]
+  - generic:
+    - button "New See similar" [ref=e77] [cursor=pointer]:
+      - generic [ref=e78]: New
+      - text: See similar
+    - generic: Scroll down to find components like this one

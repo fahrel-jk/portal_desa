@@ -89,8 +89,14 @@
         
         .card { background-color: var(--card); border: 1px solid var(--border); border-radius: 1.25rem; }
         .navbar-pill {
-            background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.8); max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            box-shadow: 0 16px 40px -12px rgba(24, 33, 27, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95);
         }
 
         .page-header {

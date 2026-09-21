@@ -21,6 +21,7 @@ class DemographicSeeder extends Seeder
 
         if (! $village) {
             $this->command->warn('No published village found. Skipping demographic seeder.');
+
             return;
         }
 

@@ -407,7 +407,7 @@ class DashboardController extends Controller
         ]);
 
         // Regenerate slug if name changed
-        if ($service->name !== $validated['name'] || !$service->slug) {
+        if ($service->name !== $validated['name'] || ! $service->slug) {
             $validated['slug'] = VillageService::generateSlug($validated['name'], $village->id, $service->id);
         }
 

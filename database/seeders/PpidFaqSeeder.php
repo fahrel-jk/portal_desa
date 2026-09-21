@@ -16,7 +16,7 @@ class PpidFaqSeeder extends Seeder
     {
         $village = Village::where('slug', 'pujon-kidul')->first();
 
-        if (!$village) {
+        if (! $village) {
             return;
         }
 
@@ -80,7 +80,7 @@ class PpidFaqSeeder extends Seeder
             ],
             [
                 'question' => 'Apakah pembuatan surat pengantar dikenakan biaya?',
-                'answer' => "Tidak. Seluruh pelayanan pembuatan surat pengantar di Kantor Desa Pujon Kidul adalah **Gratis (Rp 0)**.",
+                'answer' => 'Tidak. Seluruh pelayanan pembuatan surat pengantar di Kantor Desa Pujon Kidul adalah **Gratis (Rp 0)**.',
                 'order' => 4,
             ],
             [

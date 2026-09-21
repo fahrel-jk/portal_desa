@@ -1,6 +1,10 @@
 <?php
+
+use App\Models\User;
+use App\Models\Village;
+
 // Script to update "Ladang Panjang" to "Pujon Kidul"
-$v = \App\Models\Village::where('slug', 'ladang-panjang')->first();
+$v = Village::where('slug', 'ladang-panjang')->first();
 if ($v) {
     $v->name = 'Pujon Kidul';
     $v->slug = 'pujon-kidul';
@@ -10,8 +14,8 @@ if ($v) {
     $v->address = 'Jl. Krajan, Desa Pujon Kidul, Kec. Pujon, Kab. Malang, Jawa Timur';
     $v->save();
     echo "Village updated.\n";
-    
-    $u = \App\Models\User::where('village_id', $v->id)->first();
+
+    $u = User::where('village_id', $v->id)->first();
     if ($u) {
         $u->name = 'Admin Pujon Kidul';
         $u->email = 'admin@pujonkidul.desa.id';

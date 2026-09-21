@@ -3,21 +3,20 @@
 namespace App\Http\Controllers\Desa;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Models\ServiceRequest;
+use Illuminate\Http\Request;
 
 class ServiceRequestController extends Controller
 {
     public function index()
     {
         $village = auth()->user()->village;
-        
+
         $requests = ServiceRequest::with(['user', 'service'])
             ->where('village_id', $village->id)
             ->latest()
             ->paginate(15);
-            
+
         return view('desa.service_requests.index', compact('requests', 'village'));
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Village;
-use App\Models\VillageAgenda;
 use App\Models\VillageComplaint;
 use App\Models\VillageNews;
 use App\Models\VillageProduct;
@@ -50,7 +49,7 @@ class VillagePageController extends Controller
             return view('village.unavailable', ['slug' => $slug]);
         }
 
-        $village->load('template');
+        $village->load(['template', 'officials', 'demographics']);
 
         $templateSlug = $village->template->slug;
         $viewName = "village.templates.{$templateSlug}.profil";
@@ -254,12 +253,7 @@ class VillagePageController extends Controller
 
         $village->load('template');
 
-        // Get current month's agendas for initial load
-        $year = (int) request('year', now()->year);
-        $month = (int) request('month', now()->month);
-
         $agendas = $village->agendas()
-            ->forMonth($year, $month)
             ->orderBy('event_date')
             ->orderBy('start_time')
             ->get();
@@ -269,6 +263,13 @@ class VillagePageController extends Controller
             ->take(5)
             ->get();
 
+        if ($upcomingAgendas->count() < 5) {
+            $upcomingAgendas = $village->agendas()
+                ->orderBy('event_date')
+                ->take(5)
+                ->get();
+        }
+
         $templateSlug = $village->template->slug;
         $viewName = "village.templates.{$templateSlug}.agenda";
 
@@ -276,7 +277,7 @@ class VillagePageController extends Controller
             $viewName = 'village.templates.klasik.agenda';
         }
 
-        return view($viewName, compact('village', 'agendas', 'upcomingAgendas', 'year', 'month'));
+        return view($viewName, compact('village', 'agendas', 'upcomingAgendas'));
     }
 
     /**
@@ -377,6 +378,7 @@ class VillagePageController extends Controller
 
         return view($viewName, compact('village', 'service', 'otherServices'));
     }
+
     /**
      * Show PPID / Public Documents page.
      */
@@ -391,11 +393,11 @@ class VillagePageController extends Controller
         $village->load('template');
 
         $query = $village->documents()->where('is_active', true);
-        
+
         if ($request->has('category') && $request->category !== '') {
             $query->where('category', $request->category);
         }
-        
+
         $documents = $query->paginate(15);
         $categories = $village->documents()->where('is_active', true)->select('category')->distinct()->pluck('category');
 
@@ -447,12 +449,12 @@ class VillagePageController extends Controller
 
         $document->increment('download_count');
 
-        $filePath = storage_path('app/public/' . $document->file_path);
+        $filePath = storage_path('app/public/'.$document->file_path);
 
         if (! file_exists($filePath)) {
             abort(404, 'File not found.');
         }
 
-        return response()->download($filePath, $document->title . '.pdf');
+        return response()->download($filePath, $document->title.'.pdf');
     }
 }

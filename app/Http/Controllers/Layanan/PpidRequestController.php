@@ -13,13 +13,14 @@ class PpidRequestController extends Controller
     {
         $user = auth()->user();
         $village = $user->village;
+
         return view('layanan.ppid.create', compact('village', 'user'));
     }
 
     public function store(Request $request)
     {
         $user = auth()->user();
-        
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'agency' => 'required|string|max:255',
@@ -60,7 +61,7 @@ class PpidRequestController extends Controller
             ->where('user_id', $user->id)
             ->firstOrFail();
 
-        if (!$ppidRequest->admin_reply_file_path) {
+        if (! $ppidRequest->admin_reply_file_path) {
             abort(404);
         }
 

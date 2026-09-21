@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Template;
 use App\Models\User;
 use App\Models\Village;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AdminMonitoringTest extends TestCase
@@ -39,10 +41,10 @@ class AdminMonitoringTest extends TestCase
     {
         $admin = User::factory()->create(['role' => 'admin_provinsi']);
 
-        $template = \App\Models\Template::create([
+        $template = Template::create([
             'name' => 'Test Template',
             'slug' => 'test-template',
-            'is_active' => true
+            'is_active' => true,
         ]);
 
         // Create mixed villages
@@ -65,12 +67,12 @@ class AdminMonitoringTest extends TestCase
     {
         return Village::create([
             'name' => $name,
-            'slug' => \Illuminate\Support\Str::slug($name),
+            'slug' => Str::slug($name),
             'kecamatan' => 'Kecamatan Test',
             'kabupaten' => 'Kabupaten Test',
             'description' => 'Desc',
             'status' => $status,
-            'template_id' => $templateId
+            'template_id' => $templateId,
         ]);
     }
 }

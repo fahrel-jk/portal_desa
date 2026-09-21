@@ -1,17 +1,28 @@
 <?php
 
+use App\Http\Controllers\AccessRequestController;
+use App\Http\Controllers\Admin\AccessRequestReviewController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\FeedbackController;
+use App\Http\Controllers\Admin\MonitoringController;
 use App\Http\Controllers\ApbdesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Desa\AgendaController;
 use App\Http\Controllers\Desa\AnggaranController;
 use App\Http\Controllers\Desa\ComplaintController;
-use App\Http\Controllers\Desa\DemographicController;
 use App\Http\Controllers\Desa\DashboardController as DesaDashboardController;
+use App\Http\Controllers\Desa\DemographicController;
+use App\Http\Controllers\Desa\DocumentController;
+use App\Http\Controllers\Desa\FaqController;
+use App\Http\Controllers\Desa\GalleryController;
+use App\Http\Controllers\Desa\InformationRequestController;
+use App\Http\Controllers\Desa\OperatorController;
+use App\Http\Controllers\Desa\PengajuanMasukController;
 use App\Http\Controllers\Desa\ProductController;
 use App\Http\Controllers\Desa\TitikLokasiController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\Layanan\PengajuanController;
+use App\Http\Controllers\Layanan\PpidRequestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VillagePageController;
 use App\Http\Controllers\WizardController;
@@ -93,10 +104,10 @@ Route::middleware(['auth', 'perwakilan_desa'])->prefix('desa/kelola')->name('des
     Route::delete('/services/{service}', [DesaDashboardController::class, 'servicesDestroy'])->name('services.destroy');
 
     // Galleries
-    Route::get('/galleries', [\App\Http\Controllers\Desa\GalleryController::class, 'index'])->name('galleries.index');
-    Route::get('/galleries/create', [\App\Http\Controllers\Desa\GalleryController::class, 'create'])->name('galleries.create');
-    Route::post('/galleries', [\App\Http\Controllers\Desa\GalleryController::class, 'store'])->name('galleries.store');
-    Route::delete('/galleries/{gallery}', [\App\Http\Controllers\Desa\GalleryController::class, 'destroy'])->name('galleries.destroy');
+    Route::get('/galleries', [GalleryController::class, 'index'])->name('galleries.index');
+    Route::get('/galleries/create', [GalleryController::class, 'create'])->name('galleries.create');
+    Route::post('/galleries', [GalleryController::class, 'store'])->name('galleries.store');
+    Route::delete('/galleries/{gallery}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
 
     // Titik Lokasi (Peta Interaktif)
     Route::get('/titik-lokasi', [TitikLokasiController::class, 'index'])->name('titik-lokasi.index');
@@ -105,17 +116,17 @@ Route::middleware(['auth', 'perwakilan_desa'])->prefix('desa/kelola')->name('des
     Route::get('/titik-lokasi/{titikLokasi}/edit', [TitikLokasiController::class, 'edit'])->name('titik-lokasi.edit');
     Route::patch('/titik-lokasi/{titikLokasi}', [TitikLokasiController::class, 'update'])->name('titik-lokasi.update');
     Route::delete('/titik-lokasi/{titikLokasi}', [TitikLokasiController::class, 'destroy'])->name('titik-lokasi.destroy');
-    
+
     // Operators
-    Route::get('/operators', [\App\Http\Controllers\Desa\OperatorController::class, 'index'])->name('operators.index');
-    Route::get('/operators/create', [\App\Http\Controllers\Desa\OperatorController::class, 'create'])->name('operators.create');
-    Route::post('/operators', [\App\Http\Controllers\Desa\OperatorController::class, 'store'])->name('operators.store');
-    Route::delete('/operators/{operator}', [\App\Http\Controllers\Desa\OperatorController::class, 'destroy'])->name('operators.destroy');
+    Route::get('/operators', [OperatorController::class, 'index'])->name('operators.index');
+    Route::get('/operators/create', [OperatorController::class, 'create'])->name('operators.create');
+    Route::post('/operators', [OperatorController::class, 'store'])->name('operators.store');
+    Route::delete('/operators/{operator}', [OperatorController::class, 'destroy'])->name('operators.destroy');
 
     // Pengajuan Masuk
-    Route::get('/pengajuan-masuk', [\App\Http\Controllers\Desa\PengajuanMasukController::class, 'index'])->name('pengajuan-masuk.index');
-    Route::get('/pengajuan-masuk/{id}', [\App\Http\Controllers\Desa\PengajuanMasukController::class, 'show'])->name('pengajuan-masuk.show');
-    Route::patch('/pengajuan-masuk/{id}', [\App\Http\Controllers\Desa\PengajuanMasukController::class, 'update'])->name('pengajuan-masuk.update');
+    Route::get('/pengajuan-masuk', [PengajuanMasukController::class, 'index'])->name('pengajuan-masuk.index');
+    Route::get('/pengajuan-masuk/{id}', [PengajuanMasukController::class, 'show'])->name('pengajuan-masuk.show');
+    Route::patch('/pengajuan-masuk/{id}', [PengajuanMasukController::class, 'update'])->name('pengajuan-masuk.update');
 
     // Anggaran (APBDes)
     Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran.index');
@@ -142,20 +153,20 @@ Route::middleware(['auth', 'perwakilan_desa'])->prefix('desa/kelola')->name('des
     Route::delete('/agenda/{agenda}', [AgendaController::class, 'destroy'])->name('agenda.destroy');
 
     // Dokumen PPID
-    Route::get('/documents', [\App\Http\Controllers\Desa\DocumentController::class, 'index'])->name('documents.index');
-    Route::get('/documents/create', [\App\Http\Controllers\Desa\DocumentController::class, 'create'])->name('documents.create');
-    Route::post('/documents', [\App\Http\Controllers\Desa\DocumentController::class, 'store'])->name('documents.store');
-    Route::get('/documents/{document}/edit', [\App\Http\Controllers\Desa\DocumentController::class, 'edit'])->name('documents.edit');
-    Route::patch('/documents/{document}', [\App\Http\Controllers\Desa\DocumentController::class, 'update'])->name('documents.update');
-    Route::delete('/documents/{document}', [\App\Http\Controllers\Desa\DocumentController::class, 'destroy'])->name('documents.destroy');
+    Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
+    Route::get('/documents/create', [DocumentController::class, 'create'])->name('documents.create');
+    Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
+    Route::get('/documents/{document}/edit', [DocumentController::class, 'edit'])->name('documents.edit');
+    Route::patch('/documents/{document}', [DocumentController::class, 'update'])->name('documents.update');
+    Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
 
     // FAQ
-    Route::get('/faqs', [\App\Http\Controllers\Desa\FaqController::class, 'index'])->name('faqs.index');
-    Route::get('/faqs/create', [\App\Http\Controllers\Desa\FaqController::class, 'create'])->name('faqs.create');
-    Route::post('/faqs', [\App\Http\Controllers\Desa\FaqController::class, 'store'])->name('faqs.store');
-    Route::get('/faqs/{faq}/edit', [\App\Http\Controllers\Desa\FaqController::class, 'edit'])->name('faqs.edit');
-    Route::patch('/faqs/{faq}', [\App\Http\Controllers\Desa\FaqController::class, 'update'])->name('faqs.update');
-    Route::delete('/faqs/{faq}', [\App\Http\Controllers\Desa\FaqController::class, 'destroy'])->name('faqs.destroy');
+    Route::get('/faqs', [FaqController::class, 'index'])->name('faqs.index');
+    Route::get('/faqs/create', [FaqController::class, 'create'])->name('faqs.create');
+    Route::post('/faqs', [FaqController::class, 'store'])->name('faqs.store');
+    Route::get('/faqs/{faq}/edit', [FaqController::class, 'edit'])->name('faqs.edit');
+    Route::patch('/faqs/{faq}', [FaqController::class, 'update'])->name('faqs.update');
+    Route::delete('/faqs/{faq}', [FaqController::class, 'destroy'])->name('faqs.destroy');
 
     // Demographics
     Route::get('/demographics', [DemographicController::class, 'index'])->name('demographics.index');
@@ -171,8 +182,8 @@ Route::middleware(['auth', 'perwakilan_desa'])->prefix('desa/kelola')->name('des
     Route::patch('/complaints/{complaint}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.update_status');
 
     // Information Requests (Permohonan Informasi)
-    Route::get('/permohonan-informasi', [\App\Http\Controllers\Desa\InformationRequestController::class, 'index'])->name('information-requests.index');
-    Route::patch('/permohonan-informasi/{informationRequest}', [\App\Http\Controllers\Desa\InformationRequestController::class, 'update'])->name('information-requests.update');
+    Route::get('/permohonan-informasi', [InformationRequestController::class, 'index'])->name('information-requests.index');
+    Route::patch('/permohonan-informasi/{informationRequest}', [InformationRequestController::class, 'update'])->name('information-requests.update');
 });
 
 // Admin routes (admin_provinsi only)
@@ -186,39 +197,39 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/villages/{village}', [AdminDashboardController::class, 'destroy'])->name('destroy');
 
     // Monitoring
-    Route::get('/monitoring', [\App\Http\Controllers\Admin\MonitoringController::class, 'index'])->name('monitoring');
+    Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring');
 
     // Feedback
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
     Route::patch('/feedback/{feedback}/read', [FeedbackController::class, 'markAsRead'])->name('feedback.read');
-    
+
     // Access Requests Review
-    Route::get('/access-requests', [\App\Http\Controllers\Admin\AccessRequestReviewController::class, 'index'])->name('access-requests.index');
-    Route::get('/access-requests/{accessRequest}', [\App\Http\Controllers\Admin\AccessRequestReviewController::class, 'show'])->name('access-requests.show');
-    Route::patch('/access-requests/{accessRequest}/approve', [\App\Http\Controllers\Admin\AccessRequestReviewController::class, 'approve'])->name('access-requests.approve');
-    Route::patch('/access-requests/{accessRequest}/reject', [\App\Http\Controllers\Admin\AccessRequestReviewController::class, 'reject'])->name('access-requests.reject');
+    Route::get('/access-requests', [AccessRequestReviewController::class, 'index'])->name('access-requests.index');
+    Route::get('/access-requests/{accessRequest}', [AccessRequestReviewController::class, 'show'])->name('access-requests.show');
+    Route::patch('/access-requests/{accessRequest}/approve', [AccessRequestReviewController::class, 'approve'])->name('access-requests.approve');
+    Route::patch('/access-requests/{accessRequest}/reject', [AccessRequestReviewController::class, 'reject'])->name('access-requests.reject');
 });
 
 // Warga layanan routes
 Route::prefix('layanan')->middleware(['auth', 'warga_layanan'])->name('layanan.')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Layanan\PengajuanController::class, 'index'])->name('dashboard'); // fallback dashboard
-    Route::get('/riwayat', [\App\Http\Controllers\Layanan\PengajuanController::class, 'index'])->name('pengajuan.index');
+    Route::get('/', [PengajuanController::class, 'index'])->name('dashboard'); // fallback dashboard
+    Route::get('/riwayat', [PengajuanController::class, 'index'])->name('pengajuan.index');
     // PPID routes for Warga
-    Route::get('/ppid/ajukan', [\App\Http\Controllers\Layanan\PpidRequestController::class, 'create'])->name('ppid.create');
-    Route::post('/ppid/ajukan', [\App\Http\Controllers\Layanan\PpidRequestController::class, 'store'])->name('ppid.store');
-    Route::get('/ppid/{id}', [\App\Http\Controllers\Layanan\PpidRequestController::class, 'show'])->name('ppid.show');
-    Route::get('/ppid/{id}/download', [\App\Http\Controllers\Layanan\PpidRequestController::class, 'download'])->name('ppid.download');
+    Route::get('/ppid/ajukan', [PpidRequestController::class, 'create'])->name('ppid.create');
+    Route::post('/ppid/ajukan', [PpidRequestController::class, 'store'])->name('ppid.store');
+    Route::get('/ppid/{id}', [PpidRequestController::class, 'show'])->name('ppid.show');
+    Route::get('/ppid/{id}/download', [PpidRequestController::class, 'download'])->name('ppid.download');
 
     // Pengajuan Layanan
-    Route::get('/ajukan/{layanan}', [\App\Http\Controllers\Layanan\PengajuanController::class, 'create'])->name('pengajuan.create');
-    Route::post('/ajukan', [\App\Http\Controllers\Layanan\PengajuanController::class, 'store'])->name('pengajuan.store');
-    Route::get('/{kode_tracking}', [\App\Http\Controllers\Layanan\PengajuanController::class, 'show'])->name('pengajuan.show');
-    Route::get('/{kode_tracking}/download', [\App\Http\Controllers\Layanan\PengajuanController::class, 'downloadResult'])->name('pengajuan.download');
+    Route::get('/ajukan/{layanan}', [PengajuanController::class, 'create'])->name('pengajuan.create');
+    Route::post('/ajukan', [PengajuanController::class, 'store'])->name('pengajuan.store');
+    Route::get('/{kode_tracking}', [PengajuanController::class, 'show'])->name('pengajuan.show');
+    Route::get('/{kode_tracking}/download', [PengajuanController::class, 'downloadResult'])->name('pengajuan.download');
 });
 
 // Public Village Pages
-Route::get('/desa/{slug}/request-akses', [\App\Http\Controllers\AccessRequestController::class, 'create'])->name('desa.request-akses.create');
-Route::post('/desa/{slug}/request-akses', [\App\Http\Controllers\AccessRequestController::class, 'store'])->name('desa.request-akses.store');
+Route::get('/desa/{slug}/request-akses', [AccessRequestController::class, 'create'])->name('desa.request-akses.create');
+Route::post('/desa/{slug}/request-akses', [AccessRequestController::class, 'store'])->name('desa.request-akses.store');
 Route::get('/desa/{slug}/profil', [VillagePageController::class, 'profile'])->name('village.profile');
 Route::get('/desa/{slug}/apbdes', [ApbdesController::class, 'show'])->name('village.apbdes');
 Route::get('/desa/{slug}/apbdes/pdf', [ApbdesController::class, 'exportPdf'])->name('village.apbdes.pdf');
@@ -234,7 +245,7 @@ Route::get('/desa/{slug}/layanan', [VillagePageController::class, 'serviceIndex'
 Route::get('/desa/{slug}/layanan/{serviceSlug}', [VillagePageController::class, 'serviceShow'])->name('village.service.show');
 Route::get('/desa/{slug}/ppid', [VillagePageController::class, 'ppidIndex'])->name('village.ppid');
 Route::get('/desa/{slug}/ppid/permohonan', [VillagePageController::class, 'ppidRequest'])->name('village.ppid.request');
-Route::post('/desa/{slug}/ppid/permohonan', [\App\Http\Controllers\Desa\InformationRequestController::class, 'store'])->name('village.ppid.request.store');
+Route::post('/desa/{slug}/ppid/permohonan', [InformationRequestController::class, 'store'])->name('village.ppid.request.store');
 Route::get('/desa/{slug}/ppid/download/{id}', [VillagePageController::class, 'documentDownload'])->name('village.ppid.download');
 Route::get('/desa/{slug}', [VillagePageController::class, 'show'])->name('village.show');
 

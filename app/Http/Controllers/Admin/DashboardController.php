@@ -115,11 +115,11 @@ class DashboardController extends Controller
     public function toggleFeatured(Village $village): RedirectResponse
     {
         $village->update([
-            'is_featured' => !$village->is_featured,
+            'is_featured' => ! $village->is_featured,
         ]);
 
         $status = $village->is_featured ? 'ditampilkan di beranda' : 'disembunyikan dari beranda';
-        
+
         return back()->with('success', "Desa \"{$village->name}\" sekarang $status.");
     }
 
@@ -134,15 +134,23 @@ class DashboardController extends Controller
         }
 
         // Delete associated files in storage
-        if ($village->logo_path) Storage::disk('public')->delete($village->logo_path);
-        if ($village->hero_image_path) Storage::disk('public')->delete($village->hero_image_path);
+        if ($village->logo_path) {
+            Storage::disk('public')->delete($village->logo_path);
+        }
+        if ($village->hero_image_path) {
+            Storage::disk('public')->delete($village->hero_image_path);
+        }
 
         foreach ($village->officials as $official) {
-            if ($official->photo_path) Storage::disk('public')->delete($official->photo_path);
+            if ($official->photo_path) {
+                Storage::disk('public')->delete($official->photo_path);
+            }
         }
 
         foreach ($village->news as $news) {
-            if ($news->cover_image_path) Storage::disk('public')->delete($news->cover_image_path);
+            if ($news->cover_image_path) {
+                Storage::disk('public')->delete($news->cover_image_path);
+            }
         }
 
         // The related models (officials, news, services, galleries) will cascade delete via foreign keys,

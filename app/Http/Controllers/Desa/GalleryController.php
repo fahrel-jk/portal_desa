@@ -73,7 +73,7 @@ class GalleryController extends Controller
         if ($gallery->image_path) {
             Storage::disk('public')->delete($gallery->image_path);
         }
-        
+
         $gallery->delete();
 
         return redirect()->route('desa.galleries.index')->with('success', 'Foto berhasil dihapus dari galeri.');
