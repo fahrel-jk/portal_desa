@@ -46,6 +46,7 @@ class Village extends Model
         'approved_by',
         'theme_color',
         'layout_settings',
+        'navigation_settings',
     ];
 
     /**
@@ -61,6 +62,7 @@ class Village extends Model
             'is_featured' => 'boolean',
             'geojson_batas_wilayah' => 'array',
             'layout_settings' => 'array',
+            'navigation_settings' => 'array',
         ];
     }
 
@@ -112,6 +114,76 @@ class Village extends Model
             ];
 
             $defaultMap->forget($item['id']);
+        }
+
+        foreach ($defaultMap as $missingDefault) {
+            $result[] = $missingDefault;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Default list of navigation menu items.
+     */
+    public static function defaultNavSections(): array
+    {
+        return [
+            ['id' => 'home', 'label' => 'Beranda', 'type' => 'route', 'target' => 'village.show', 'placement' => 'main', 'enabled' => true],
+            ['id' => 'profile', 'label' => 'Profil', 'type' => 'route', 'target' => 'village.profile', 'placement' => 'main', 'enabled' => true],
+            ['id' => 'services', 'label' => 'Layanan', 'type' => 'route', 'target' => 'village.services', 'placement' => 'main', 'enabled' => true],
+            ['id' => 'news', 'label' => 'Berita', 'type' => 'hash', 'target' => '#berita', 'placement' => 'main', 'enabled' => true],
+            ['id' => 'agenda', 'label' => 'Agenda', 'type' => 'route', 'target' => 'village.agenda', 'placement' => 'main', 'enabled' => true],
+            ['id' => 'apbdes', 'label' => 'APBDes', 'type' => 'route', 'target' => 'village.apbdes', 'placement' => 'main', 'enabled' => true],
+            ['id' => 'ppid', 'label' => 'PPID', 'type' => 'route', 'target' => 'village.ppid', 'placement' => 'dropdown', 'enabled' => true],
+            ['id' => 'galleries', 'label' => 'Galeri', 'type' => 'hash', 'target' => '#galeri', 'placement' => 'dropdown', 'enabled' => true],
+            ['id' => 'products', 'label' => 'Produk UMKM', 'type' => 'hash', 'target' => '#produk', 'placement' => 'dropdown', 'enabled' => true],
+            ['id' => 'map', 'label' => 'Lokasi', 'type' => 'hash', 'target' => '#lokasi', 'placement' => 'dropdown', 'enabled' => true],
+            ['id' => 'contact', 'label' => 'Kontak', 'type' => 'hash', 'target' => '#kontak', 'placement' => 'dropdown', 'enabled' => true],
+        ];
+    }
+
+    /**
+     * Get ordered navigation menu items for header rendering.
+     */
+    public function getOrderedNavSections(): array
+    {
+        $defaults = self::defaultNavSections();
+        $saved = $this->navigation_settings;
+
+        if (empty($saved) || ! is_array($saved)) {
+            return $defaults;
+        }
+
+        $defaultMap = collect($defaults)->keyBy('id');
+        $result = [];
+
+        foreach ($saved as $item) {
+            if (! isset($item['id'])) {
+                continue;
+            }
+
+            if ($defaultMap->has($item['id'])) {
+                $default = $defaultMap->get($item['id']);
+                $result[] = [
+                    'id' => $item['id'],
+                    'label' => ! empty($item['label']) ? $item['label'] : $default['label'],
+                    'type' => $default['type'],
+                    'target' => $default['target'],
+                    'placement' => isset($item['placement']) && in_array($item['placement'], ['main', 'dropdown']) ? $item['placement'] : $default['placement'],
+                    'enabled' => isset($item['enabled']) ? (bool) $item['enabled'] : true,
+                ];
+                $defaultMap->forget($item['id']);
+            } elseif (isset($item['type']) && $item['type'] === 'custom') {
+                $result[] = [
+                    'id' => $item['id'],
+                    'label' => ! empty($item['label']) ? $item['label'] : 'Custom Link',
+                    'type' => 'custom',
+                    'target' => $item['target'] ?? '#',
+                    'placement' => isset($item['placement']) && in_array($item['placement'], ['main', 'dropdown']) ? $item['placement'] : 'main',
+                    'enabled' => isset($item['enabled']) ? (bool) $item['enabled'] : true,
+                ];
+            }
         }
 
         foreach ($defaultMap as $missingDefault) {

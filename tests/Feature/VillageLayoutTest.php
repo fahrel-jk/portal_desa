@@ -52,9 +52,8 @@ test('village operator can view layout builder page', function () {
     $response = $this->actingAs($this->operator)->get(route('desa.layout.index'));
 
     $response->assertOk()
-        ->assertSee('Tata Letak Homepage Desa')
-        ->assertSee('Struktur Halaman Utama')
-        ->assertSee('Simpan Tata Letak');
+        ->assertSee('Manajer Pengaturan Web Desa (CMS Builder)')
+        ->assertSee('Pengaturan Menu Navigasi (Navbar CMS)');
 });
 
 test('village operator can update section order and visibility', function () {
@@ -70,7 +69,7 @@ test('village operator can update section order and visibility', function () {
         ]);
 
     $response->assertRedirect()
-        ->assertSessionHas('success', 'Pengaturan tata letak (layout) desa berhasil diperbarui!');
+        ->assertSessionHas('success', 'Pengaturan tata letak dan menu navigasi berhasil diperbarui!');
 
     $this->village->refresh();
     $sections = $this->village->getOrderedLayoutSections();
@@ -126,4 +125,51 @@ test('layout settings returns not found for perwakilan_desa without assigned vil
     $response = $this->actingAs($unassignedOperator)->get(route('desa.layout.index'));
 
     $response->assertNotFound();
+});
+
+test('village operator can update navigation menu settings and custom links', function () {
+    $customNavs = [
+        ['id' => 'home', 'label' => 'Home Utama', 'enabled' => true, 'type' => 'route', 'target' => 'village.show', 'placement' => 'main'],
+        ['id' => 'custom-link-1', 'label' => 'Portal Wisata', 'enabled' => true, 'type' => 'custom', 'target' => 'https://wisata.example.com', 'placement' => 'main'],
+        ['id' => 'agenda', 'label' => 'Jadwal Desa', 'enabled' => false, 'type' => 'route', 'target' => 'village.agenda', 'placement' => 'dropdown'],
+    ];
+
+    $response = $this->actingAs($this->operator)
+        ->patch(route('desa.layout.update'), [
+            'nav_sections' => $customNavs,
+        ]);
+
+    $response->assertRedirect()
+        ->assertSessionHas('success', 'Pengaturan tata letak dan menu navigasi berhasil diperbarui!');
+
+    $this->village->refresh();
+    $navs = $this->village->getOrderedNavSections();
+
+    expect($navs[0]['label'])->toBe('Home Utama');
+    expect($navs[1]['label'])->toBe('Portal Wisata');
+    expect($navs[1]['target'])->toBe('https://wisata.example.com');
+    expect(collect($navs)->firstWhere('id', 'agenda')['enabled'])->toBeFalse();
+});
+
+test('public page renders dynamic navigation menu for Klasik and Modern templates', function () {
+    $customNavs = [
+        ['id' => 'home', 'label' => 'Beranda Utama', 'enabled' => true, 'type' => 'route', 'target' => 'village.show', 'placement' => 'main'],
+        ['id' => 'custom-link-1', 'label' => 'Link Kustom Jatim', 'enabled' => true, 'type' => 'custom', 'target' => 'https://jatimprov.go.id', 'placement' => 'main'],
+        ['id' => 'agenda', 'label' => 'Agenda Rahasia', 'enabled' => false, 'type' => 'route', 'target' => 'village.agenda', 'placement' => 'main'],
+    ];
+
+    $this->village->update(['navigation_settings' => $customNavs]);
+    $this->otherVillage->update(['navigation_settings' => $customNavs]);
+
+    $responseKlasik = $this->get('/desa/sukamaju');
+    $responseKlasik->assertOk()
+        ->assertSee('Beranda Utama')
+        ->assertSee('Link Kustom Jatim')
+        ->assertDontSee('Agenda Rahasia');
+
+    $responseModern = $this->get('/desa/makmur');
+    $responseModern->assertOk()
+        ->assertSee('Beranda Utama')
+        ->assertSee('Link Kustom Jatim')
+        ->assertDontSee('Agenda Rahasia');
 });
