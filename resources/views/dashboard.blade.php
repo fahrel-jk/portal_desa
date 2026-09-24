@@ -67,6 +67,22 @@
                 @if($village->status === 'published')
                     {{-- Quick actions for published village --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <a href="{{ route('desa.layout.index') }}" class="bg-graphite-card border border-cobalt/30 rounded-2xl p-6 hover:border-cobalt transition group relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-cobalt text-white text-[10px] font-bold px-2 py-0.5 rounded-bl-lg">
+                                Page Builder
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">
+                                    <svg class="w-5 h-5 text-cobalt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-ivory-text">Tata Letak (Layout)</h4>
+                                    <p class="text-xs text-ash-text">Atur urutan & tampilkan bagian</p>
+                                </div>
+                            </div>
+                        </a>
                         <a href="{{ route('desa.profile.edit') }}" class="bg-graphite-card border border-slate-border/15 rounded-2xl p-6 hover:border-cobalt/30 transition group">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-cobalt/10 flex items-center justify-center group-hover:bg-cobalt/20 transition">

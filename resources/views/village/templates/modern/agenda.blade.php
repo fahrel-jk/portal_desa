@@ -2,11 +2,7 @@
 
 @push('styles')
 <style>
-    /* ==========================================================================
-       AGENDA DESA — CSS murni (tidak bergantung pada Tailwind).
-       Daftar agenda dirender server-side sebagai timeline: tanggal | rel | isi.
-       Warna kategori masuk lewat variabel --c pada tiap item.
-       ========================================================================== */
+
 
     .ag-layout {
         display: grid;

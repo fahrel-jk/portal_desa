@@ -45,6 +45,7 @@ class Village extends Model
         'approved_at',
         'approved_by',
         'theme_color',
+        'layout_settings',
     ];
 
     /**
@@ -59,7 +60,65 @@ class Village extends Model
             'approved_at' => 'datetime',
             'is_featured' => 'boolean',
             'geojson_batas_wilayah' => 'array',
+            'layout_settings' => 'array',
         ];
+    }
+
+    /**
+     * Default list of layout sections.
+     */
+    public static function defaultLayoutSections(): array
+    {
+        return [
+            ['id' => 'hero', 'title' => 'Banner Utama / Hero', 'enabled' => true],
+            ['id' => 'statistics', 'title' => 'Statistik Ringkas', 'enabled' => true],
+            ['id' => 'profile', 'title' => 'Profil & Aparatur Desa', 'enabled' => true],
+            ['id' => 'services', 'title' => 'Layanan Utama Warga', 'enabled' => true],
+            ['id' => 'news', 'title' => 'Kabar & Berita Desa', 'enabled' => true],
+            ['id' => 'agenda', 'title' => 'Kalender & Agenda Desa', 'enabled' => true],
+            ['id' => 'galleries', 'title' => 'Galeri Foto & Dokumentasi', 'enabled' => true],
+            ['id' => 'products', 'title' => 'Produk UMKM Desa', 'enabled' => true],
+            ['id' => 'complaint_banner', 'title' => 'Laporan & Pengaduan Warga', 'enabled' => true],
+            ['id' => 'map', 'title' => 'Peta & Lokasi Desa', 'enabled' => true],
+            ['id' => 'faq', 'title' => 'Pertanyaan Umum (FAQ)', 'enabled' => true],
+        ];
+    }
+
+    /**
+     * Get ordered layout sections for homepage rendering.
+     */
+    public function getOrderedLayoutSections(): array
+    {
+        $defaults = self::defaultLayoutSections();
+        $saved = $this->layout_settings;
+
+        if (empty($saved) || ! is_array($saved)) {
+            return $defaults;
+        }
+
+        $defaultMap = collect($defaults)->keyBy('id');
+        $result = [];
+
+        foreach ($saved as $item) {
+            if (! isset($item['id']) || ! $defaultMap->has($item['id'])) {
+                continue;
+            }
+
+            $default = $defaultMap->get($item['id']);
+            $result[] = [
+                'id' => $item['id'],
+                'title' => ! empty($item['title']) ? $item['title'] : $default['title'],
+                'enabled' => isset($item['enabled']) ? (bool) $item['enabled'] : true,
+            ];
+
+            $defaultMap->forget($item['id']);
+        }
+
+        foreach ($defaultMap as $missingDefault) {
+            $result[] = $missingDefault;
+        }
+
+        return $result;
     }
 
     /**

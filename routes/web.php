@@ -16,6 +16,7 @@ use App\Http\Controllers\Desa\DocumentController;
 use App\Http\Controllers\Desa\FaqController;
 use App\Http\Controllers\Desa\GalleryController;
 use App\Http\Controllers\Desa\InformationRequestController;
+use App\Http\Controllers\Desa\LayoutController;
 use App\Http\Controllers\Desa\OperatorController;
 use App\Http\Controllers\Desa\PengajuanMasukController;
 use App\Http\Controllers\Desa\ProductController;
@@ -78,6 +79,10 @@ Route::middleware(['auth', 'perwakilan_desa'])->prefix('wizard')->name('wizard.'
 Route::middleware(['auth', 'perwakilan_desa'])->prefix('desa/kelola')->name('desa.')->group(function () {
     Route::get('/profil', [DesaDashboardController::class, 'editProfile'])->name('profile.edit');
     Route::patch('/profil', [DesaDashboardController::class, 'updateProfile'])->name('profile.update');
+
+    // Layout Manager (WordPress / Blogger style)
+    Route::get('/layout', [LayoutController::class, 'index'])->name('layout.index');
+    Route::patch('/layout', [LayoutController::class, 'update'])->name('layout.update');
 
     // Officials
     Route::get('/officials', [DesaDashboardController::class, 'officialsIndex'])->name('officials.index');
