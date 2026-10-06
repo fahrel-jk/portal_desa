@@ -5,13 +5,11 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 @endif
 <style>
-    /* ==========================================================================
-       PROFIL DESA — CSS murni.
+    /* PROFIL DESA — CSS murni.
        Semua spacing/padding/gap ditulis di sini, TIDAK bergantung pada utility
        Tailwind, jadi tetap rapi walaupun class Tailwind tidak ter-compile.
        Class lama (.profil-hero, .profil-card, .info-row, .eyebrow) dipertahankan
-       supaya selector animasi/tema di layout tetap kena.
-       ========================================================================== */
+       supaya selector animasi/tema di layout tetap kena. */
 
     .pf {
         --pf-gap: 1.5rem;
@@ -404,7 +402,7 @@
 
 <div class="pf">
 
-    {{-- ═════════════ HERO ═════════════ --}}
+    {{-- ════════════ HERO ════════════ --}}
     <div class="profil-hero pf-hero">
         <div class="pf-hero-inner">
             <div class="pf-badge">
@@ -437,7 +435,7 @@
         </div>
     </div>
 
-    {{-- ═════════════ VISI & MISI ═════════════ --}}
+    {{-- ════════════ VISI & MISI ════════════ --}}
     @if($village->visi || count($misiItems))
     <div class="pf-row pf-row--vm">
 
@@ -472,7 +470,7 @@
     </div>
     @endif
 
-    {{-- ═════════════ KONTEN UTAMA + SIDEBAR ═════════════ --}}
+    {{-- ════════════ KONTEN UTAMA + SIDEBAR ════════════ --}}
     <div class="pf-row pf-row--main">
 
         {{-- ---------- KONTEN UTAMA ---------- --}}

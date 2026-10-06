@@ -21,7 +21,7 @@
                             <p class="text-xs text-ash-text mb-1">User telah dibuat. Sampaikan informasi login ini ke pemohon:</p>
                             <p class="text-sm text-ivory-text font-mono">Email: {{ session('generated_email') }}</p>
                             <p class="text-sm text-amber-400 font-mono font-bold mt-1">Password: {{ session('generated_password') }}</p>
-                            <p class="text-xs text-red-400 mt-1 mt-2 font-medium">⚠️ Simpan password ini! Password tidak akan ditampilkan lagi.</p>
+                            <p class="text-xs text-red-400 mt-1 mt-2 font-medium">Simpan password ini! Password tidak akan ditampilkan lagi.</p>
                         </div>
                     @endif
                 </div>

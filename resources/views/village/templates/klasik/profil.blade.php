@@ -59,9 +59,7 @@
 
     <main class="flex-grow">
 
-        {{-- ============================================================= --}}
         {{-- SECTION 1: Hero Profil (Background HIJAU/PRIMARY) --}}
-        {{-- ============================================================= --}}
         <section class="bg-deep py-16 md:py-24 text-center">
             <div class="max-w-4xl mx-auto px-4 sm:px-6">
                 <p class="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary-foreground opacity-80 mb-4">
@@ -72,9 +70,7 @@
             </div>
         </section>
 
-        {{-- ============================================================= --}}
         {{-- SECTION 2: Visi & Misi (Background BEIGE/BACKGROUND) --}}
-        {{-- ============================================================= --}}
         @if($village->visi || $village->misi)
         <section class="bg-background py-16 md:py-20">
             <div class="max-w-4xl mx-auto px-4 sm:px-6">
@@ -114,9 +110,7 @@
         </section>
         @endif
 
-        {{-- ============================================================= --}}
         {{-- SECTION 3: Bagan Struktur (Background HIJAU/DEEP) --}}
-        {{-- ============================================================= --}}
         @if($village->bagan_struktur_path)
         <section class="bg-deep py-16 md:py-20">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
@@ -138,9 +132,7 @@
         </section>
         @endif
 
-        {{-- ============================================================= --}}
         {{-- SECTION 4: Sejarah Desa (Background SURFACE/WHITE) --}}
-        {{-- ============================================================= --}}
         @if($village->history || $village->description)
         <section class="bg-surface py-16 md:py-20">
             <div class="max-w-4xl mx-auto px-4 sm:px-6">
@@ -159,9 +151,7 @@
         </section>
         @endif
 
-        {{-- ============================================================= --}}
         {{-- SECTION 5: Peta Lokasi Desa (Background BEIGE/BACKGROUND) --}}
-        {{-- ============================================================= --}}
         @if($village->latitude && $village->longitude)
         <section class="bg-background py-16 md:py-20">
             <div class="max-w-6xl mx-auto px-4 sm:px-6">

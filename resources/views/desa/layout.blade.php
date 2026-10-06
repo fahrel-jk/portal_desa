@@ -38,14 +38,14 @@
                         :class="activeTab === 'homepage' ? 'bg-cobalt text-pure-white shadow-md shadow-cobalt/20' : 'text-ash-text hover:text-ivory-text hover:bg-white/5'"
                         class="px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
-                    🧱 Bagian Halaman Utama (Homepage)
+                    Bagian Halaman Utama (Homepage)
                 </button>
 
                 <button type="button" @click="activeTab = 'navigation'" 
                         :class="activeTab === 'navigation' ? 'bg-cobalt text-pure-white shadow-md shadow-cobalt/20' : 'text-ash-text hover:text-ivory-text hover:bg-white/5'"
                         class="px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
-                    🔗 Menu Navigasi (Navbar CMS)
+                    Menu Navigasi (Navbar CMS)
                 </button>
             </div>
 
@@ -320,7 +320,7 @@
 
                             <div class="bg-slate-950 border border-slate-700/60 rounded-xl p-3.5 mb-4 shadow-inner">
                                 <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                                    <span>📌 Navbar Utama:</span>
+                                    <span>Navbar Utama:</span>
                                 </div>
                                 <div class="flex flex-wrap gap-1.5 mb-4 p-2 bg-slate-900 rounded-lg border border-slate-800">
                                     <template x-for="item in navItems.filter(i => i.enabled && i.placement === 'main')" :key="item.id">
@@ -330,7 +330,7 @@
                                 </div>
 
                                 <div class="text-[11px] font-bold text-purple-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                                    <span>🔽 Dropdown 'Lainnya':</span>
+                                    <span>Dropdown 'Lainnya':</span>
                                 </div>
                                 <div class="space-y-1.5 p-2 bg-slate-900 rounded-lg border border-slate-800">
                                     <template x-for="item in navItems.filter(i => i.enabled && i.placement === 'dropdown')" :key="item.id">
