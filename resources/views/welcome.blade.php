@@ -34,9 +34,7 @@
         <div class="absolute inset-0 bg-black/40"></div>
     </div>
 
-    {{-- ═══════════════════════════════════════
-         NAVIGATION — Transparent over hero, Center aligned links
-         ═══════════════════════════════════════ --}}
+    {{-- NAVIGATION — Transparent over hero, Center aligned links --}}
     <nav class="fixed w-full top-0 z-50 transition-all duration-300" x-data="{ scrolled: false, mobileOpen: false }" @scroll.window="scrolled = (window.scrollY > 40)">
         <div :class="scrolled ? 'bg-black/40 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20' : 'bg-transparent py-2'" class="transition-all duration-300">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
@@ -94,9 +92,7 @@
         </div>
     </nav>
 
-    {{-- ═══════════════════════════════════════
-         HERO — Dreamy Velorah Style
-         ═══════════════════════════════════════ --}}
+    {{-- HERO — Dreamy Velorah Style --}}
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
         {{-- Background flows through completely from fixed body --}}
 
@@ -115,9 +111,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════
-         STATS — Trust strip
-         ═══════════════════════════════════════ --}}
+    {{-- STATS — Trust strip --}}
     <section class="relative z-10 -mt-20 pb-24">
         <div class="max-w-5xl mx-auto px-6">
             <div class="scroll-reveal bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 sm:p-10 shadow-xl shadow-black/20">
@@ -143,9 +137,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════
-         CARA KERJA — 4 Steps
-         ═══════════════════════════════════════ --}}
+    {{-- CARA KERJA — 4 Steps --}}
     <section id="cara-kerja" class="py-24 bg-black/40 backdrop-blur-md border-y border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
@@ -179,9 +171,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════
-         TEMPLATE SHOWCASE
-         ═══════════════════════════════════════ --}}
+    {{-- TEMPLATE SHOWCASE --}}
     <section id="template" class="py-24">
         <div class="max-w-7xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
@@ -230,9 +220,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════
-         SEARCH & SHOWCASE VILLAGES
-         ═══════════════════════════════════════ --}}
+    {{-- SEARCH & SHOWCASE VILLAGES --}}
     <section id="pencarian" class="py-24 bg-black/40 backdrop-blur-md border-y border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-10">
@@ -361,9 +349,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════
-         FAQ ACCORDION
-         ═══════════════════════════════════════ --}}
+    {{-- FAQ ACCORDION --}}
     <section id="faq" class="py-24">
         <div class="max-w-3xl mx-auto px-6">
             <div class="scroll-reveal text-center mb-16">
@@ -400,9 +386,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════
-         CTA FINAL
-         ═══════════════════════════════════════ --}}
+    {{-- CTA FINAL --}}
     <section class="relative py-32 overflow-hidden bg-black/40 backdrop-blur-md border-y border-white/5">
         {{-- Background flows through completely from fixed body --}}
 
@@ -424,9 +408,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════
-         CONTACT FOOTER
-         ═══════════════════════════════════════ --}}
+    {{-- CONTACT FOOTER --}}
     <footer class="relative pb-10 pt-20 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="scroll-reveal bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 sm:p-12 mb-10 shadow-2xl">

@@ -226,9 +226,7 @@
             @php $customTitle = $section['title'] ?? null; @endphp
             @switch($section['id'])
                 @case('hero')
-                    {{-- ═══════════════════════════════════════
-                         HERO — Rounded image, glass panel
-                         ═══════════════════════════════════════ --}}
+                    {{-- HERO — Rounded image, glass panel --}}
                     <section style="padding: 1.5rem 1rem 2rem;">
                         <div style="max-width: 1120px; margin: 0 auto;">
                             <div style="border-radius: 1.25rem; overflow: hidden; position: relative; min-height: 320px; background-color: #4a6741; background-size: cover; background-position: center; {{ $village->hero_image_path ? 'background-image: url(' . Storage::url($village->hero_image_path) . ');' : '' }}" class="sm:!min-h-[520px]">
@@ -282,9 +280,7 @@
                     @break
 
                 @case('statistics')
-                    {{-- ═══════════════════════════════════════
-                         STATISTICS — 3 numbers, thin dividers
-                         ═══════════════════════════════════════ --}}
+                    {{-- STATISTICS — 3 numbers, thin dividers --}}
                     <section style="padding: 2.5rem 0; border-bottom: 1px solid var(--border);">
                         <div style="max-width: 900px; margin: 0 auto; padding: 0 1.5rem;">
                             <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0;" class="flex-col sm:flex-row">
@@ -308,9 +304,7 @@
                     @break
 
                 @case('profile')
-                    {{-- ═══════════════════════════════════════
-                         PROFIL + KONTAK + PERANGKAT
-                         ═══════════════════════════════════════ --}}
+                    {{-- PROFIL + KONTAK + PERANGKAT --}}
                     <section id="profil" class="scroll-mt-20" style="padding: 4rem 0 5rem;">
                         <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
                             <div id="profil-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
@@ -433,9 +427,7 @@
                     @break
 
                 @case('complaint_banner')
-                    {{-- ═══════════════════════════════════════
-                         LAPOR DESA (Pengaduan)
-                         ═══════════════════════════════════════ --}}
+                    {{-- LAPOR DESA (Pengaduan) --}}
                     <section id="lapor-desa" style="padding-bottom: 4rem;">
                         <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
                             <div style="background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 90%, black), var(--primary)); border-radius: 1.25rem; overflow: hidden; position: relative; padding: 2.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; color: var(--primary-fg); box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
@@ -456,9 +448,7 @@
                     @break
 
                 @case('services')
-                    {{-- ═══════════════════════════════════════
-                         LAYANAN (Services)
-                         ═══════════════════════════════════════ --}}
+                    {{-- LAYANAN (Services) --}}
                     @if($village->services->count() > 0)
                         <section id="layanan" class="scroll-mt-20" style="padding-bottom: 4rem;">
                             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
@@ -475,11 +465,17 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style="align-items: stretch;">
                                     @foreach($village->services->take(6) as $service)
                                         <div class="card transition-all duration-300 group flex flex-col h-full" style="padding: 1.5rem; border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
-                                            <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-10 shrink-0" style="background-color: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary);">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                            <div class="flex items-center gap-4 mb-4">
+                                                <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary);">
+                                                    @if($village->logo_path)
+                                                        <img src="{{ Storage::url($village->logo_path) }}" alt="Logo {{ $village->name }}" class="w-7 h-7 object-contain">
+                                                    @else
+                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                    @endif
+                                                </div>
+                                                <h3 class="font-bold text-lg leading-tight" style="font-family: Outfit, sans-serif;">{{ $service->name }}</h3>
                                             </div>
                                             <div class="flex-1 flex flex-col">
-                                                <h3 class="font-bold text-lg mb-3" style="font-family: Outfit, sans-serif;">{{ $service->name }}</h3>
                                                 @if($service->description)
                                                     <p class="text-[14px] leading-relaxed mb-6 line-clamp-3" style="color: var(--muted-fg);">{{ $service->description }}</p>
                                                 @endif
@@ -499,9 +495,7 @@
                     @break
 
                 @case('news')
-                    {{-- ═══════════════════════════════════════
-                         BERITA (News)
-                         ═══════════════════════════════════════ --}}
+                    {{-- BERITA (News) --}}
                     @if($village->news->count() > 0)
                         <section id="berita" class="scroll-mt-20" style="padding-bottom: 4rem;">
                             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
@@ -549,9 +543,7 @@
                     @break
 
                 @case('agenda')
-                    {{-- ═══════════════════════════════════════
-                         AGENDA (Events) & MINI KALENDER
-                         ═══════════════════════════════════════ --}}
+                    {{-- AGENDA (Events) & MINI KALENDER --}}
                     @php
                         $upcomingAgendas = $village->agendas->where('event_date', '>=', now()->toDateString())->sortBy('event_date')->take(5);
                         if ($upcomingAgendas->count() < 5) {
@@ -714,9 +706,7 @@
                     @break
 
                 @case('galleries')
-                    {{-- ═══════════════════════════════════════
-                         GALERI — Grid 3×2 with caption pills
-                         ═══════════════════════════════════════ --}}
+                    {{-- GALERI — Grid 3×2 with caption pills --}}
                     @if($village->galleries->count() > 0)
                         <section id="galeri" class="scroll-mt-20" style="padding-bottom: 4rem;">
                             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
@@ -744,9 +734,7 @@
                     @break
 
                 @case('products')
-                    {{-- ═══════════════════════════════════════
-                         PRODUK UMKM
-                         ═══════════════════════════════════════ --}}
+                    {{-- PRODUK UMKM --}}
                     @if($village->products->where('is_active', true)->count() > 0)
                         <section id="produk" class="scroll-mt-20" style="padding-bottom: 4rem;">
                             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
@@ -804,9 +792,7 @@
                     @break
 
                 @case('map')
-                    {{-- ═══════════════════════════════════════
-                         PETA / LOKASI — Map + Legend card
-                         ═══════════════════════════════════════ --}}
+                    {{-- PETA / LOKASI — Map + Legend card --}}
                     @if($village->latitude && $village->longitude)
                         <section id="lokasi" class="scroll-mt-20" style="padding-bottom: 4rem;">
                             <div style="max-width: 1120px; margin: 0 auto; padding: 0 1rem;">
@@ -853,9 +839,7 @@
                     @break
 
                 @case('faq')
-                    {{-- ═══════════════════════════════════════
-                         FAQ / TANYA JAWAB
-                         ═══════════════════════════════════════ --}}
+                    {{-- FAQ / TANYA JAWAB --}}
                     @if($village->faqs->count() > 0)
                         <script type="application/ld+json">
                         {
@@ -894,9 +878,7 @@
 
     @include('village.templates.modern.footer')
 
-    {{-- ═══════════════════════════════════════
-         LEAFLET MAP SCRIPT
-         ═══════════════════════════════════════ --}}
+    {{-- LEAFLET MAP SCRIPT --}}
     @if($village->latitude && $village->longitude)
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <script>
@@ -948,9 +930,7 @@
         </script>
     @endif
 
-    {{-- ═══════════════════════════════════════
-         BACK TO TOP — Floating glass pill
-         ═══════════════════════════════════════ --}}
+    {{-- BACK TO TOP — Floating glass pill --}}
     <div
         x-data="{ showTop: false }"
         x-init="window.addEventListener('scroll', () => { showTop = window.scrollY > 400 })"

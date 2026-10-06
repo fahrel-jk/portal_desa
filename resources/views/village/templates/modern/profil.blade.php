@@ -402,7 +402,7 @@
 
 <div class="pf">
 
-    {{-- ════════════ HERO ════════════ --}}
+    {{-- HERO --}}
     <div class="profil-hero pf-hero">
         <div class="pf-hero-inner">
             <div class="pf-badge">
@@ -435,7 +435,7 @@
         </div>
     </div>
 
-    {{-- ════════════ VISI & MISI ════════════ --}}
+    {{-- VISI & MISI --}}
     @if($village->visi || count($misiItems))
     <div class="pf-row pf-row--vm">
 
@@ -470,7 +470,7 @@
     </div>
     @endif
 
-    {{-- ════════════ KONTEN UTAMA + SIDEBAR ════════════ --}}
+    {{-- KONTEN UTAMA + SIDEBAR --}}
     <div class="pf-row pf-row--main">
 
         {{-- ---------- KONTEN UTAMA ---------- --}}

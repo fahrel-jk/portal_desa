@@ -11,11 +11,16 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 4rem;">
         @foreach($services as $service)
             <div class="card transition-all duration-300 group flex flex-col h-full" style="padding: 1.5rem; border-color: var(--border);" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
-                <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 shrink-0" style="background-color: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary);">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary);">
+                        @if($village->logo_path)
+                            <img src="{{ Storage::url($village->logo_path) }}" alt="Logo {{ $village->name }}" class="w-8 h-8 object-contain">
+                        @else
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        @endif
+                    </div>
+                    <h3 class="font-bold text-lg leading-tight" style="font-family: Outfit, sans-serif; color: var(--fg);">{{ $service->name }}</h3>
                 </div>
-                
-                <h3 class="font-bold text-xl mb-3" style="font-family: Outfit, sans-serif; color: var(--fg);">{{ $service->name }}</h3>
                 
                 @if($service->description)
                     <p class="text-[14.5px] leading-relaxed mb-6" style="color: var(--muted-fg);">{{ $service->description }}</p>

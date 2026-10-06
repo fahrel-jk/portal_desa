@@ -1,6 +1,4 @@
-{{-- ═══════════════════════════════════════
-     FOOTER (Kontak & Navigasi) — Redesigned
-     ═══════════════════════════════════════ --}}
+{{-- FOOTER (Kontak & Navigasi) — Redesigned --}}
 <footer id="kontak" style="margin-top: 2rem; padding: 2rem 0 1.25rem; border-top: 2px solid var(--primary, #c4654a); background-color: color-mix(in srgb, var(--bg, #eef0ea) 50%, white); border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
   <div style="max-width: 1120px; margin: 0 auto; padding: 0 1.5rem;">
     

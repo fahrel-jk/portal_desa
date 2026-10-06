@@ -4,8 +4,8 @@ use App\Models\Village;
 use App\Models\VillageNews;
 use Illuminate\Contracts\Console\Kernel;
 
-require __DIR__.'/vendor/autoload.php';
-$app = require_once __DIR__.'/bootstrap/app.php';
+require __DIR__.'/../vendor/autoload.php';
+$app = require_once __DIR__.'/../bootstrap/app.php';
 $kernel = $app->make(Kernel::class);
 $kernel->bootstrap();
 

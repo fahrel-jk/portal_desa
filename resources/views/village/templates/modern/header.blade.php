@@ -22,9 +22,7 @@
     };
 @endphp
 
-    {{-- ═══════════════════════════════════════
-         NAVIGATION — Solid, above hero
-         ═══════════════════════════════════════ --}}
+    {{-- NAVIGATION — Solid, above hero --}}
     <div style="position: sticky; top: 0.75rem; z-index: 50; padding: 0 0.75rem; margin-bottom: 1.5rem;" class="sm:mb-8">
         <style>
             @media (min-width: 640px) {
