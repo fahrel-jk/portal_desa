@@ -96,12 +96,12 @@
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
         {{-- Background flows through completely from fixed body --}}
 
-        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center mt-20">
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center mb-10 md:mb-16 lg:mb-20">
             <h1 class="animate-fade-rise font-serif-velorah text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white tracking-normal leading-[1.1] mb-6">
-                Bawa desa Anda ke<br class="hidden sm:inline">era digital.
+                Bawa desa Anda ke<br class="hidden sm:inline">era digital
             </h1>
             <p class="animate-fade-rise-d1 max-w-2xl mx-auto text-[15px] sm:text-base leading-relaxed text-white/80 mb-10 font-light">
-                Platform termudah untuk membuat halaman resmi desa. Pilih template, isi data, dan halaman desa Anda siap diakses publik dalam hitungan menit — tanpa perlu coding.
+                Platform termudah untuk membuat halaman resmi desa. Pilih template, isi data, dan halaman desa Anda siap diakses publik dalam hitungan menit tanpa perlu coding.
             </p>
             <div class="animate-fade-rise-d2 flex justify-center">
                 <a href="{{ route('register') }}" class="glass-button text-white font-medium px-8 py-3 rounded-full text-[15px]">
@@ -112,10 +112,10 @@
     </section>
 
     {{-- STATS — Trust strip --}}
-    <section class="relative z-10 -mt-20 pb-24">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="scroll-reveal bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 sm:p-10 shadow-xl shadow-black/20">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <section class="relative z-10 -mt-16 md:-mt-24 lg:-mt-32 pb-16 md:pb-24">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="scroll-reveal bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 sm:p-10 shadow-xl shadow-black/20">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
                     <div>
                         <div class="text-3xl sm:text-4xl font-serif-velorah text-white mb-1">{{ $stats['total_villages'] }}+</div>
                         <div class="text-xs sm:text-sm text-white/70 uppercase tracking-widest">Desa Tergabung</div>
@@ -233,7 +233,7 @@
 
             {{-- Search Form --}}
             <div class="scroll-reveal max-w-3xl mx-auto mb-16">
-                <form action="{{ url('/') }}#pencarian" method="GET" class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row gap-2 sm:gap-3 shadow-xl shadow-black/20">
+                <form action="{{ url('/') }}#pencarian" method="GET" class="bg-white/5 backdrop-blur-md rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row gap-2 sm:gap-3 shadow-xl shadow-black/20">
                     <div class="flex-grow">
                         <label for="q" class="sr-only">Cari Desa</label>
                         <input type="text" name="q" id="q" value="{{ request('q') }}" placeholder="Cari nama desa..." class="w-full h-11 bg-white/10 border border-white/20 rounded-xl px-4 text-white placeholder:text-white/50 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors">
