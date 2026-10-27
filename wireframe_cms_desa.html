@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1440">
+    <title>Wireframe CMS Admin Provinsi & Operator Desa - 1440 Desktop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================================
+           FIGMA DESKTOP 1440px x 1024px CMS WIREFRAME SCREENS
+           Each <section> is a discrete 1440x1024 desktop screen that
+           can be selected and moved independently in Figma!
+           ========================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html, body {
+            width: 1440px;
+            margin: 0 auto;
+            background: #E5E7EB;
+            color: #111827;
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.5;
+        }
+
+        /* EACH CMS SCREEN AS A STANDALONE 1440x1024 DESKTOP FRAME */
+        .cms-screen {
+            width: 1440px;
+            min-height: 1024px;
+            background: #FFFFFF;
+            border: 1px solid #111827;
+            box-sizing: border-box;
+            position: relative;
+            margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+        }
+
+        .screen-label-bar {
+            grid-column: 1 / -1;
+            background: #111827;
+            color: #FFFFFF;
+            padding: 8px 24px;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.05em;
+        }
+
+        /* SIDEBAR (CMS) */
+        .cms-sidebar {
+            background: #F9FAFB;
+            border-right: 1px solid #D1D5DB;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cms-logo-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #D1D5DB;
+            margin-bottom: 18px;
+        }
+
+        .cms-logo-box {
+            width: 38px;
+            height: 38px;
+            border: 1.5px solid #111827;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            background: #FFFFFF;
+        }
+
+        .cms-nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .cms-nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            border: 1px solid transparent;
+        }
+
+        .cms-nav-item.active {
+            background: #111827;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .cms-nav-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #E5E7EB;
+            color: #111827;
+            font-weight: 700;
+        }
+
+        .cms-nav-item.active .cms-nav-badge {
+            background: #374151;
+            color: #FFFFFF;
+        }
+
+        /* MAIN CONTENT AREA */
+        .cms-main {
+            background: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cms-topbar {
+            height: 64px;
+            border-bottom: 1px solid #D1D5DB;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cms-body {
+            padding: 32px;
+            flex: 1;
+        }
+
+        /* REUSABLE WIREFRAME PRIMITIVES */
+        .wf-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border: 1px solid #111827;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: #F3F4F6;
+            color: #111827;
+        }
+
+        .wf-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .wf-btn-solid {
+            background: #111827;
+            color: #FFFFFF;
+            border: 1px solid #111827;
+        }
+
+        .wf-btn-outline {
+            background: #FFFFFF;
+            color: #111827;
+            border: 1px solid #111827;
+        }
+
+        /* METRIC CARDS ROW */
+        .stats-row-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card-box {
+            border: 1px solid #D1D5DB;
+            border-left: 3px solid #111827;
+            border-radius: 4px;
+            padding: 18px 20px;
+            background: #F9FAFB;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111827;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #6B7280;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        /* DATA TABLES */
+        .table-wrap {
+            border: 1px solid #D1D5DB;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #FFFFFF;
+            margin-bottom: 24px;
+        }
+
+        .table-head-bar {
+            padding: 14px 20px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #D1D5DB;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px 18px;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .data-table th {
+            background: #F3F4F6;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #4B5563;
+        }
+
+        .data-table tr:last-child td { border-bottom: none; }
+
+        /* BUILDER WORKSPACE */
+        .builder-2col {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .builder-box {
+            border: 1px solid #D1D5DB;
+            border-radius: 4px;
+            padding: 20px;
+            background: #FFFFFF;
+        }
+
+        .reorder-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .reorder-row {
+            border: 1px solid #D1D5DB;
+            border-radius: 4px;
+            padding: 10px 14px;
+            background: #F9FAFB;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .input-reorder {
+            border: 1px solid #D1D5DB;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #FFFFFF;
+            flex: 1;
+            max-width: 260px;
+        }
+
+        .arrow-btn {
+            width: 26px;
+            height: 26px;
+            border: 1px solid #111827;
+            background: #FFFFFF;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .toggle-switch-box {
+            width: 32px;
+            height: 18px;
+            background: #111827;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .toggle-switch-box::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: white;
+            position: absolute;
+            top: 3px;
+            right: 3px;
+        }
+
+        .preview-simulator-frame {
+            border: 1.5px solid #111827;
+            border-radius: 4px;
+            background: #FFFFFF;
+            overflow: hidden;
+        }
+
+        .preview-sim-header {
+            background: #F3F4F6;
+            border-bottom: 1px solid #D1D5DB;
+            padding: 8px 12px;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            font-family: monospace;
+        }
+
+        .preview-sim-body {
+            padding: 14px;
+            background: #F9FAFB;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sim-block {
+            border: 1px dashed #111827;
+            padding: 10px;
+            background: #FFFFFF;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===================================================================
+         SCREEN 1: ADMIN PROVINSI — DASHBOARD & ANTREAN REVIEW (1440x1024)
+         =================================================================== -->
+    <section class="cms-screen" id="cms-screen-1">
+        <div class="screen-label-bar">
+            <span>SCREEN 1: ADMIN PROVINSI - DASHBOARD & ANTREAN REVIEW DESA</span>
+            <span>W: 1440px | H: 1024px</span>
+        </div>
+
+        <!-- Sidebar Admin -->
+        <aside class="cms-sidebar">
+            <div>
+                <div class="cms-logo-header">
+                    <div class="cms-logo-box">JT</div>
+                    <div>
+                        <strong style="font-size: 14px; display: block;">Admin Diskominfo</strong>
+                        <span style="font-size: 11px; color: #6B7280;">Provinsi Jawa Timur</span>
+                    </div>
+                </div>
+
+                <ul class="cms-nav-list">
+                    <li class="cms-nav-item active">
+                        <span>Antrean Review Desa</span>
+                        <span class="cms-nav-badge">3</span>
+                    </li>
+                    <li class="cms-nav-item">
+                        <span>Monitoring Desa Live</span>
+                        <span class="cms-nav-badge">28</span>
+                    </li>
+                    <li class="cms-nav-item">
+                        <span>Master Template</span>
+                        <span class="cms-nav-badge">2</span>
+                    </li>
+                    <li class="cms-nav-item">
+                        <span>Laporan Verifikasi</span>
+                    </li>
+                    <li class="cms-nav-item">
+                        <span>Pengaturan Sistem</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid #D1D5DB; padding-top: 14px; display: flex; align-items: center; gap: 10px;">
+                <div style="width: 32px; height: 32px; border: 1px solid #111827; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">AD</div>
+                <div style="font-size: 12px;">
+                    <strong>Admin Verifikator</strong>
+                    <div style="color: #6B7280; font-size: 10px;">Super Admin Jatim</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="cms-main">
+            <header class="cms-topbar">
+                <div style="font-size: 12px; color: #6B7280;">
+                    Portal Desa Jatim / Panel Provinsi / <strong>Antrean Review Pendaftaran</strong>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <span class="wf-badge">Server Online 100%</span>
+                    <a href="wireframe_landing.html" class="wf-btn wf-btn-outline">Lihat Landing Page</a>
+                </div>
+            </header>
+
+            <div class="cms-body">
+                <div style="margin-bottom: 20px;">
+                    <h2 style="font-size: 22px; font-weight: 800;">Antrean Tinjauan Pendaftaran Desa Baru</h2>
+                    <p style="font-size: 13px; color: #4B5563;">Review data perwakilan kelurahan, periksa SK tugas, dan lakukan approval publikasi.</p>
+                </div>
+
+                <!-- 4 Metrics -->
+                <div class="stats-row-4">
+                    <div class="stat-card-box">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Menunggu Review</div>
+                    </div>
+                    <div class="stat-card-box">
+                        <div class="stat-number">28</div>
+                        <div class="stat-label">Disetujui / Live</div>
+                    </div>
+                    <div class="stat-card-box">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Ditolak / Revisi</div>
+                    </div>
+                    <div class="stat-card-box">
+                        <div class="stat-number">33</div>
+                        <div class="stat-label">Total Pendaftaran</div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-wrap">
+                    <div class="table-head-bar">
+                        <strong>Daftar Pengajuan Masuk</strong>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" placeholder="Cari desa..." style="border: 1px solid #D1D5DB; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                            <button class="wf-btn wf-btn-outline" style="padding: 4px 10px;">Filter</button>
+                        </div>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nama Desa</th>
+                                <th>Kecamatan & Kab.</th>
+                                <th>Perwakilan / Kontak</th>
+                                <th>Template</th>
+                                <th>Tanggal Pengajuan</th>
+                                <th>Status</th>
+                                <th style="text-align: right;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Desa Pujon Kidul</strong></td>
+                                <td>Kec. Pujon, Kab. Malang</td>
+                                <td>Udi Hartoko (0812-3456-xxxx)</td>
+                                <td><span class="wf-badge">Tradisional</span></td>
+                                <td>25 Okt 2026, 09:20</td>
+                                <td><span class="wf-badge">Review</span></td>
+                                <td style="text-align: right;"><button class="wf-btn wf-btn-solid">Buka Review</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Desa Sumberan</strong></td>
+                                <td>Kec. Ambulu, Kab. Jember</td>
+                                <td>Ahmad Syafii (0856-7890-xxxx)</td>
+                                <td><span class="wf-badge">Modern</span></td>
+                                <td>24 Okt 2026, 14:15</td>
+                                <td><span class="wf-badge">Review</span></td>
+                                <td style="text-align: right;"><button class="wf-btn wf-btn-solid">Buka Review</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Desa Tamansari</strong></td>
+                                <td>Kec. Licin, Kab. Banyuwangi</td>
+                                <td>Made Suartha (0813-2468-xxxx)</td>
+                                <td><span class="wf-badge">Tradisional</span></td>
+                                <td>23 Okt 2026, 11:05</td>
+                                <td><span class="wf-badge">Review</span></td>
+                                <td style="text-align: right;"><button class="wf-btn wf-btn-solid">Buka Review</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ===================================================================
+         SCREEN 2: ADMIN PROVINSI — MODAL REVIEW DETAIL DESA (1440x1024)
+         =================================================================== -->
+    <section class="cms-screen" id="cms-screen-2">
+        <div class="screen-label-bar">
+            <span>SCREEN 2: ADMIN PROVINSI - MODAL DETAIL VERIFIKASI DOKUMEN DESA</span>
+            <span>W: 1440px | H: 1024px</span>
+        </div>
+
+        <aside class="cms-sidebar">
+            <div>
+                <div class="cms-logo-header">
+                    <div class="cms-logo-box">JT</div>
+                    <div>
+                        <strong style="font-size: 14px; display: block;">Admin Diskominfo</strong>
+                        <span style="font-size: 11px; color: #6B7280;">Provinsi Jawa Timur</span>
+                    </div>
+                </div>
+                <ul class="cms-nav-list">
+                    <li class="cms-nav-item active"><span>Antrean Review Desa</span></li>
+                    <li class="cms-nav-item"><span>Monitoring Desa Live</span></li>
+                    <li class="cms-nav-item"><span>Master Template</span></li>
+                </ul>
+            </div>
+            <div style="font-size: 11px; color: #6B7280;">Admin Verifikator</div>
+        </aside>
+
+        <main class="cms-main">
+            <header class="cms-topbar">
+                <div style="font-size: 12px; color: #6B7280;">
+                    Review Pendaftaran: <strong>Desa Pujon Kidul, Kab. Malang</strong>
+                </div>
+                <span class="wf-badge">ID: REG-2026-089</span>
+            </header>
+
+            <div class="cms-body">
+                <div style="border: 1.5px solid #111827; border-radius: 4px; padding: 24px; background: #FFFFFF; max-width: 1080px; margin: 0 auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #D1D5DB; padding-bottom: 14px; margin-bottom: 20px;">
+                        <div>
+                            <span class="wf-badge" style="margin-bottom: 4px;">Detail Verifikasi Berkas</span>
+                            <h3 style="font-size: 18px; font-weight: 800;">Pemeriksaan Kelayakan: Desa Pujon Kidul</h3>
+                        </div>
+                        <div style="font-size: 12px; color: #6B7280;">Diajukan: 25 Oktober 2026</div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 24px;">
+                        <!-- Checklist Dokumen -->
+                        <div style="border: 1px solid #D1D5DB; padding: 18px; border-radius: 4px; background: #F9FAFB;">
+                            <strong style="font-size: 13px; display: block; margin-bottom: 10px;">Checklist Dokumen & Legalitas:</strong>
+                            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+                                <li>[OK] <strong>Identitas Balai Desa:</strong> Jl. Raya Pujon Kidul No. 12 (Valid)</li>
+                                <li>[OK] <strong>SK Tugas Perwakilan:</strong> SK_Kades_2026.pdf (Terlampir Sah)</li>
+                                <li>[OK] <strong>Struktur Organisasi:</strong> 6 Jabatan Resmi Perangkat Terisi</li>
+                                <li>[OK] <strong>Media Visual:</strong> Logo resmi dan foto panorama balai desa</li>
+                                <li>[OK] <strong>Template Dipilih:</strong> Template Tradisional / Klasik</li>
+                            </ul>
+                        </div>
+
+                        <!-- Decision Panel -->
+                        <div style="border: 1px solid #D1D5DB; padding: 18px; border-radius: 4px; background: #FFFFFF; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <strong style="font-size: 13px; display: block; margin-bottom: 8px;">Tindakan Persetujuan Admin:</strong>
+                                <p style="font-size: 12px; color: #4B5563; line-height: 1.5; margin-bottom: 14px;">
+                                    Jika disetujui, website desa akan langsung tayang pada alamat <code>/desa/pujon-kidul</code> dan akun operator desa akan diaktifkan secara otomatis.
+                                </p>
+                                <div>
+                                    <label style="font-size: 11px; font-weight: 700; color: #6B7280; display: block; margin-bottom: 4px;">Catatan Verifikator (Opsional):</label>
+                                    <textarea style="width: 100%; height: 60px; border: 1px solid #111827; padding: 6px; font-size: 12px;" placeholder="Tuliskan catatan verifikasi..."></textarea>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 10px; margin-top: 16px;">
+                                <button class="wf-btn wf-btn-solid" style="flex: 1;">Setujui & Terbitkan</button>
+                                <button class="wf-btn wf-btn-outline" style="border-color: #111827;">Tolak Pengajuan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ===================================================================
+         SCREEN 3: OPERATOR DESA — CMS LAYOUT BUILDER (1440x1024)
+         =================================================================== -->
+    <section class="cms-screen" id="cms-screen-3">
+        <div class="screen-label-bar">
+            <span>SCREEN 3: OPERATOR DESA - CMS LAYOUT BUILDER (URUTAN HOMEPAGE)</span>
+            <span>W: 1440px | H: 1024px</span>
+        </div>
+
+        <!-- Sidebar Operator -->
+        <aside class="cms-sidebar">
+            <div>
+                <div class="cms-logo-header">
+                    <div class="cms-logo-box">PK</div>
+                    <div>
+                        <strong style="font-size: 14px; display: block;">Desa Pujon Kidul</strong>
+                        <span style="font-size: 11px; color: #6B7280;">Panel CMS Operator</span>
+                    </div>
+                </div>
+
+                <ul class="cms-nav-list">
+                    <li class="cms-nav-item"><span>Dashboard Desa</span></li>
+                    <li class="cms-nav-item active"><span>CMS Layout Builder</span></li>
+                    <li class="cms-nav-item"><span>Navbar Menu Link</span></li>
+                    <li class="cms-nav-item"><span>Pelayanan Surat</span></li>
+                    <li class="cms-nav-item"><span>Pengaduan Warga</span></li>
+                    <li class="cms-nav-item"><span>Kabar & Agenda</span></li>
+                    <li class="cms-nav-item"><span>Transparansi APBDes</span></li>
+                </ul>
+            </div>
+
+            <div style="font-size: 11px; color: #6B7280;">Operator: Bambang Wijaya</div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="cms-main">
+            <header class="cms-topbar">
+                <div style="font-size: 12px; color: #6B7280;">
+                    CMS Builder / <strong>Urutan Bagian Halaman Utama (Homepage)</strong>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <a href="wireframe_desa_tradisional.html" target="_blank" class="wf-btn wf-btn-outline">Pratinjau Web</a>
+                    <button class="wf-btn wf-btn-solid">Simpan Urutan</button>
+                </div>
+            </header>
+
+            <div class="cms-body">
+                <div style="margin-bottom: 20px;">
+                    <h2 style="font-size: 22px; font-weight: 800;">Pengaturan Posisi & Visibilitas Bagian</h2>
+                    <p style="font-size: 13px; color: #4B5563;">Gunakan tombol UP / DOWN untuk mengubah urutan seksi di homepage desa.</p>
+                </div>
+
+                <div class="builder-2col">
+                    <!-- Left: Reorder Section List -->
+                    <div class="builder-box">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #D1D5DB; padding-bottom: 10px;">
+                            <strong>Daftar Bagian Homepage</strong>
+                            <button class="wf-btn wf-btn-outline" style="padding: 4px 8px; font-size: 11px;">Reset Default</button>
+                        </div>
+
+                        <div class="reorder-list">
+                            <div class="reorder-row" style="border-left: 3px solid black;">
+                                <span>1. Banner Hero</span>
+                                <span class="wf-badge" style="font-size: 9px;">Terkunci</span>
+                            </div>
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Layanan Utama Warga">
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <button class="arrow-btn">UP</button>
+                                    <button class="arrow-btn">DOWN</button>
+                                    <div class="toggle-switch-box"></div>
+                                </div>
+                            </div>
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Statistik Ringkas Desa">
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <button class="arrow-btn">UP</button>
+                                    <button class="arrow-btn">DOWN</button>
+                                    <div class="toggle-switch-box"></div>
+                                </div>
+                            </div>
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Profil & Sambutan Kades">
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <button class="arrow-btn">UP</button>
+                                    <button class="arrow-btn">DOWN</button>
+                                    <div class="toggle-switch-box"></div>
+                                </div>
+                            </div>
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Kabar & Berita Desa">
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <button class="arrow-btn">UP</button>
+                                    <button class="arrow-btn">DOWN</button>
+                                    <div class="toggle-switch-box"></div>
+                                </div>
+                            </div>
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Transparansi APBDes 2026">
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <button class="arrow-btn">UP</button>
+                                    <button class="arrow-btn">DOWN</button>
+                                    <div class="toggle-switch-box"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Visual Preview Simulator -->
+                    <div class="preview-simulator-frame">
+                        <div class="preview-sim-header">
+                            <span>Simulator Visual Live Preview</span>
+                            <span>Desktop 1440px</span>
+                        </div>
+                        <div class="preview-sim-body">
+                            <div class="sim-block" style="background: #E5E7EB;">[ HEADER & NAVBAR BALAI DESA ]</div>
+                            <div class="sim-block" style="height: 60px; display: flex; align-items: center; justify-content: center;">1. [ HERO BANNER ]</div>
+                            <div class="sim-block">2. [ LAYANAN UTAMA WARGA (6 KARTU) ]</div>
+                            <div class="sim-block">3. [ STATISTIK RINGKAS DESA ]</div>
+                            <div class="sim-block">4. [ PROFIL & SAMBUTAN KEPALA DESA ]</div>
+                            <div class="sim-block">5. [ KABAR & WARTA BALAI DESA ]</div>
+                            <div class="sim-block">6. [ TRANSPARANSI ANGGARAN APBDES ]</div>
+                            <div class="sim-block" style="background: #E5E7EB;">[ FOOTER BALAI DESA ]</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ===================================================================
+         SCREEN 4: OPERATOR DESA — NAVBAR CMS BUILDER (1440x1024)
+         =================================================================== -->
+    <section class="cms-screen" id="cms-screen-4">
+        <div class="screen-label-bar">
+            <span>SCREEN 4: OPERATOR DESA - NAVBAR MENU & ANCHOR CMS BUILDER</span>
+            <span>W: 1440px | H: 1024px</span>
+        </div>
+
+        <aside class="cms-sidebar">
+            <div>
+                <div class="cms-logo-header">
+                    <div class="cms-logo-box">PK</div>
+                    <div>
+                        <strong style="font-size: 14px; display: block;">Desa Pujon Kidul</strong>
+                        <span style="font-size: 11px; color: #6B7280;">Panel CMS Operator</span>
+                    </div>
+                </div>
+
+                <ul class="cms-nav-list">
+                    <li class="cms-nav-item"><span>Dashboard Desa</span></li>
+                    <li class="cms-nav-item"><span>CMS Layout Builder</span></li>
+                    <li class="cms-nav-item active"><span>Navbar Menu Link</span></li>
+                    <li class="cms-nav-item"><span>Pelayanan Surat</span></li>
+                    <li class="cms-nav-item"><span>Pengaduan Warga</span></li>
+                </ul>
+            </div>
+            <div style="font-size: 11px; color: #6B7280;">Operator: Bambang Wijaya</div>
+        </aside>
+
+        <main class="cms-main">
+            <header class="cms-topbar">
+                <div style="font-size: 12px; color: #6B7280;">
+                    CMS Builder / <strong>Menu Navigasi (Navbar CMS)</strong>
+                </div>
+                <button class="wf-btn wf-btn-solid">Simpan Menu Navbar</button>
+            </header>
+
+            <div class="cms-body">
+                <div style="margin-bottom: 20px;">
+                    <h2 style="font-size: 22px; font-weight: 800;">Pengaturan Menu Tautan Header Navbar</h2>
+                    <p style="font-size: 13px; color: #4B5563;">Atur teks tombol, target link anchor (#), dan posisi menu di bar utama atau dropdown.</p>
+                </div>
+
+                <div class="builder-2col">
+                    <div class="builder-box">
+                        <strong style="font-size: 14px; display: block; margin-bottom: 12px;">Daftar Item Menu Navbar:</strong>
+                        <div class="reorder-list">
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Beranda">
+                                <input type="text" style="width: 100px; padding: 4px; font-size: 11px;" value="#beranda">
+                                <button class="arrow-btn">UP</button>
+                                <button class="arrow-btn">DOWN</button>
+                            </div>
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Profil & Kades">
+                                <input type="text" style="width: 100px; padding: 4px; font-size: 11px;" value="#profil">
+                                <button class="arrow-btn">UP</button>
+                                <button class="arrow-btn">DOWN</button>
+                            </div>
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Pelayanan Warga">
+                                <input type="text" style="width: 100px; padding: 4px; font-size: 11px;" value="#layanan">
+                                <button class="arrow-btn">UP</button>
+                                <button class="arrow-btn">DOWN</button>
+                            </div>
+                            <div class="reorder-row">
+                                <input type="text" class="input-reorder" value="Warta Desa">
+                                <input type="text" style="width: 100px; padding: 4px; font-size: 11px;" value="#berita">
+                                <button class="arrow-btn">UP</button>
+                                <button class="arrow-btn">DOWN</button>
+                            </div>
+                        </div>
+
+                        <!-- Anchor Helper Chips -->
+                        <div style="margin-top: 20px; border-top: 1px solid #D1D5DB; padding-top: 14px;">
+                            <span style="font-size: 11px; font-weight: 700; color: #6B7280;">Anchor Chips Helper Cepat:</span>
+                            <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
+                                <span style="border: 1px dashed #111827; padding: 3px 8px; font-size: 11px; font-family: monospace;">#berita</span>
+                                <span style="border: 1px dashed #111827; padding: 3px 8px; font-size: 11px; font-family: monospace;">#layanan</span>
+                                <span style="border: 1px dashed #111827; padding: 3px 8px; font-size: 11px; font-family: monospace;">#galeri</span>
+                                <span style="border: 1px dashed #111827; padding: 3px 8px; font-size: 11px; font-family: monospace;">#produk</span>
+                                <span style="border: 1px dashed #111827; padding: 3px 8px; font-size: 11px; font-family: monospace;">#apbdes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preview-simulator-frame">
+                        <div class="preview-sim-header">
+                            <span>Pratinjau Live Header Navbar</span>
+                            <span>Scale 100%</span>
+                        </div>
+                        <div style="padding: 24px; background: #F9FAFB;">
+                            <div style="border: 1px solid #111827; background: #FFFFFF; padding: 14px 20px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-weight: 800; font-size: 13px;">DESA PUJON KIDUL</div>
+                                <div style="display: flex; gap: 14px; font-size: 12px; font-weight: 600;">
+                                    <span>Beranda</span>
+                                    <span>Profil & Kades</span>
+                                    <span>Pelayanan Warga</span>
+                                    <span>Warta Desa</span>
+                                </div>
+                                <button class="wf-btn wf-btn-solid" style="padding: 4px 10px; font-size: 11px;">Kontak</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ===================================================================
+         SCREEN 5: OPERATOR DESA — PELAYANAN SURAT & PENGADUAN (1440x1024)
+         =================================================================== -->
+    <section class="cms-screen" id="cms-screen-5">
+        <div class="screen-label-bar">
+            <span>SCREEN 5: OPERATOR DESA - MANAJEMEN PELAYANAN SURAT & PENGADUAN WARGA</span>
+            <span>W: 1440px | H: 1024px</span>
+        </div>
+
+        <aside class="cms-sidebar">
+            <div>
+                <div class="cms-logo-header">
+                    <div class="cms-logo-box">PK</div>
+                    <div>
+                        <strong style="font-size: 14px; display: block;">Desa Pujon Kidul</strong>
+                        <span style="font-size: 11px; color: #6B7280;">Panel CMS Operator</span>
+                    </div>
+                </div>
+
+                <ul class="cms-nav-list">
+                    <li class="cms-nav-item"><span>Dashboard Desa</span></li>
+                    <li class="cms-nav-item"><span>CMS Layout Builder</span></li>
+                    <li class="cms-nav-item"><span>Navbar Menu Link</span></li>
+                    <li class="cms-nav-item active"><span>Pelayanan Surat Masuk</span></li>
+                    <li class="cms-nav-item"><span>Pengaduan Warga</span></li>
+                    <li class="cms-nav-item"><span>Warta & Agenda</span></li>
+                </ul>
+            </div>
+            <div style="font-size: 11px; color: #6B7280;">Operator: Bambang Wijaya</div>
+        </aside>
+
+        <main class="cms-main">
+            <header class="cms-topbar">
+                <div style="font-size: 12px; color: #6B7280;">
+                    Pelayanan Warga / <strong>Daftar Permohonan Surat Masuk</strong>
+                </div>
+                <span class="wf-badge">3 Surat Menunggu Verifikasi</span>
+            </header>
+
+            <div class="cms-body">
+                <div style="margin-bottom: 20px;">
+                    <h2 style="font-size: 22px; font-weight: 800;">Manajemen Pelayanan Surat Administrasi Kependudukan</h2>
+                    <p style="font-size: 13px; color: #4B5563;">Verifikasi permohonan surat masuk warga, proses pencetakan dokumen, dan terbitkan salinan digital.</p>
+                </div>
+
+                <div class="stats-row-4">
+                    <div class="stat-card-box">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Surat Masuk Baru</div>
+                    </div>
+                    <div class="stat-card-box">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Aduan Warga</div>
+                    </div>
+                    <div class="stat-card-box">
+                        <div class="stat-number">128</div>
+                        <div class="stat-label">Surat Diterbitkan</div>
+                    </div>
+                    <div class="stat-card-box">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Artikel Terbit</div>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <div class="table-head-bar">
+                        <strong>Permohonan Surat Warga Terbaru</strong>
+                        <input type="text" placeholder="Cari NIK..." style="border: 1px solid #D1D5DB; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nama Pemohon</th>
+                                <th>NIK & Dusun</th>
+                                <th>Jenis Surat</th>
+                                <th>Tanggal Pengajuan</th>
+                                <th>Status Berkas</th>
+                                <th style="text-align: right;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Siti Aminah</strong></td>
+                                <td>3507195408920001 • Dusun Maron</td>
+                                <td>Surat Keterangan Usaha (SKU)</td>
+                                <td>Hari ini, 08:45 WIB</td>
+                                <td><span class="wf-badge">Menunggu Verifikasi</span></td>
+                                <td style="text-align: right;"><button class="wf-btn wf-btn-solid">Proses & Cetak PDF</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Budi Santoso</strong></td>
+                                <td>3507191205880003 • Dusun Krajan</td>
+                                <td>Surat Pengantar SKCK</td>
+                                <td>Hari ini, 07:15 WIB</td>
+                                <td><span class="wf-badge">Menunggu Verifikasi</span></td>
+                                <td style="text-align: right;"><button class="wf-btn wf-btn-solid">Proses & Cetak PDF</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dewi Lestari</strong></td>
+                                <td>3507196603950002 • Dusun Tulungrejo</td>
+                                <td>Surat Keterangan Domisili</td>
+                                <td>Kemarin, 15:30 WIB</td>
+                                <td><span class="wf-badge">Siap Diambil</span></td>
+                                <td style="text-align: right;"><button class="wf-btn wf-btn-outline">Unduh Salinan</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </section>
+
+</body>
+</html>

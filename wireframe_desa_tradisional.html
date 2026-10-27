@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1440">
+    <title>Wireframe Template Desa Tradisional - 1440 Desktop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================================
+           FIGMA DESKTOP 1440px TRADISIONAL (REORDERABLE SECTIONS)
+           Direct <section> children for auto-layout reordering in Figma
+           ========================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html, body {
+            width: 1440px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            color: #111827;
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.6;
+        }
+
+        .font-serif {
+            font-family: 'Libre Baskerville', Georgia, serif;
+        }
+
+        /* DIRECT SECTION CONTAINER (W: 1440px) */
+        .wf-section {
+            width: 1440px;
+            box-sizing: border-box;
+            position: relative;
+            background: #FFFFFF;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .wf-container {
+            width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        /* REUSABLE WIREFRAME PRIMITIVES */
+        .wf-placeholder-box {
+            background: #F3F4F6;
+            border: 1px solid #D1D5DB;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .wf-has-cross {
+            background: 
+                linear-gradient(to top right, transparent calc(50% - 0.5px), #D1D5DB 50%, transparent calc(50% + 0.5px)),
+                linear-gradient(to bottom right, transparent calc(50% - 0.5px), #D1D5DB 50%, transparent calc(50% + 0.5px)),
+                #F3F4F6;
+        }
+
+        .wf-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border: 1px solid #111827;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            background: #F3F4F6;
+            color: #111827;
+            text-transform: uppercase;
+        }
+
+        .wf-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .wf-btn-solid {
+            background: #111827;
+            color: #FFFFFF;
+            border: 1px solid #111827;
+        }
+
+        .wf-btn-outline {
+            background: #FFFFFF;
+            color: #111827;
+            border: 1px solid #111827;
+        }
+
+        /* SECTION 1: TOPBAR INFO */
+        .wf-topbar {
+            background: #F3F4F6;
+            padding: 10px 0;
+            font-size: 12px;
+            color: #4B5563;
+        }
+
+        .topbar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* SECTION 2: OFFICIAL HEADER & NAVBAR */
+        .wf-header-gov {
+            background: #FFFFFF;
+            padding: 24px 0 0;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .gov-brand {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .emblem-box {
+            width: 58px;
+            height: 64px;
+            border: 1.5px solid #111827;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 11px;
+            background: #F9FAFB;
+            text-align: center;
+        }
+
+        .gov-titles h2 {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #4B5563;
+        }
+
+        .gov-titles h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #111827;
+            margin: 2px 0;
+        }
+
+        .classic-navbar {
+            border-top: 1px solid #D1D5DB;
+            background: #F9FAFB;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 4px;
+        }
+
+        .nav-list a {
+            display: block;
+            padding: 14px 18px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            color: #111827;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-list a.active, .nav-list a:hover {
+            background: #FFFFFF;
+            border-bottom: 3px solid #111827;
+        }
+
+        /* SECTION 3: HERO KLASIK */
+        .wf-hero-classic {
+            padding: 60px 0 72px;
+        }
+
+        .hero-classic-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        /* SECTION 4: DEMOGRAPHY STATS */
+        .wf-stats-classic {
+            padding: 36px 0;
+            background: #F9FAFB;
+        }
+
+        .stats-grid-classic {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+
+        .stat-item {
+            border-right: 1px solid #D1D5DB;
+            padding: 0 16px;
+        }
+
+        .stat-item:last-child { border-right: none; }
+
+        /* SECTION 5: KADES & VISI MISI */
+        .wf-kades-classic {
+            padding: 72px 0;
+        }
+
+        .kades-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 48px;
+            align-items: start;
+            margin-top: 36px;
+        }
+
+        .kades-card {
+            border: 1.5px solid #111827;
+            padding: 16px;
+            background: #FFFFFF;
+            text-align: center;
+        }
+
+        /* SECTION 6: STRUKTUR APARATUR */
+        .wf-struktur-classic {
+            padding: 72px 0;
+            background: #F9FAFB;
+        }
+
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .org-node {
+            border: 1.5px solid #111827;
+            background: #FFFFFF;
+            padding: 12px 24px;
+            text-align: center;
+            min-width: 240px;
+            border-radius: 4px;
+        }
+
+        .org-row-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* SECTION 7: LAYANAN WARGA */
+        .wf-layanan-classic {
+            padding: 72px 0;
+        }
+
+        .services-grid-classic {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .service-card {
+            border: 1px solid #D1D5DB;
+            padding: 24px;
+            background: #FFFFFF;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* SECTION 8: APBDES TABEL */
+        .wf-apbdes-classic {
+            padding: 72px 0;
+            background: #F9FAFB;
+        }
+
+        .table-classic {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+            background: #FFFFFF;
+            border: 1px solid #D1D5DB;
+        }
+
+        .table-classic th, .table-classic td {
+            border: 1px solid #D1D5DB;
+            padding: 12px 16px;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .table-classic th {
+            background: #F3F4F6;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }
+
+        /* SECTION 9: WARTA & BERITA */
+        .wf-berita-classic {
+            padding: 72px 0;
+        }
+
+        .news-grid-classic {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 32px;
+        }
+
+        .news-card-classic {
+            border: 1px solid #D1D5DB;
+            background: #FFFFFF;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* SECTION 10: AGENDA */
+        .wf-agenda-classic {
+            padding: 72px 0;
+            background: #F9FAFB;
+        }
+
+        .agenda-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .agenda-row {
+            border: 1px solid #D1D5DB;
+            background: #FFFFFF;
+            padding: 18px 24px;
+            border-radius: 4px;
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            align-items: center;
+            gap: 24px;
+        }
+
+        /* SECTION 11: PETA & PENGADUAN */
+        .wf-kontak-classic {
+            padding: 72px 0;
+        }
+
+        /* SECTION 12: FOOTER */
+        footer.wf-footer-classic {
+            background: #F3F4F6;
+            border-top: 2px solid #111827;
+            padding: 60px 0 32px;
+        }
+
+        .footer-grid-classic {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+            font-size: 13px;
+        }
+
+        .footer-grid-classic h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .footer-grid-classic ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            color: #4B5563;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= SECTION 1: TOPBAR INFO ================= -->
+    <header class="wf-section wf-topbar">
+        <div class="wf-container topbar-inner">
+            <div style="display: flex; gap: 24px;">
+                <span>Jam Pelayanan Kantor: Senin - Jumat (08.00 - 15.00 WIB)</span>
+                <span>Balai Desa: Jl. Raya Pujon Kidul No. 12, Malang</span>
+            </div>
+            <div style="display: flex; gap: 24px;">
+                <span>Layanan Pengaduan: (0341) 592811</span>
+                <span>info@pujonkidul.desa.id</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= SECTION 2: OFFICIAL HEADER & NAVBAR ================= -->
+    <header class="wf-section wf-header-gov">
+        <div class="wf-container">
+            <div class="header-top">
+                <div class="gov-brand">
+                    <div class="emblem-box">LOGO<br>KAB</div>
+                    <div class="gov-titles">
+                        <h2>Pemerintah Kabupaten Malang - Kecamatan Pujon</h2>
+                        <h1 class="font-serif">Desa Pujon Kidul</h1>
+                        <p style="font-size: 13px; color: #6B7280;">Kawasan Mandiri Wisata dan Pertanian Terpadu</p>
+                    </div>
+                </div>
+                <div>
+                    <a href="#layanan" class="wf-btn wf-btn-solid font-serif">Pelayanan Warga Online</a>
+                </div>
+            </div>
+        </div>
+
+        <nav class="classic-navbar">
+            <div class="wf-container">
+                <ul class="nav-list font-serif">
+                    <li><a href="#beranda" class="active">Beranda</a></li>
+                    <li><a href="#profil">Profil & Kades</a></li>
+                    <li><a href="#struktur">Aparatur Desa</a></li>
+                    <li><a href="#layanan">Pelayanan Surat</a></li>
+                    <li><a href="#apbdes">Transparansi APBDes</a></li>
+                    <li><a href="#berita">Warta Desa</a></li>
+                    <li><a href="#agenda">Agenda Kegiatan</a></li>
+                    <li><a href="#kontak">Pengaduan</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ================= SECTION 3: HERO KLASIK ================= -->
+    <section class="wf-section wf-hero-classic" id="beranda">
+        <div class="wf-container hero-classic-grid">
+            <div>
+                <span class="wf-badge" style="margin-bottom: 16px;">Portal Resmi Pemerintahan Desa</span>
+                <h1 class="font-serif" style="font-size: 40px; line-height: 1.2; margin: 12px 0 18px; font-weight: 700;">
+                    Pelayanan desa yang dekat, jelas, dan berwibawa
+                </h1>
+                <p style="font-size: 15px; color: #4B5563; line-height: 1.7; margin-bottom: 24px;">
+                    Selamat datang di website resmi Desa Pujon Kidul. Urus surat kependudukan, pelajari rencana anggaran desa, dan pantau jalannya pemerintahan secara transparan.
+                </p>
+                <div style="display: flex; gap: 12px; margin-bottom: 28px;">
+                    <a href="#layanan" class="wf-btn wf-btn-solid">Ajukan Layanan Surat</a>
+                    <a href="#profil" class="wf-btn wf-btn-outline">Baca Profil Desa</a>
+                </div>
+                <div style="display: flex; gap: 20px; font-size: 12px; color: #6B7280; border-top: 1px solid #E5E7EB; padding-top: 16px;">
+                    <span>Kantor Balai Desa Buka</span>
+                    <span>12 Staf Pelayanan</span>
+                    <span>Respon &lt; 24 Jam</span>
+                </div>
+            </div>
+
+            <div>
+                <div style="border: 2px solid #111827; padding: 8px; background: #FFFFFF; border-radius: 4px;">
+                    <div class="wf-placeholder-box wf-has-cross" style="height: 340px;">
+                        [ Foto Balai Desa & Panorama Pujon Kidul ]
+                    </div>
+                    <div style="font-size: 11px; color: #6B7280; text-align: center; margin-top: 8px; font-style: italic;">
+                        Pusat Informasi & Pelayanan Pemerintahan Balai Desa Pujon Kidul
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 4: DEMOGRAPHY STATS ================= -->
+    <section class="wf-section wf-stats-classic">
+        <div class="wf-container stats-grid-classic">
+            <div class="stat-item">
+                <div class="font-serif" style="font-size: 32px; font-weight: 700;">4.850</div>
+                <div style="font-size: 12px; color: #6B7280; text-transform: uppercase;">Jiwa Penduduk</div>
+            </div>
+            <div class="stat-item">
+                <div class="font-serif" style="font-size: 32px; font-weight: 700;">1.420</div>
+                <div style="font-size: 12px; color: #6B7280; text-transform: uppercase;">Kepala Keluarga</div>
+            </div>
+            <div class="stat-item">
+                <div class="font-serif" style="font-size: 32px; font-weight: 700;">3 Dusun</div>
+                <div style="font-size: 12px; color: #6B7280; text-transform: uppercase;">Maron, Krajan, Tulungrejo</div>
+            </div>
+            <div class="stat-item">
+                <div class="font-serif" style="font-size: 32px; font-weight: 700;">340 Ha</div>
+                <div style="font-size: 12px; color: #6B7280; text-transform: uppercase;">Lahan Produktif</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 5: KADES & VISI MISI ================= -->
+    <section class="wf-section wf-kades-classic" id="profil">
+        <div class="wf-container">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6B7280; display: block; margin-bottom: 6px;">Pimpinan Desa</span>
+            <h2 class="font-serif" style="font-size: 28px; font-weight: 700;">Sambutan Kepala Desa & Visi Pembangunan</h2>
+
+            <div class="kades-grid">
+                <div class="kades-card">
+                    <div class="wf-placeholder-box wf-has-cross" style="height: 300px; margin-bottom: 14px;">
+                        [ Pasfoto Resmi Kepala Desa ]
+                    </div>
+                    <strong class="font-serif" style="font-size: 18px; display: block;">Udi Hartoko</strong>
+                    <span style="font-size: 12px; color: #6B7280;">Kepala Desa Pujon Kidul (2021-2027)</span>
+                </div>
+
+                <div>
+                    <blockquote class="font-serif" style="border-left: 3px solid #111827; padding-left: 20px; font-size: 16px; color: #374151; font-style: italic; line-height: 1.8; margin-bottom: 24px;">
+                        "Membangun desa bukan sekadar membangun fisik bangunan, melainkan merajut kegotong-royongan warga, menjaga kelestarian alam, serta menghadirkan birokrasi yang melayani sepenuh hati."
+                    </blockquote>
+
+                    <div style="background: #F9FAFB; border: 1px solid #D1D5DB; padding: 24px; border-radius: 4px;">
+                        <h4 class="font-serif" style="font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Visi Pembangunan Desa</h4>
+                        <p style="font-size: 13px; color: #4B5563; line-height: 1.6; margin-bottom: 16px;">
+                            "Terwujudnya Desa Pujon Kidul yang Mandiri, Sejahtera, dan Berdaya Saing melalui Pemanfaatan Potensi Pertanian, Pariwisata, dan Pelayanan Berbasis Tata Kelola yang Bersih."
+                        </p>
+                        <h4 class="font-serif" style="font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Misi Pemerintahan</h4>
+                        <ul style="padding-left: 18px; font-size: 13px; color: #4B5563; display: flex; flex-direction: column; gap: 6px;">
+                            <li>Meningkatkan kualitas pelayanan administrasi kependudukan yang transparan.</li>
+                            <li>Mengembangkan ekonomi kerakyatan melalui BUMDes dan pariwisata persawahan.</li>
+                            <li>Meningkatkan prasarana jalan usaha tani dan irigasi desa.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 6: STRUKTUR APARATUR ================= -->
+    <section class="wf-section wf-struktur-classic" id="struktur">
+        <div class="wf-container">
+            <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6B7280;">Bagan Tata Kelola</span>
+                <h2 class="font-serif" style="font-size: 26px; font-weight: 700; margin-top: 4px;">Struktur Organisasi Pemerintahan Desa</h2>
+            </div>
+
+            <div class="org-chart">
+                <div class="org-node">
+                    <span class="wf-badge" style="font-size: 9px;">Pimpinan</span>
+                    <div style="font-weight: 700; font-size: 13px; margin-top: 4px;">Kepala Desa</div>
+                    <div style="font-size: 11px; color: #6B7280;">Udi Hartoko</div>
+                </div>
+
+                <div style="width: 2px; height: 16px; background: #111827;"></div>
+
+                <div class="org-node">
+                    <span class="wf-badge" style="font-size: 9px;">Sekretariat</span>
+                    <div style="font-weight: 700; font-size: 13px; margin-top: 4px;">Sekretaris Desa</div>
+                    <div style="font-size: 11px; color: #6B7280;">Ahmad Fauzi, S.AP</div>
+                </div>
+
+                <div style="width: 2px; height: 16px; background: #111827;"></div>
+
+                <div class="org-row-4">
+                    <div class="org-node">
+                        <div style="font-weight: 700; font-size: 12px;">Kaur Keuangan</div>
+                        <div style="font-size: 11px; color: #6B7280;">Siti Rahmawati</div>
+                    </div>
+                    <div class="org-node">
+                        <div style="font-weight: 700; font-size: 12px;">Kaur Perencanaan</div>
+                        <div style="font-size: 11px; color: #6B7280;">Bambang Wijaya</div>
+                    </div>
+                    <div class="org-node">
+                        <div style="font-weight: 700; font-size: 12px;">Kasi Pelayanan</div>
+                        <div style="font-size: 11px; color: #6B7280;">Endang Purwanti</div>
+                    </div>
+                    <div class="org-node">
+                        <div style="font-weight: 700; font-size: 12px;">Kasi Kesejahteraan</div>
+                        <div style="font-size: 11px; color: #6B7280;">Joko Prasetyo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 7: LAYANAN WARGA ================= -->
+    <section class="wf-section wf-layanan-classic" id="layanan">
+        <div class="wf-container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div>
+                    <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6B7280;">Pusat Pelayanan</span>
+                    <h2 class="font-serif" style="font-size: 26px; font-weight: 700; margin-top: 4px;">Layanan Administrasi Surat Kependudukan</h2>
+                </div>
+                <span class="wf-badge">Gratis / Rp 0</span>
+            </div>
+
+            <div class="services-grid-classic">
+                <div class="service-card">
+                    <div style="font-weight: 700; font-size: 14px;">01. Surat Pengantar SKCK</div>
+                    <p style="font-size: 12px; color: #4B5563; line-height: 1.5;">Pengantar resmi catatan kepolisian untuk seleksi pekerjaan atau kelengkapan berkas dinas.</p>
+                    <div style="margin-top: auto; border-top: 1px solid #E5E7EB; padding-top: 10px; display: flex; justify-content: space-between;">
+                        <span style="font-size: 11px; color: #6B7280;">Syarat: KTP & KK Asli</span>
+                        <a href="#" style="font-size: 12px; font-weight: 700; color: black; text-decoration: none;">Ajukan</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div style="font-weight: 700; font-size: 14px;">02. Surat Keterangan Usaha (SKU)</div>
+                    <p style="font-size: 12px; color: #4B5563; line-height: 1.5;">Bukti legalitas operasional usaha mikro warga untuk pengajuan permodalan KUR perbankan.</p>
+                    <div style="margin-top: auto; border-top: 1px solid #E5E7EB; padding-top: 10px; display: flex; justify-content: space-between;">
+                        <span style="font-size: 11px; color: #6B7280;">Syarat: Foto Usaha</span>
+                        <a href="#" style="font-size: 12px; font-weight: 700; color: black; text-decoration: none;">Ajukan</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div style="font-weight: 700; font-size: 14px;">03. Surat Keterangan Domisili</div>
+                    <p style="font-size: 12px; color: #4B5563; line-height: 1.5;">Keterangan tempat tinggal sementara atau tetap warga di wilayah rukun tetangga / RW.</p>
+                    <div style="margin-top: auto; border-top: 1px solid #E5E7EB; padding-top: 10px; display: flex; justify-content: space-between;">
+                        <span style="font-size: 11px; color: #6B7280;">Syarat: Pengantar RT/RW</span>
+                        <a href="#" style="font-size: 12px; font-weight: 700; color: black; text-decoration: none;">Ajukan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 8: APBDES TABEL ================= -->
+    <section class="wf-section wf-apbdes-classic" id="apbdes">
+        <div class="wf-container">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6B7280;">Akuntabilitas Anggaran</span>
+            <h2 class="font-serif" style="font-size: 26px; font-weight: 700; margin-top: 4px;">Transparansi Anggaran Pendapatan & Belanja Desa (APBDes 2026)</h2>
+
+            <table class="table-classic">
+                <thead>
+                    <tr>
+                        <th>Uraian Akun Anggaran</th>
+                        <th>Target (Rp)</th>
+                        <th>Realisasi (Rp)</th>
+                        <th>Persentase (%)</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Pendapatan Asli Desa (PADes)</td>
+                        <td>Rp 420.000.000</td>
+                        <td>Rp 388.500.000</td>
+                        <td>92.5%</td>
+                        <td>BUMDes Wisata Sawah</td>
+                    </tr>
+                    <tr>
+                        <td>2. Dana Desa (APBN)</td>
+                        <td>Rp 890.000.000</td>
+                        <td>Rp 890.000.000</td>
+                        <td>100.0%</td>
+                        <td>BLT & Ketahanan Pangan</td>
+                    </tr>
+                    <tr>
+                        <td>3. Alokasi Dana Desa (ADD)</td>
+                        <td>Rp 540.000.000</td>
+                        <td>Rp 490.000.000</td>
+                        <td>90.7%</td>
+                        <td>Operasional Pemerintahan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 9: WARTA & BERITA ================= -->
+    <section class="wf-section wf-berita-classic" id="berita">
+        <div class="wf-container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div>
+                    <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6B7280;">Warta Publikasi</span>
+                    <h2 class="font-serif" style="font-size: 26px; font-weight: 700; margin-top: 4px;">Kabar Terkini Balai Desa</h2>
+                </div>
+                <a href="#" style="font-size: 13px; font-weight: 700; color: black;">Lihat Semua</a>
+            </div>
+
+            <div class="news-grid-classic">
+                <div class="news-card-classic">
+                    <div class="wf-placeholder-box wf-has-cross" style="height: 180px;">[ Foto Berita 1 ]</div>
+                    <div style="padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+                        <span style="font-size: 11px; color: #6B7280;">24 Oktober 2026</span>
+                        <h3 class="font-serif" style="font-size: 16px; font-weight: 700;">Musrenbangdes Tetapkan 5 Prioritas Pembangunan</h3>
+                        <p style="font-size: 12px; color: #4B5563;">Kesepakatan perbaikan irigasi 80 hektar lahan sayur bersama warga.</p>
+                    </div>
+                </div>
+
+                <div class="news-card-classic">
+                    <div class="wf-placeholder-box wf-has-cross" style="height: 180px;">[ Foto Berita 2 ]</div>
+                    <div style="padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+                        <span style="font-size: 11px; color: #6B7280;">18 Oktober 2026</span>
+                        <h3 class="font-serif" style="font-size: 16px; font-weight: 700;">Pelayanan Posyandu Serentak Balita & Lansia</h3>
+                        <p style="font-size: 12px; color: #4B5563;">Pemberian nutrisi dan vitamin A bagi 210 balita di 3 pos dusun.</p>
+                    </div>
+                </div>
+
+                <div class="news-card-classic">
+                    <div class="wf-placeholder-box wf-has-cross" style="height: 180px;">[ Foto Berita 3 ]</div>
+                    <div style="padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+                        <span style="font-size: 11px; color: #6B7280;">12 Oktober 2026</span>
+                        <h3 class="font-serif" style="font-size: 16px; font-weight: 700;">Pelatihan BUMDes Olahan Susu Sapi Perah</h3>
+                        <p style="font-size: 12px; color: #4B5563;">Mendorong peternak mandiri menghasilkan produk keju dan yogurt lokal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 10: AGENDA ================= -->
+    <section class="wf-section wf-agenda-classic" id="agenda">
+        <div class="wf-container">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6B7280;">Kalender Balai Desa</span>
+            <h2 class="font-serif" style="font-size: 26px; font-weight: 700; margin-top: 4px;">Agenda Kegiatan Masyarakat</h2>
+
+            <div class="agenda-list">
+                <div class="agenda-row">
+                    <div style="text-align: center; border-right: 1px solid #D1D5DB; padding-right: 16px;">
+                        <strong class="font-serif" style="font-size: 22px; display: block;">28</strong>
+                        <span style="font-size: 11px; color: #6B7280; text-transform: uppercase;">Okt 2026</span>
+                    </div>
+                    <div>
+                        <strong class="font-serif" style="font-size: 15px;">Penyaluran BLT Dana Desa Triwulan IV</strong>
+                        <p style="font-size: 12px; color: #4B5563;">Pendopo Balai Desa • Pukul 08.30 WIB • Membawa KTP Asli dan KK.</p>
+                    </div>
+                    <span class="wf-badge">Sosial</span>
+                </div>
+
+                <div class="agenda-row">
+                    <div style="text-align: center; border-right: 1px solid #D1D5DB; padding-right: 16px;">
+                        <strong class="font-serif" style="font-size: 22px; display: block;">02</strong>
+                        <span style="font-size: 11px; color: #6B7280; text-transform: uppercase;">Nov 2026</span>
+                    </div>
+                    <div>
+                        <strong class="font-serif" style="font-size: 15px;">Kerja Bakti Bersih Saluran Drainase Desa</strong>
+                        <p style="font-size: 12px; color: #4B5563;">Dusun Maron & Krajan • Pukul 06.30 WIB bersama perangkat desa.</p>
+                    </div>
+                    <span class="wf-badge">Gotong Royong</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 11: PETA & PENGADUAN ================= -->
+    <section class="wf-section wf-kontak-classic" id="kontak">
+        <div class="wf-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+            <div>
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6B7280;">Wilayah Administrasi</span>
+                <h3 class="font-serif" style="font-size: 20px; font-weight: 700; margin: 4px 0 16px;">Peta & Lokasi Balai Desa</h3>
+                <div class="wf-placeholder-box wf-has-cross" style="height: 280px; border-radius: 4px;">
+                    [ Peta Wilayah Desa Pujon Kidul, Batas Dusun & Titik Balai Desa ]
+                </div>
+            </div>
+
+            <div>
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6B7280;">Aspirasi Warga</span>
+                <h3 class="font-serif" style="font-size: 20px; font-weight: 700; margin: 4px 0 16px;">Form Pengaduan Resmi</h3>
+                <div style="background: #F9FAFB; border: 1px solid #D1D5DB; padding: 20px; border-radius: 4px; display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <label style="display: block; font-size: 11px; font-weight: 700; margin-bottom: 4px;">Nama / NIK</label>
+                        <input type="text" style="width: 100%; height: 36px; border: 1px solid #111827; padding: 0 10px; font-size: 12px;" placeholder="Masukkan NIK atau nama">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; font-weight: 700; margin-bottom: 4px;">Isi Laporan</label>
+                        <textarea style="width: 100%; height: 72px; border: 1px solid #111827; padding: 8px 10px; font-size: 12px;" placeholder="Tuliskan aspirasi atau laporan..."></textarea>
+                    </div>
+                    <button class="wf-btn wf-btn-solid font-serif" style="width: 100%;">Kirim Pengaduan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 12: FOOTER ================= -->
+    <footer class="wf-section wf-footer-classic">
+        <div class="wf-container">
+            <div class="footer-grid-classic">
+                <div>
+                    <h4 class="font-serif">Pemerintah Desa Pujon Kidul</h4>
+                    <p style="color: #4B5563; line-height: 1.6;">
+                        Kecamatan Pujon, Kabupaten Malang, Jawa Timur.<br>
+                        Kode Pos: 65391 • Telp: (0341) 592811
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-serif">Tautan</h4>
+                    <ul>
+                        <li>Pemkab Malang</li>
+                        <li>Diskominfo Jatim</li>
+                        <li>Kementerian Desa</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif">Layanan</h4>
+                    <ul>
+                        <li>Syarat Surat Kependudukan</li>
+                        <li>Laporan APBDes</li>
+                        <li>Jadwal Posyandu</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif">Format Wireframe</h4>
+                    <span class="wf-badge">1440 Desktop Standard</span>
+                    <div style="margin-top: 10px;">
+                        <a href="wireframe_landing.html" class="wf-btn wf-btn-outline" style="padding: 6px 12px; font-size: 11px;">Ke Landing Page</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid #D1D5DB; padding-top: 20px; display: flex; justify-content: space-between; font-size: 12px; color: #6B7280;">
+                <span>© 2026 Pemerintah Desa Pujon Kidul. Seluruh hak cipta dilindungi.</span>
+                <span>Ukuran Frame Desktop Figma W: 1440px</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

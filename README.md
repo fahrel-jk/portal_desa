@@ -241,7 +241,7 @@ Password semua akun: **`password`**
 
 | Role | Email | Status Desa |
 |---|---|---|
-| **Admin Provinsi** | `admin@jatimprov.go.id` | — |
+| **Admin Provinsi** | `admin@portaldesa.test` | — |
 | **Desa (Published)** | `published@desa.id` | `published` |
 | **Desa (Pending)** | `pending@desa.id` | `pending_review` |
 
