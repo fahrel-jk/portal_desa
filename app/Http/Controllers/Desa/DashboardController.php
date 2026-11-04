@@ -316,9 +316,7 @@ class DashboardController extends Controller
         return redirect()->route('desa.news.index')->with('success', 'Berita berhasil dihapus.');
     }
 
-    // ========================================
     // VILLAGE SERVICES (Layanan Administrasi)
-    // ========================================
 
     /**
      * List village services.

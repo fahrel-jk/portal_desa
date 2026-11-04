@@ -8,9 +8,7 @@
 @source '../**/*.tsx';
 
 @theme {
-    /* ═══════════════════════════════════════════════
-       Mercury Dark Theme — design2.md
-       ═══════════════════════════════════════════════ */
+    /* Mercury Dark Theme — design2.md */
 
     /* Font */
     --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -60,9 +58,7 @@
     --color-portal-bg: #171721;
 }
 
-/* ═══════════════════════════════════════════════
-   Animations — Velorah-inspired
-   ═══════════════════════════════════════════════ */
+/* Animations — Velorah-inspired */
 
 @keyframes fade-rise {
     from {
@@ -119,9 +115,7 @@
 .scroll-reveal.is-visible .stagger-3 { transition-delay: 0.3s; }
 .scroll-reveal.is-visible .stagger-4 { transition-delay: 0.4s; }
 
-/* ═══════════════════════════════════════════════
-   Liquid Glass — Velorah
-   ═══════════════════════════════════════════════ */
+/* Liquid Glass — Velorah */
 
 .liquid-glass {
     background: rgba(255, 255, 255, 0.03);
@@ -154,9 +148,7 @@
     pointer-events: none;
 }
 
-/* ═══════════════════════════════════════════════
-   Velorah Link Animation
-   ═══════════════════════════════════════════════ */
+/* Velorah Link Animation */
 
 .velorah-link {
     position: relative;
@@ -183,9 +175,7 @@
 }
 
 
-/* ═══════════════════════════════════════════════
-   Dark Form Overrides — for Breeze components
-   ═══════════════════════════════════════════════ */
+/* Dark Form Overrides — for Breeze components */
 
 /* Make all Breeze text inputs dark */
 input[type="text"]:not(.bg-white):not(.bg-white\/90),
@@ -212,9 +202,7 @@ select:focus {
     box-shadow: 0 0 0 3px rgba(82, 102, 235, 0.25) !important;
 }
 
-/* ═══════════════════════════════════════════════
-   Accessibility
-   ═══════════════════════════════════════════════ */
+/* Accessibility */
 
 @media (prefers-reduced-motion: reduce) {
     .animate-fade-rise,
@@ -231,9 +219,7 @@ select:focus {
     }
 }
 
-/* ═══════════════════════════════════════════════
-   Custom React Components Theme
-   ═══════════════════════════════════════════════ */
+/* Custom React Components Theme */
 
 @theme inline {
   --color-context-card-border: var(--context-card-border);

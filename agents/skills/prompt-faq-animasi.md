@@ -53,7 +53,7 @@ konsisten dengan identitas visual "clean organic" yang sudah berjalan
 ## A. CSS animasi bersama — `resources/css/faq.css`
 
 ```css
-/* === Animasi accordion (teknis grid-rows) === */
+/* Animasi accordion (teknis grid-rows) */
 .faq-panel {
   display: grid;
   grid-template-rows: 0fr;
@@ -69,7 +69,7 @@ konsisten dengan identitas visual "clean organic" yang sudah berjalan
   overflow: hidden;
 }
 
-/* === Rotasi chevron === */
+/* Rotasi chevron */
 .faq-chevron {
   transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -77,7 +77,7 @@ konsisten dengan identitas visual "clean organic" yang sudah berjalan
   transform: rotate(180deg);
 }
 
-/* === Stagger reveal saat masuk viewport === */
+/* Stagger reveal saat masuk viewport */
 .faq-reveal {
   opacity: 0;
   transform: translateY(12px);
@@ -89,7 +89,7 @@ konsisten dengan identitas visual "clean organic" yang sudah berjalan
   transform: translateY(0);
 }
 
-/* === Hormati prefers-reduced-motion === */
+/* Hormati prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .faq-panel,
   .faq-chevron,

@@ -65,9 +65,7 @@ beforeEach(function () {
     ]);
 });
 
-// ========================================
 // BASIC ACCESS
-// ========================================
 
 test('user can access their own village dashboard', function () {
     $response = $this->actingAs($this->myUser)
@@ -86,9 +84,7 @@ test('user cannot edit profile of unpublished village', function () {
     $response->assertForbidden();
 });
 
-// ========================================
 // CROSS-VILLAGE NEWS AUTHORIZATION
-// ========================================
 
 test('user cannot edit news belonging to another village', function () {
     $response = $this->actingAs($this->myUser)
@@ -121,9 +117,7 @@ test('user cannot delete news belonging to another village', function () {
     $this->assertDatabaseHas('village_news', ['id' => $this->otherNews->id]);
 });
 
-// ========================================
 // CROSS-VILLAGE OFFICIALS AUTHORIZATION
-// ========================================
 
 test('user cannot edit official belonging to another village', function () {
     $response = $this->actingAs($this->myUser)
@@ -156,9 +150,7 @@ test('user cannot delete official belonging to another village', function () {
     $this->assertDatabaseHas('village_officials', ['id' => $this->otherOfficial->id]);
 });
 
-// ========================================
 // CROSS-VILLAGE SERVICES AUTHORIZATION
-// ========================================
 
 test('user cannot edit service belonging to another village', function () {
     $response = $this->actingAs($this->myUser)
