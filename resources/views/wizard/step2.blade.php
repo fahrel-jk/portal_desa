@@ -46,9 +46,9 @@
                                 <h4 class="font-semibold text-ivory-text">{{ $template->name }}</h4>
                                 <p class="text-sm text-ash-text mt-1">
                                     @if($template->slug === 'klasik')
-                                        Header solid dengan daftar konten — tampilan bersih dan formal.
+                                        Header solid dengan daftar konten tampilan bersih dan formal.
                                     @else
-                                        Header dengan overlay gambar dan grid kartu — tampilan modern dan dinamis.
+                                        Header dengan overlay gambar dan grid kartu tampilan modern dan dinamis.
                                     @endif
                                 </p>
 

@@ -151,7 +151,7 @@
                 @php
                 $steps = [
                     ['icon' => 'M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z', 'title' => 'Daftar Akun', 'desc' => 'Buat akun sebagai perwakilan desa. Hanya butuh email dan password.'],
-                    ['icon' => 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z', 'title' => 'Pilih Template', 'desc' => 'Pilih desain yang cocok untuk desa Anda — Klasik atau Modern.'],
+                    ['icon' => 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z', 'title' => 'Pilih Template', 'desc' => 'Pilih desain yang cocok untuk desa Anda Klasik atau Modern.'],
                     ['icon' => 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z', 'title' => 'Isi Konten', 'desc' => 'Lengkapi profil desa, daftar perangkat, dan upload logo dalam wizard interaktif.'],
                     ['icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', 'title' => 'Disetujui & Tayang', 'desc' => 'Admin Provinsi review data Anda. Setelah disetujui, halaman desa langsung tayang!'],
                 ];
